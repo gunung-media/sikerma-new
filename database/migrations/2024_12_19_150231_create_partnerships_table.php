@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('document_number');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
 
 
             $table->enum('status', PartnershipStatusEnum::getValues())->default(PartnershipStatusEnum::ACTIVE->value);

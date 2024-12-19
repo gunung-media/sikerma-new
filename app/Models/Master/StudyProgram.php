@@ -7,6 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $faculty_id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Master\Faculty $faculty
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereFacultyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class StudyProgram extends Model
 {
     protected $fillable = [

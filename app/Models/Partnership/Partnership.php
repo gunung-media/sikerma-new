@@ -11,6 +11,49 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property PartnershipTypeEnum $type
+ * @property string $document_number
+ * @property string $title
+ * @property string|null $description
+ * @property int|null $user_id
+ * @property PartnershipStatusEnum $status
+ * @property \Illuminate\Support\Carbon $start_date
+ * @property \Illuminate\Support\Carbon $end_date
+ * @property string|null $executor
+ * @property int|null $faculty_id
+ * @property int|null $study_program_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partnership\PartnershipActivity> $activities
+ * @property-read int|null $activities_count
+ * @property-read Faculty|null $faculty
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partnership\Partner> $partners
+ * @property-read int|null $partners_count
+ * @property-read StudyProgram|null $studyProgram
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDocumentNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereExecutor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereFacultyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereStudyProgramId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Partnership extends Model
 {
     protected $fillable = [
