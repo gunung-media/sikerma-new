@@ -1,0 +1,7 @@
+declare namespace App.Enums {
+    export type AgencyTypeEnum = 'perguruan' | 'mitra';
+    export type PartnershipActivityTypeEnum = 'asistensi-mengajar-di-satuan-pendidikan-kampus-merdeka' | 'gelar-bersama-joint-degree' | 'gelar-ganda-dual-degree' | 'kegiatan-wirausaha-kampus-merdeka' | 'magang-praktik-kerja-kampus-merdeka' | 'membangun-desa-kkn-tematik-kampus-merdeka' | 'pelatihan' | 'pelatihan-dosen-dan-instruktur' | 'pemagangan' | 'penelitian-bersama' | 'penelitian-bersama-artikel-jurnal-ilmiah' | 'penelitian-bersama-paten' | 'penelitian-bersama-prototipe' | 'penelitian-riset-kampus-merdeka' | 'penerbitan-berkala-ilmiah' | 'pengabdian-kepada-masyarakat' | 'pengembangan-kurikulum-program-bersama' | 'pengembangan-pusat-penelitian-dan-pengembangan-keilmuan' | 'pengembangan-sistem-produk' | 'pengiriman-praktisi-sebagai-dosen' | 'penyaluran-lulusan' | 'penyelenggaraan-seminar-konferensi-ilmiah' | 'pertukaran-dosen' | 'pertukaran-mahasiswa' | 'pertukaran-pelajar-kampus-merdeka' | 'proyek-kemanusiaan-kampus-merdeka' | 'studi-proyek-independen-kampus-merdeka' | 'transfer-kredit' | 'visiting-professor';
+    export type PartnershipStatusEnum = 'active' | 'dalam-perpanjangan' | 'expired' | 'non-aktif';
+    export type PartnershipTypeEnum = 'Memorandum of Understanding' | 'Memorandum of Agreement' | 'Implementation Agreement';
+    export type RoleEnum = 'super-admin' | 'faculty-admin' | 'study-program-admin';
+}
