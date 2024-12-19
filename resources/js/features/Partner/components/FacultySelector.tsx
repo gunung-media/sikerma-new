@@ -7,10 +7,11 @@ type FacultySelectorProps = {
     className?: string
     onChange: (value: string | any) => void
     error?: string
-    value?: string
+    value?: number
+    description?: string
 }
 
-export const FacultySelector: FC<FacultySelectorProps> = ({ className, onChange, error, value }) => {
+export const FacultySelector: FC<FacultySelectorProps> = ({ className, onChange, error, value, description }) => {
     const [faculties, setFaculties] = useState<FacultyType[]>([]);
 
     const getFaculties = async () => {
@@ -30,6 +31,7 @@ export const FacultySelector: FC<FacultySelectorProps> = ({ className, onChange,
             value={value}
             className={className}
             errorMessage={error}
+            description={description}
         />
     );
 };

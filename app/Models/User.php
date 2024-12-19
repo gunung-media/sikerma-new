@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\RoleEnum;
 use App\Models\Master\Faculty;
 use App\Models\Master\StudyProgram;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

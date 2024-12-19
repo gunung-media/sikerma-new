@@ -1,1 +1,2 @@
-export * from "./FacultySelector"
+export * from "./PartnershipStatusSelector"
+export * from "./PartnershipTypeSelector"

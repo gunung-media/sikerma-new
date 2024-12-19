@@ -7,10 +7,11 @@ type StudyProgramSelectorProps = {
     className?: string
     onChange: (value: string | any) => void
     error?: string
-    value?: string
+    value?: number
+    description?: string
 }
 
-export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className, onChange, error, value }) => {
+export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className, onChange, error, value, description }) => {
     const [studyPrograms, setStudyPrograms] = useState<StudyProgramType[]>([]);
 
     const getFaculties = async () => {
@@ -30,6 +31,7 @@ export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className,
             value={value}
             className={className}
             errorMessage={error}
+            description={description}
         />
     );
 };

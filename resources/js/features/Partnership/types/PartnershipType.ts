@@ -14,9 +14,9 @@ export interface PartnershipType extends BaseTableInterface {
     status: App.Enums.PartnershipStatusEnum;
     start_date: string;
     end_date: string;
-    executor: string;
-    faculty_id: number;
-    study_program_id: number;
+    executor?: string | null;
+    faculty_id?: number | null;
+    study_program_id?: number | null;
     user: UserType;
     faculty?: FacultyType;
     studyProgram?: StudyProgramType;
