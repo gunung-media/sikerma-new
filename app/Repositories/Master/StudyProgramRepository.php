@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Repositories\Partnership;
+namespace App\Repositories\Master;
 
 use App\Interfaces\BaseRepositoryInterface;
-use App\Models\Partnership\PartnershipActivity;
+use App\Models\Master\StudyProgram;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class PartnershipActivityRepository implements BaseRepositoryInterface
+class StudyProgramRepository implements BaseRepositoryInterface
 {
     public function __construct(
-        protected PartnershipActivity $model,
+        protected StudyProgram $model,
     ) {}
 
     public function getAll(): Collection
@@ -27,15 +27,8 @@ class PartnershipActivityRepository implements BaseRepositoryInterface
         return $query->find($id);
     }
 
-    public function create(array $data): PartnershipActivity
+    public function create(array $data): StudyProgram
     {
-        if (isset($data['file']) && $data['file'] instanceof \Illuminate\Http\UploadedFile) {
-            $filePath = $data['file']->store('partnership_activities/documents', 'public');
-            $data['document_path'] = $filePath;
-        }
-
-        unset($data['file']);
-
         return $this->model->create($data);
     }
 
@@ -60,7 +53,7 @@ class PartnershipActivityRepository implements BaseRepositoryInterface
         return $query->paginate($perPage);
     }
 
-    public function findByAttributes(array $attributes): ?PartnershipActivity
+    public function findByAttributes(array $attributes): ?StudyProgram
     {
         $query = $this->model->query();
 
