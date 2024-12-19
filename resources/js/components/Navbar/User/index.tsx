@@ -36,7 +36,7 @@ export const User = () => {
                             </div>
                             <div className="flex-grow-1">
                                 <h6 className="mb-0">{user.name}</h6>
-                                <small className="text-muted">{user.roles?.[0]?.name || 'No role assigned'}</small>
+                                <small className="text-muted">{user.role || 'No role assigned'}</small>
                             </div>
                         </div>
                     </a>
@@ -67,8 +67,8 @@ export const User = () => {
                         className="dropdown-item"
                         href={route('auth.logout')}
                     >
-                        <i className="bx bx-power-off bx-md me-3"></i
-                        ><span>Log Out</span>
+                        <i className="bx bx-power-off bx-md me-3"></i>
+                        <span>Log Out</span>
                     </a>
                 </li>
             </ul>

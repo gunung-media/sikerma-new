@@ -22,21 +22,21 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'single',
-        label: 'Role',
-        icon: 'bx-shield',
-        url: 'roles.index'
+        label: 'User',
+        icon: 'bxs-user',
+        url: 'master.users.index'
     },
     {
         type: 'single',
-        label: 'Faculty',
+        label: 'Fakultas',
         icon: 'bxs-school',
-        url: 'faculties.index'
+        url: 'master.faculties.index'
     },
     {
         type: 'single',
-        label: 'Room',
+        label: 'Prodi',
         icon: 'bxs-buildings',
-        url: 'rooms.index'
+        url: 'master.study-programs.index'
     },
     {
         type: 'header',
@@ -44,31 +44,16 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'multiple',
-        label: 'Room Schedule',
+        label: 'Kerjasama',
         icon: 'bx-calendar',
         items: [
             {
-                label: 'List Schedule',
-                url: 'schedules.index'
+                label: 'List Kerjasama',
+                url: 'partnerships.index'
             },
             {
-                label: 'Add New Schedule',
-                url: 'schedules.create'
-            }
-        ]
-    },
-    {
-        type: 'multiple',
-        label: 'Reservation',
-        icon: 'bxs-calendar-event',
-        items: [
-            {
-                label: 'List Reservation',
-                url: 'dashboard'
-            },
-            {
-                label: 'Add New Reservation',
-                url: 'dashboard'
+                label: 'Tambah Kerjasama',
+                url: 'partnerships.create'
             }
         ]
     },

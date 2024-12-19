@@ -34,8 +34,8 @@ export const Navbar = () => {
                 </div>
 
                 <ul className="navbar-nav flex-row align-items-center ms-auto">
-                    <Shortcut />
-                    <Notification />
+                    {/* <Shortcut /> */}
+                    {/* <Notification /> */}
                     <User />
                 </ul>
             </div>

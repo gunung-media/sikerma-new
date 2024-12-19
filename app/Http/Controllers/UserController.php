@@ -21,7 +21,10 @@ class UserController extends Controller
 
     public function index(): InertiaResponse
     {
-        return Inertia::render('User/index', ['data' => $this->userRepository->getAll()]);
+        return Inertia::render('User/index', [
+            'data' => $this->userRepository->getAll(),
+            'roles' => $this->userRepository->getGroupByRole(),
+        ]);
     }
 
     public function store(Request $request): Response|RedirectResponse
@@ -30,7 +33,7 @@ class UserController extends Controller
             'name' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required',
-            'role' => 'required|in:' . implode(',', array_keys(RoleEnum::getValues())),
+            'role' => 'required|in:' . implode(',', RoleEnum::getValues()),
             'faculty_id' => 'exists:faculties,id',
             'study_program_id' => 'exists:study_programs,id',
 
@@ -47,21 +50,20 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, User $faculty): Response|RedirectResponse
+    public function update(Request $request, User $user): Response|RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required',
-            'username' => 'required|unique:users,username,' . $faculty->id,
-            'password' => 'required',
-            'role' => 'required|in:' . implode(',', array_keys(RoleEnum::getValues())),
-            'faculty_id' => 'exists:faculties,id',
-            'study_program_id' => 'exists:study_programs,id',
+            'username' => 'required|unique:users,username,' . $user->id,
+            'role' => 'required|in:' . implode(',', RoleEnum::getValues()),
+            'faculty_id' => 'nullable|exists:faculties,id',
+            'study_program_id' => 'nullable|exists:study_programs,id',
 
         ]);
 
         DB::beginTransaction();
         try {
-            $this->userRepository->update($faculty->id, $validated);
+            $this->userRepository->update($user->id, $validated);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {
@@ -70,11 +72,11 @@ class UserController extends Controller
         }
     }
 
-    public function destroy(User $faculty): Response|RedirectResponse
+    public function destroy(User $user): Response|RedirectResponse
     {
         DB::beginTransaction();
         try {
-            $this->userRepository->delete($faculty->id);
+            $this->userRepository->delete($user->id);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {

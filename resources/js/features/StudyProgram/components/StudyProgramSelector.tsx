@@ -11,11 +11,11 @@ type StudyProgramSelectorProps = {
 }
 
 export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className, onChange, error, value }) => {
-    const [faculties, setFaculties] = useState<StudyProgramType[]>([]);
+    const [studyPrograms, setStudyPrograms] = useState<StudyProgramType[]>([]);
 
     const getFaculties = async () => {
-        const { data } = await axios.get(route('api.faculties'))
-        setFaculties(data.faculties)
+        const { data } = await axios.get(route('api.studyPrograms'))
+        setStudyPrograms(data.studyPrograms)
     }
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className,
     return (
         <CustomSelect
             label="Prodi"
-            options={faculties.map((type) => ({ value: type.id, label: type.name }))}
+            options={studyPrograms.map((type) => ({ value: type.id, label: type.name }))}
             onChange={(value) => onChange(value)}
             value={value}
             className={className}

@@ -15,14 +15,9 @@
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,
         "paths": {
-            "@/*": [
-                "./resources/js/*"
-            ]
+            "@/*": ["./resources/js/*"]
         },
-        "types": [
-            "vite/client",
-            "node"
-        ]
+        "types": ["vite/client", "node"]
     },
     "include": [
         "resources/js/**/*.ts",
@@ -30,7 +25,5 @@
         "resources/js/**/*.d.ts",
         "types/generated.d.ts"
     ],
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"]
 }

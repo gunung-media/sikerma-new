@@ -6,6 +6,7 @@ use App\Interfaces\BaseRepositoryInterface;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class UserRepository implements BaseRepositoryInterface
 {
@@ -16,6 +17,8 @@ class UserRepository implements BaseRepositoryInterface
     public function getAll(): Collection
     {
         $query = $this->model->query();
+
+        $query->with('faculty', 'studyProgram');
 
         return $query->get();
     }
@@ -29,12 +32,17 @@ class UserRepository implements BaseRepositoryInterface
 
     public function create(array $data): User
     {
+        $data['password'] = bcrypt($data['password']);
         return $this->model->create($data);
     }
 
     public function update($id, array $data): bool
     {
         $query = $this->findById($id);
+
+        if (isset($data['password']) && $data['password'] != $query->password) {
+            $data['password'] = bcrypt($data['password']);
+        }
 
         return $query->update($data);
     }
@@ -66,5 +74,18 @@ class UserRepository implements BaseRepositoryInterface
         $query = $this->model->query();
 
         return $query->where($attributes)->exists();
+    }
+
+    public function getGroupByRole()
+    {
+        return $this->model->all()
+            ->groupBy('role')
+            ->map(function ($users, $role) {
+                return [
+                    'name' => $role,
+                    'users' => $users,
+                ];
+            })
+            ->values();
     }
 }
