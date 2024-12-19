@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\StudyProgramController;
 use App\Http\Controllers\Master\FacultyController;
 use App\Http\Controllers\Partnership\PartnershipController;
 use App\Http\Controllers\UserController;
@@ -24,7 +25,7 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::resource('users', UserController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('faculties', FacultyController::class)->only(['index', 'store', 'update', 'destroy']);
-            Route::resource('study-programs', FacultyController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('study-programs', StudyProgramController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
     Route::resource('partnerships', PartnershipController::class);

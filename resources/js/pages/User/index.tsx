@@ -137,7 +137,7 @@ export default function User({ roles, data }: PageProps & {
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    <Button value="Add New User" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
+                    <Button value="Tambah User" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable

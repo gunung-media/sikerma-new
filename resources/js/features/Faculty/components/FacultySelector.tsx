@@ -7,7 +7,7 @@ type FacultySelectorProps = {
     className?: string
     onChange: (value: string | any) => void
     error?: string
-    value?: string
+    value?: number
 }
 
 export const FacultySelector: FC<FacultySelectorProps> = ({ className, onChange, error, value }) => {

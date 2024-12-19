@@ -16,7 +16,7 @@ class StudyProgramRepository implements BaseRepositoryInterface
     public function getAll(): Collection
     {
         $query = $this->model->query();
-
+        $query->with('faculty');
         return $query->get();
     }
 

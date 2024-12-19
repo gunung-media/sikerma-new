@@ -1,4 +1,4 @@
-import { FacultyType, FacultyDto } from "@/features/Faculty"
+import { StudyProgramType, StudyProgramDto } from "@/features/StudyProgram"
 import { AuthenticatedLayout } from "@/layouts/Authenticated"
 import { PageProps } from "@/types"
 import { FormEventHandler, useState } from "react"
@@ -9,21 +9,23 @@ import { CustomOffcanvas } from "@/components/Offcanvas";
 import { router, usePage } from "@inertiajs/react";
 import { basicErrorToast, errorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
+import { FacultySelector } from "@/features/Faculty";
 
-export default function Faculty({ data }: PageProps & {
-    data: FacultyType[],
+export default function StudyProgram({ data }: PageProps & {
+    data: StudyProgramType[],
 }) {
     const { errors } = usePage<PageProps>().props
     const [showForm, setShowForm] = useState(false);
     const [selectedId, setSelectedId] = useState<number | null>(null);
-    const [faculty, setFaculty] = useState<FacultyDto>({
+    const [studyProgram, setStudyProgram] = useState<StudyProgramDto>({
         name: '',
+        faculty_id: 0
     })
 
-    const cols = ["#", "Name", "Action"];
+    const cols = ["#", "Name", "Fakultas", "Action"];
 
     const handleEdit = (index: number) => {
-        setFaculty(data[index])
+        setStudyProgram(data[index])
         setSelectedId(data[index].id)
         setShowForm(true);
     };
@@ -33,7 +35,7 @@ export default function Faculty({ data }: PageProps & {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault()
         if (isEditing) {
-            router.put(route('master.faculties.update', selectedId), faculty, {
+            router.put(route('master.study-programs.update', selectedId), studyProgram, {
                 onError: (errors) => {
                     errorToast(errors.error ? errors.error : 'Something went wrong')
                 },
@@ -41,12 +43,12 @@ export default function Faculty({ data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
-                    setTimeout(() => router.visit(route('master.faculties.index')), 500)
+                    setTimeout(() => router.visit(route('master.study-programs.index')), 500)
                 }
             })
             return;
         }
-        router.post(route('master.faculties.store'), faculty, {
+        router.post(route('master.study-programs.store'), studyProgram, {
             onError: (errors) => {
                 console.error(errors)
                 basicErrorToast(errors)
@@ -54,14 +56,14 @@ export default function Faculty({ data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.faculties.index')), 500)
+                setTimeout(() => router.visit(route('master.study-programs.index')), 500)
             }
         })
     }
 
     const handleDelete = async (index: number) => {
         await confirmationDelete(() => {
-            router.delete(route('master.faculties.destroy', data[index].id), {
+            router.delete(route('master.study-programs.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
                 }
@@ -71,8 +73,8 @@ export default function Faculty({ data }: PageProps & {
 
 
     return (
-        <AuthenticatedLayout title="Fakultas">
-            <h4 className="mb-1">List Fakultas</h4>
+        <AuthenticatedLayout title="Prodi">
+            <h4 className="mb-1">List Prodi</h4>
 
             <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what faculty needs.</p>
 
@@ -80,26 +82,18 @@ export default function Faculty({ data }: PageProps & {
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    <Button value="Tambah Fakultas" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
+                    <Button value="Tambah Prodi" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, index, index
+                            index + 1, item.name, item.faculty.name, index
                         ])}
                         options={{
                             responsive: true,
                         }}
                         slots={{
-                            1: (value: number) => (
-                                <div className="d-flex flex-column">
-                                    <span className="emp_name text-truncate">{data[value]?.name}</span>
-                                    <small className="emp_post text-truncate text-muted">
-                                        {data[value]?.slug}
-                                    </small>
-                                </div>
-                            ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
@@ -128,11 +122,17 @@ export default function Faculty({ data }: PageProps & {
                     <Input
                         label="Name"
                         name="name"
-                        placeholder="Faculty Name"
-                        value={faculty?.name}
+                        placeholder="Nama Prodi"
+                        value={studyProgram?.name}
                         errorMessage={errors.name}
-                        onChange={(val) => setFaculty({ ...faculty, name: val.target.value })}
+                        onChange={(val) => setStudyProgram({ ...studyProgram, name: val.target.value })}
                         className="mb-3"
+                    />
+
+                    <FacultySelector
+                        error={errors.faculty_id}
+                        value={studyProgram.faculty_id}
+                        onChange={(val) => setStudyProgram({ ...studyProgram, faculty_id: val })}
                     />
 
                     <Button value="Save" type="primary" className="mt-4" isSubmit />

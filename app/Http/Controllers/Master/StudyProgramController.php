@@ -43,7 +43,7 @@ class StudyProgramController extends Controller
         }
     }
 
-    public function update(Request $request, StudyProgram $faculty): Response|RedirectResponse
+    public function update(Request $request, StudyProgram $studyProgram): Response|RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required',
@@ -52,7 +52,7 @@ class StudyProgramController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->studyProgramRepository->update($faculty->id, $validated);
+            $this->studyProgramRepository->update($studyProgram->id, $validated);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {
@@ -61,11 +61,11 @@ class StudyProgramController extends Controller
         }
     }
 
-    public function destroy(StudyProgram $faculty): Response|RedirectResponse
+    public function destroy(StudyProgram $studyProgram): Response|RedirectResponse
     {
         DB::beginTransaction();
         try {
-            $this->studyProgramRepository->delete($faculty->id);
+            $this->studyProgramRepository->delete($studyProgram->id);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {
