@@ -1,7 +1,7 @@
 import { UserType, UserDto } from "@/features/User"
 import { AuthenticatedLayout } from "@/layouts/Authenticated"
 import { PageProps } from "@/types"
-import { FormEventHandler, useEffect, useState } from "react"
+import { FormEventHandler, useState } from "react"
 import DataTable from "datatables.net-react";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
@@ -34,6 +34,7 @@ export default function User({ roles, data }: PageProps & {
     const cols = ["#", "Name", "Username", "Role", "Action"];
 
     const handleEdit = (index: number) => {
+        // @ts-expect-error
         setUser(data[index])
         setSelectedId(data[index].id)
         setShowForm(true);
@@ -175,7 +176,10 @@ export default function User({ roles, data }: PageProps & {
 
             <CustomOffcanvas
                 show={showForm}
-                handleClose={() => setShowForm(false)}
+                handleClose={() => {
+                    setSelectedId(null)
+                    setShowForm(false)
+                }}
                 title={selectedId ? "Edit Room" : "Add New Room"}
             >
                 <form onSubmit={handleSubmit} method="post">

@@ -11,6 +11,7 @@ import 'datatables.net-responsive-bs5';
 
 createInertiaApp({
     resolve: (name: string) => {
+        console.log(1)
         const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true }) as Record<string, any>
         return pages[`./Pages/${name}.tsx`]
     },
