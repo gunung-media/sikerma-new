@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $faculty_id
@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class StudyProgram extends Model
 {

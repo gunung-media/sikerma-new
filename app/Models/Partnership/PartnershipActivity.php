@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $partnership_id
@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnershipActivity wherePartnershipId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnershipActivity whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class PartnershipActivity extends Model
 {

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUserId($value)
  * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Partnership extends Model
 {

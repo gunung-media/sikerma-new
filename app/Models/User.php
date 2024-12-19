@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -42,6 +42,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
  * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class User extends Authenticatable
 {
