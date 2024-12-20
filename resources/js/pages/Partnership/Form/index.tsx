@@ -2,9 +2,9 @@ import { PartnershipDto, PartnershipStatusSelector, PartnershipType, Partnership
 import { AuthenticatedLayout } from "@/layouts/Authenticated";
 import { PageProps } from "@/types";
 import { errorToast, successToast } from "@/utils/Toast";
-import { router, usePage } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import axios, { AxiosError } from "axios";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { App } from "@/types/enum"
 import { FacultySelector } from "@/features/Faculty";
 import { Button } from "@/components/Button";
@@ -52,6 +52,10 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
         const formData = new FormData();
 
+        if (isEditing) {
+            formData.append('_method', 'PUT')
+        }
+
         for (const key in data) {
             if (Object.hasOwnProperty.call(data, key)) {
                 //@ts-expect-error
@@ -87,8 +91,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         }
 
         try {
-            const response = await axios[isEditing ? 'put' : 'post'](
-                route('partnerships.store'),
+            const response = await axios.post(
+                isEditing ? route('partnerships.update', partnership.id) : route('partnerships.store'),
                 formData,
                 {
                     headers: {
@@ -116,6 +120,28 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             }
         }
     };
+
+    useEffect(() => {
+        if (!isEditing) return
+
+        console.log(partnership)
+        setData({
+            type: partnership.type,
+            document_number: partnership.document_number,
+            title: partnership.title,
+            description: partnership.description,
+            status: partnership.status,
+            start_date: partnership.start_date,
+            end_date: partnership.end_date,
+            executor: partnership.executor,
+            faculty_id: partnership.faculty_id,
+            study_program_id: partnership.study_program_id,
+            partners: partnership.partners,
+            activities: partnership.activities
+        })
+
+
+    }, [partnership])
 
     return (
         <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
@@ -287,6 +313,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         </div>
                                         <div className="card-body mt-5">
                                             <Dropzone
+                                                value={activity.document_path}
                                                 onChange={(file) => {
                                                     const newActivities = [...data.activities];
                                                     newActivities[index] = { ...activity, file: file };

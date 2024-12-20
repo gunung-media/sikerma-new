@@ -108,7 +108,7 @@ class PartnershipController extends Controller
     public function show(string $id): InertiaResponse
     {
         return Inertia::render('Partnership/Form/index', [
-            'data' => $this->partnershipRepository->findById($id),
+            'partnership' => $this->partnershipRepository->findById($id),
             'is_read_only' => true
         ]);
     }
@@ -116,7 +116,7 @@ class PartnershipController extends Controller
     public function edit(string $id): InertiaResponse
     {
         return Inertia::render('Partnership/Form/index', [
-            'data' => $this->partnershipRepository->findById($id),
+            'partnership' => $this->partnershipRepository->findById($id),
         ]);
     }
 
@@ -146,7 +146,7 @@ class PartnershipController extends Controller
             'activities' => 'nullable|array',
             'activities.*.id' => 'nullable|exists:partnership_activities,id',
             'activities.*.activity_type' => 'required|in:' . implode(',', PartnershipActivityTypeEnum::getValues()),
-            'activities.*.file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx',
+            'activities.*.file' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 
         DB::beginTransaction();
@@ -158,14 +158,14 @@ class PartnershipController extends Controller
                 'type' => $validatedData['type'],
                 'document_number' => $validatedData['document_number'],
                 'title' => $validatedData['title'],
-                'description' => $validatedData['description'],
-                'user_id' => $validatedData['user_id'],
+                'description' => $validatedData['description'] ?? null,
+                'user_id' => $validatedData['user_id'] ?? auth()->guard('web')->user()->id,
                 'status' => $validatedData['status'],
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
-                'executor' => $validatedData['executor'],
-                'faculty_id' => $validatedData['faculty_id'],
-                'study_program_id' => $validatedData['study_program_id'],
+                'executor' => $validatedData['executor'] ?? null,
+                'faculty_id' => $validatedData['faculty_id'] ?? null,
+                'study_program_id' => $validatedData['study_program_id'] ?? null,
             ]);
 
             if (isset($validatedData['partners'])) {
@@ -202,7 +202,7 @@ class PartnershipController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
+            dd($e);
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }

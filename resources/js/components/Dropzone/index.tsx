@@ -1,6 +1,8 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { getDocument } from "pdfjs-dist";
+import { usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 
 interface DropzoneProps {
     onChange: (file: File) => void;
@@ -8,6 +10,8 @@ interface DropzoneProps {
 }
 
 export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
+    const { props } = usePage<PageProps>()
+
     const [filePreview, setFilePreview] = useState<string | null>(null);
     const [isPDF, setIsPDF] = useState<boolean>(false);
 
@@ -18,13 +22,13 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
             setIsPDF(isPdfFile);
 
             if (isPdfFile) {
-                generatePDFThumbnail(file); // Generate thumbnail for PDF files
+                generatePDFThumbnail(file);
             } else {
                 const previewUrl = URL.createObjectURL(file);
-                setFilePreview(previewUrl); // Set preview for other files like images
+                setFilePreview(previewUrl);
             }
 
-            onChange(file); // Send the file to the parent component
+            onChange(file);
         }
     }, [onChange]);
 
@@ -62,7 +66,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
 
     useEffect(() => {
         if (value) {
-            setFilePreview(value);
+            setFilePreview(`${props.storageUrl}/${value}`);
         }
     }, [value]);
 
@@ -70,7 +74,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
         onDrop,
         accept: {
             "image/*": [],
-            "application/pdf": [], // Accept PDFs
+            "application/pdf": [],
         },
         multiple: false,
     });
