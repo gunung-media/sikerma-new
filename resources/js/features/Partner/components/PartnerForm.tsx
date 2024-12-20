@@ -11,6 +11,7 @@ type PartnerFormProps = {
     selectedPartner: number | null
     setSelectedPartner: (value: number | null) => void,
     onChange: (index: number, value: PartnerDto) => void
+    errors?: any
 }
 
 
@@ -20,6 +21,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
     selectedPartner,
     setSelectedPartner,
     onChange,
+    errors,
 }) => {
     return (
         <div className="card mb-5" key={index}>
@@ -43,6 +45,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                         <PartnerSelector
                             className="mb-3"
                             typeValue={partner.agency_type}
+                            error={errors?.[`partners.${index}.agency_name`]}
                             onChangeType={(value) => {
                                 onChange(index, { ...partner, agency_type: value as App.Enums.AgencyTypeEnum })
                             }}
@@ -58,6 +61,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             onChange={(e) => {
                                 onChange(index, { ...partner, agency_address: e.target.value })
                             }}
+                            errorMessage={errors?.[`partners.${index}.agency_address`]}
                         />
                         <hr />
                         <h6 className="mb-0">Penandatangan</h6>
@@ -71,6 +75,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                     onChange(index, { ...partner, signatory_name: e.target.value })
                                 }}
                                 className="col-6"
+                                errorMessage={errors?.[`partners.${index}.signatory_name`]}
                             />
 
                             <Input
@@ -81,6 +86,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                     onChange(index, { ...partner, signatory_position: e.target.value })
                                 }}
                                 className="col-6"
+                                errorMessage={errors?.[`partners.${index}.signatory_position`]}
                             />
                         </div>
 

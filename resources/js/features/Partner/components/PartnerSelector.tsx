@@ -1,4 +1,4 @@
-import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable';
 import { FC, useEffect, useState } from "react";
 import { App } from '@/types/enum';
 
@@ -57,11 +57,12 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
                 </select>
 
                 <div style={{ flex: 1, marginLeft: '-1px' }}>
-                    <Select
-                        value={value}
-                        onChange={(newVal, action) => onChangeValue(newVal)}
-                        options={[]}
-                        placeholder="Select"
+                    <CreatableSelect
+                        value={value ? { label: value, value } : null} // Set the selected value
+                        onChange={(newVal: any) => onChangeValue(newVal ? newVal.value : null)} // Handle the change
+                        onCreateOption={(newValue: string) => onChangeValue(newValue)} // Handle the creation of new value
+                        options={[]} // You can add predefined options here
+                        placeholder="Select or type to create"
                         styles={{
                             control: (provided) => ({
                                 ...provided,
@@ -72,8 +73,8 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
                     />
                 </div>
 
-                {error && <div className="invalid-feedback">{error}</div>}
             </div>
+            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 };

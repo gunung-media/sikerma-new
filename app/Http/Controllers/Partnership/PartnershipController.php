@@ -62,7 +62,7 @@ class PartnershipController extends Controller
             'partners.*.responsible_position' => 'nullable|string|max:255',
             'activities' => 'nullable|array',
             'activities.*.activity_type' => 'required|in:' . implode(',', PartnershipActivityTypeEnum::getValues()),
-            'activities.*.document_path' => 'required|string|max:255',
+            'activities.*.file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 
         DB::beginTransaction();
@@ -73,13 +73,13 @@ class PartnershipController extends Controller
                 'document_number' => $validatedData['document_number'],
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
-                'user_id' => $validatedData['user_id'],
+                'user_id' => auth()->guard('web')->user()->id,
                 'status' => $validatedData['status'],
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
-                'executor' => $validatedData['executor'],
-                'faculty_id' => $validatedData['faculty_id'],
-                'study_program_id' => $validatedData['study_program_id'],
+                'executor' => $validatedData['executor'] ?? null,
+                'faculty_id' => $validatedData['faculty_id'] ?? null,
+                'study_program_id' => $validatedData['study_program_id'] ?? null,
             ]);
 
             foreach ($validatedData['partners'] as $partnerData) {
@@ -146,7 +146,7 @@ class PartnershipController extends Controller
             'activities' => 'nullable|array',
             'activities.*.id' => 'nullable|exists:partnership_activities,id',
             'activities.*.activity_type' => 'required|in:' . implode(',', PartnershipActivityTypeEnum::getValues()),
-            'activities.*.document_path' => 'required|string|max:255',
+            'activities.*.file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 
         DB::beginTransaction();

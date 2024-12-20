@@ -17,7 +17,7 @@ import { ActivitySelector } from "@/features/PartnershipActivity";
 import { Dropzone } from "@/components/Dropzone";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
-    const { errors } = usePage<PageProps>().props
+    const [errors, setErrors] = useState<any>({})
     const defaultPartner: PartnerDto = {
         partnership_id: 0,
         agency_type: App.Enums.AgencyTypeEnum.COLAGE,
@@ -48,22 +48,65 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
     const isEditing = !!partnership
 
     const handleSubmit: FormEventHandler = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        for (const key in data) {
+            if (Object.hasOwnProperty.call(data, key)) {
+                //@ts-expect-error
+                const value = data[key];
+
+                if (Array.isArray(value)) {
+                    value.forEach((item, index) => {
+                        if (key === "activities" && item.file instanceof File) {
+                            formData.append(`${key}[${index}][file]`, item.file);
+                            for (const subKey in item) {
+                                if (Object.hasOwnProperty.call(item, subKey)) {
+                                    if (subKey === "activity_type" && item[subKey]) {
+                                        formData.append(`${key}[${index}][${subKey}]`, item[subKey]?.toString());
+                                    } else if (subKey !== "file") {
+                                        formData.append(`${key}[${index}][${subKey}]`, item[subKey]?.toString());
+                                    }
+                                }
+                            }
+                        } else {
+                            for (const subKey in item) {
+                                if (Object.hasOwnProperty.call(item, subKey)) {
+                                    formData.append(`${key}[${index}][${subKey}]`, item[subKey]?.toString());
+                                }
+                            }
+                        }
+                    });
+                } else if (value instanceof File) {
+                    formData.append(key, value);
+                } else if (value !== null) {
+                    formData.append(key, value.toString());
+                }
+            }
+        }
 
         try {
             const response = await axios[isEditing ? 'put' : 'post'](
                 route('partnerships.store'),
-                data
-            )
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
             if (response.status === 200) {
-                successToast(response.data.message)
-                router.visit(route('partnerships.index'))
+                successToast(response.data.message);
+                router.visit(route('partnerships.index'));
             }
 
         } catch (error) {
             if (error instanceof AxiosError) {
                 if (error.response?.status === 422) {
+                    console.error(error.response?.data.errors);
+                    setErrors(error.response?.data.errors);
                     errorToast("Data not valid!");
                 } else {
                     errorToast(error.response?.data.error ?? "Something went wrong!");
@@ -72,14 +115,14 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                 errorToast("Something went wrong!");
             }
         }
-    }
+    };
 
     return (
         <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
             <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
             <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what user needs.</p>
 
-            <form className="row" method="POST" onSubmit={handleSubmit}>
+            <form className="row" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="col-12 ">
                     <div className="card">
                         <div className="card-header header-elements">
@@ -203,6 +246,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         index={index}
                                         partner={partner}
                                         selectedPartner={selectedPartner}
+                                        errors={errors}
                                         setSelectedPartner={(value) => setSelectedPartner(value)}
                                         onChange={(index, value) => {
                                             const newPartners = [...data.partners];

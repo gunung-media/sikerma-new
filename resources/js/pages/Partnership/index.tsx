@@ -60,7 +60,7 @@ export default function Partnership({ data }: PageProps & {
                             ),
                             3: (value: number) => (
                                 <div className="d-flex flex-column">
-                                    <span className="emp_post text-truncate"> {data[value]?.start_date}  - {data[value]?.end_date}</span>
+                                    <span className="emp_post text-truncate"> {new Date(data[value]?.start_date).toLocaleDateString()}  - {new Date(data[value]?.end_date).toLocaleDateString()}</span>
                                 </div>
                             ),
                             4: (value: string) => (
