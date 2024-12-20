@@ -6,11 +6,18 @@ import { Button } from "@/components/Button";
 import { router } from "@inertiajs/react";
 import { basicErrorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
+import { useEffect, useState } from "react";
+import { App } from "@/types/enum";
 
 export default function Partnership({ data }: PageProps & {
     data: PartnershipType[],
 }) {
     const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "Action"];
+    const [count, setCount] = useState({
+        moa: 0,
+        mou: 0,
+        ia: 0,
+    })
 
     const handleDelete = async (index: number) => {
         await confirmationDelete(() => {
@@ -25,13 +32,51 @@ export default function Partnership({ data }: PageProps & {
         })
     }
 
+    useEffect(() => {
+        let moa = 0
+        let mou = 0
+        let ia = 0
+        data.forEach((item) => {
+            if (item.type === App.Enums.PartnershipTypeEnum.MOA) {
+                moa++
+            } else if (item.type === App.Enums.PartnershipTypeEnum.MOU) {
+                mou++
+            } else if (item.type === App.Enums.PartnershipTypeEnum.IA) {
+                ia++
+            }
+        })
+        setCount({
+            moa,
+            mou,
+            ia
+        })
+    }, [data])
+
     return (
         <AuthenticatedLayout title="Kerjasama">
             <h4 className="mb-1">List Kerjasama</h4>
 
             <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what faculty needs.</p>
-            .
-            <div className="card">
+            <div className="row g-6">
+                {Object.keys(count).map((item, index) => (
+                    <div className="col-xl-4 col-lg-6 col-md-6" >
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    {/* @ts-expect-error */}
+                                    <h6 className="fw-normal mb-0 text-body">Total {count[item]} Kerjasama</h6>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-end">
+                                    <div className="role-heading">
+                                        <h5 className="mb-1">{item.toUpperCase()}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="card mt-10">
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
