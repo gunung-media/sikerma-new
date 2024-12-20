@@ -1,1 +1,1 @@
-export * from "./FacultySelector"
+export * from "./ActivitySelector"

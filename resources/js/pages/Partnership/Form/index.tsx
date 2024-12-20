@@ -13,6 +13,8 @@ import { Input } from "@/components/Input";
 import { DatePicker } from "@/components/DatePicker";
 import { TextArea } from "@/components/Textarea";
 import { PartnerDto, PartnerForm } from "@/features/Partner";
+import { ActivitySelector } from "@/features/PartnershipActivity";
+import { Dropzone } from "@/components/Dropzone";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const { errors } = usePage<PageProps>().props
@@ -215,6 +217,42 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                     value="Tambah Penggiat"
                                     onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
                                 />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                        <div className="card">
+                            <div className="card-header">
+                                <h5 className="mb-0 me-2">
+                                    <strong>Bentuk Kegiatan</strong>
+                                </h5>
+                            </div>
+
+                            <div className="card-body">
+                                <ActivitySelector
+                                    onChange={(value) => {
+                                        setData({ ...data, activities: [...data.activities, { activity_type: value, partnership_id: 0 }] })
+                                    }}
+                                />
+
+                                {data.activities.map((activity, index) => (
+                                    <div className="card mt-5" key={index}>
+                                        <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                                            <small>{activity.activity_type}</small>
+                                        </div>
+                                        <div className="card-body mt-5">
+                                            <Dropzone
+                                                onChange={(file) => {
+                                                    const newActivities = [...data.activities];
+                                                    newActivities[index] = { ...activity, file: file };
+                                                    setData({ ...data, activities: newActivities });
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+
                             </div>
                         </div>
                     </div>
