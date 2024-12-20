@@ -34,7 +34,7 @@ export const Button: FC<ButtonProps> = ({
             className={
                 mergeClass(
                     "btn",
-                    typeof isLabel === "undefined" && `btn-${type}`,
+                    typeof isLabel === "undefined" && typeof isIcon === "undefined" && `btn-${type}`,
                     size && `btn-${size}`,
                     isLabel && `btn-label-${type}`,
                     isRounded && 'rounded-pill',

@@ -8,14 +8,25 @@ import { FormEventHandler, useState } from "react";
 import { App } from "@/types/enum"
 import { FacultySelector } from "@/features/Faculty";
 import { Button } from "@/components/Button";
-import StudyProgram from "@/pages/StudyProgram";
 import { StudyProgramSelector } from "@/features/StudyProgram";
 import { Input } from "@/components/Input";
 import { DatePicker } from "@/components/DatePicker";
 import { TextArea } from "@/components/Textarea";
+import { PartnerDto, PartnerForm } from "@/features/Partner";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const { errors } = usePage<PageProps>().props
+    const defaultPartner: PartnerDto = {
+        partnership_id: 0,
+        agency_type: App.Enums.AgencyTypeEnum.COLAGE,
+        agency_name: '',
+        agency_address: '',
+        signatory_name: '',
+        signatory_position: '',
+        responsible_name: null,
+        responsible_position: null
+    }
+
     const [data, setData] = useState<PartnershipDto>({
         type: App.Enums.PartnershipTypeEnum.MOU,
         document_number: '',
@@ -27,9 +38,10 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         executor: null,
         faculty_id: null,
         study_program_id: null,
-        partners: [],
+        partners: [defaultPartner],
         activities: []
     })
+    const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
     const isEditing = !!partnership
 
@@ -59,6 +71,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             }
         }
     }
+
     return (
         <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
             <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
@@ -171,7 +184,42 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                         </div>
                     </div>
                 </div>
-            </form>
-        </AuthenticatedLayout>
+
+                <div className="col-12 row mt-8">
+                    <div className="col-12 col-md-6">
+                        <div className="card">
+                            <div className="card-header">
+                                <h5 className="mb-0 me-2">
+                                    <strong>Penggiat Kerjasama</strong>
+                                </h5>
+                            </div>
+
+                            <div className="card-body">
+                                {data.partners.map((partner, index) => (
+                                    <PartnerForm
+                                        key={index}
+                                        index={index}
+                                        partner={partner}
+                                        selectedPartner={selectedPartner}
+                                        setSelectedPartner={(value) => setSelectedPartner(value)}
+                                        onChange={(index, value) => {
+                                            const newPartners = [...data.partners];
+                                            newPartners[index] = value;
+                                            setData({ ...data, partners: newPartners });
+                                        }}
+                                    />
+                                ))}
+
+                                <Button
+                                    className="mt-4"
+                                    value="Tambah Penggiat"
+                                    onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form >
+        </AuthenticatedLayout >
     )
 }

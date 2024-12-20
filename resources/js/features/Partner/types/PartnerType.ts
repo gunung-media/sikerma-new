@@ -7,6 +7,6 @@ export interface PartnerType extends BaseTableInterface {
     agency_address: string;
     signatory_name: string;
     signatory_position: string;
-    responsible_name: string;
-    responsible_position: string;
+    responsible_name?: string | null;
+    responsible_position?: string | null;
 }

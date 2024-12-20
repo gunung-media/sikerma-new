@@ -28,7 +28,8 @@ export const CustomSelect: FC<SelectProps> = ({ label, name, value, options, onC
     return (
         <div className={className}>
             {label && <label className="form-label" >{label}</label>}
-            <Select options={options}
+            <Select
+                options={options}
                 isSearchable
                 isClearable
                 name={name}

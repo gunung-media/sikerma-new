@@ -36,7 +36,7 @@ export const TextArea: FC<TextAreaType> = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                style={{ height: `${height}px`, overflowY: "auto", }}
+                style={{ height: `${height}px`, maxHeight: `${height}px!important`, overflowY: "auto", }}
                 className={`${errorMessage ? "is-invalid" : ""}`}
                 id={id || name}
             />
