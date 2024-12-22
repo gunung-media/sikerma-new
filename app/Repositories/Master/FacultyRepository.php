@@ -67,4 +67,11 @@ class FacultyRepository implements BaseRepositoryInterface
 
         return $query->where($attributes)->exists();
     }
+
+    public function count()
+    {
+        $query = $this->model->query();
+
+        return $query->count();
+    }
 }

@@ -88,4 +88,9 @@ class UserRepository implements BaseRepositoryInterface
             })
             ->values();
     }
+
+    public function count()
+    {
+        return $this->model->count();
+    }
 }

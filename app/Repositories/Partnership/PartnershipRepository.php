@@ -6,6 +6,8 @@ use App\Interfaces\BaseRepositoryInterface;
 use App\Models\Partnership\Partnership;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\TModel;
+use Illuminate\Support\Facades\DB;
 
 class PartnershipRepository implements BaseRepositoryInterface
 {
@@ -67,5 +69,36 @@ class PartnershipRepository implements BaseRepositoryInterface
         $query = $this->model->query();
 
         return $query->where($attributes)->exists();
+    }
+
+    public function getYearlyPartnerships(?int $year = null): Collection
+    {
+        $query = $this->model->whereYear('start_date', $year ?? now()->year);
+
+        $query->select(
+            DB::raw('start_date as date'),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy('start_date');
+
+        return $query->get();
+    }
+
+    public function getYearlyDueDates(?int $year = null)
+    {
+        $query = $this->model->whereYear('end_date', $year ?? now()->year);
+
+        $query->select(
+            DB::raw('end_date as date'),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy('end_date');
+
+        return $query->get();
+    }
+
+    public function count()
+    {
+        return $this->model->count();
     }
 }
