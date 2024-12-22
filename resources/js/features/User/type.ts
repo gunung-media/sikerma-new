@@ -7,7 +7,7 @@ export interface UserType extends BaseTableInterface {
     username: string;
     role?: App.Enums.RoleEnum
     faculty_id?: number
-    study_program_id?: string
+    study_program_id?: number
 
     faculty?: FacultyType
     studyProgram?: StudyProgramType

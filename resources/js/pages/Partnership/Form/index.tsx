@@ -15,6 +15,7 @@ import { TextArea } from "@/components/Textarea";
 import { PartnerDto, PartnerForm } from "@/features/Partner";
 import { ActivitySelector } from "@/features/PartnershipActivity";
 import { Dropzone } from "@/components/Dropzone";
+import { kebabToTitle } from "@/utils/StringRalated";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const [errors, setErrors] = useState<any>({})
@@ -309,7 +310,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                 {data.activities.map((activity, index) => (
                                     <div className="card mt-5" key={index}>
                                         <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                                            <small>{activity.activity_type}</small>
+                                            <small>{kebabToTitle(activity.activity_type)}</small>
                                         </div>
                                         <div className="card-body mt-5">
                                             <Dropzone

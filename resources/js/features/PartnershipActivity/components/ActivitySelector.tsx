@@ -1,6 +1,7 @@
 import { CustomSelect } from "@/components/Select";
 import { FC, useEffect, useState } from "react";
 import { App } from "@/types/enum"
+import { kebabToTitle } from "@/utils/StringRalated";
 
 type ActivitySelectorProps = {
     className?: string
@@ -20,7 +21,7 @@ export const ActivitySelector: FC<ActivitySelectorProps> = ({ className, onChang
     return (
         <CustomSelect
             label="Bentuk Kegiatan"
-            options={activities.map((type) => ({ value: type, label: type }))}
+            options={activities.map((type) => ({ value: type, label: kebabToTitle(type) }))}
             onChange={(value) => onChange(value)}
             value={value}
             className={className}

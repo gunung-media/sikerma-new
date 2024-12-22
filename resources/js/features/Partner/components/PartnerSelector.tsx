@@ -1,6 +1,7 @@
 import CreatableSelect from 'react-select/creatable';
 import { FC, useEffect, useState } from "react";
 import { App } from '@/types/enum';
+import { kebabToTitle } from '@/utils/StringRalated';
 
 type PartnerSelectorProps = {
     className?: string
@@ -52,16 +53,16 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
                     }}
                 >
                     {types.map((type, index) => (
-                        <option key={index} value={type}>{type}</option>
+                        <option key={index} value={type}>{kebabToTitle(type)}</option>
                     ))}
                 </select>
 
                 <div style={{ flex: 1, marginLeft: '-1px' }}>
                     <CreatableSelect
-                        value={value ? { label: value, value } : null} // Set the selected value
-                        onChange={(newVal: any) => onChangeValue(newVal ? newVal.value : null)} // Handle the change
-                        onCreateOption={(newValue: string) => onChangeValue(newValue)} // Handle the creation of new value
-                        options={[]} // You can add predefined options here
+                        value={value ? { label: value, value } : null}
+                        onChange={(newVal: any) => onChangeValue(newVal ? newVal.value : null)}
+                        onCreateOption={(newValue: string) => onChangeValue(newValue)}
+                        options={[]}
                         placeholder="Select or type to create"
                         styles={{
                             control: (provided) => ({

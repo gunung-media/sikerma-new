@@ -1,6 +1,7 @@
 import { CustomSelect } from "@/components/Select";
 import { FC, useEffect, useState } from "react";
 import { App } from "@/types/enum"
+import { kebabToTitle } from "@/utils/StringRalated";
 
 type PartnershipStatusSelectorProps = {
     className?: string
@@ -20,7 +21,7 @@ export const PartnershipStatusSelector: FC<PartnershipStatusSelectorProps> = ({ 
     return (
         <CustomSelect
             label="Status"
-            options={status.map((type) => ({ value: type, label: type }))}
+            options={status.map((type) => ({ value: type, label: kebabToTitle(type) }))}
             onChange={(value) => onChange(value)}
             value={value}
             className={className}

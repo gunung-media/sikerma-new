@@ -13,6 +13,7 @@ import { CustomSelect } from "@/components/Select";
 import { FacultySelector } from "@/features/Faculty";
 import { StudyProgramSelector } from "@/features/StudyProgram";
 import { App } from "@/types/enum";
+import { kebabToTitle } from "@/utils/StringRalated";
 
 export default function User({ roles, data }: PageProps & {
     data: UserType[],
@@ -123,7 +124,7 @@ export default function User({ roles, data }: PageProps & {
                                 </div>
                                 <div className="d-flex justify-content-between align-items-end">
                                     <div className="role-heading">
-                                        <h5 className="mb-1">{role.name}</h5>
+                                        <h5 className="mb-1">{kebabToTitle(role.name)}</h5>
                                     </div>
                                     <a href="#"><i className="bx bx-copy bx-md text-muted"></i></a>
                                 </div>
