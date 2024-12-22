@@ -10,52 +10,69 @@ interface DropzoneProps {
 }
 
 export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
-    const { props } = usePage<PageProps>()
+    const { props } = usePage<PageProps>();
 
     const [filePreview, setFilePreview] = useState<string | null>(null);
     const [isPDF, setIsPDF] = useState<boolean>(false);
+    const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (file) {
-            const isPdfFile = file.type === "application/pdf";
-            setIsPDF(isPdfFile);
+    const onDrop = useCallback(
+        (acceptedFiles: File[]) => {
+            const file = acceptedFiles[0];
+            if (file) {
+                const isPdfFile = file.type === "application/pdf";
+                setIsPDF(isPdfFile);
 
-            if (isPdfFile) {
-                generatePDFThumbnail(file);
-            } else {
-                const previewUrl = URL.createObjectURL(file);
-                setFilePreview(previewUrl);
+                if (isPdfFile) {
+                    generatePDFThumbnail(file);
+                } else {
+                    const previewUrl = URL.createObjectURL(file);
+                    setFilePreview(previewUrl);
+                }
+
+                setDownloadUrl(URL.createObjectURL(file));
+                onChange(file);
             }
+        },
+        [onChange]
+    );
 
-            onChange(file);
+    const generatePDFThumbnail = (file: File | string) => {
+        if (typeof file === "string") {
+            // Handle URL case
+            fetch(file)
+                .then((response) => response.arrayBuffer())
+                .then((buffer) => processPDF(new Uint8Array(buffer)));
+        } else {
+            // Handle File case
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                const typedArray = new Uint8Array(fileReader.result as ArrayBuffer);
+                processPDF(typedArray);
+            };
+            fileReader.readAsArrayBuffer(file);
         }
-    }, [onChange]);
+    };
 
-    const generatePDFThumbnail = (file: File) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-            const typedArray = new Uint8Array(fileReader.result as ArrayBuffer);
-            getDocument(typedArray).promise.then((pdf) => {
-                pdf.getPage(1).then((page) => {
-                    const canvas = document.createElement("canvas");
-                    const context = canvas.getContext("2d");
-                    const scale = 0.5;
+    const processPDF = (typedArray: Uint8Array) => {
+        getDocument(typedArray).promise.then((pdf) => {
+            pdf.getPage(1).then((page) => {
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                const scale = 0.5;
 
-                    if (context) {
-                        const viewport = page.getViewport({ scale });
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
+                if (context) {
+                    const viewport = page.getViewport({ scale });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-                        page.render({ canvasContext: context, viewport }).promise.then(() => {
-                            const thumbnailUrl = canvas.toDataURL();
-                            setFilePreview(thumbnailUrl);
-                        });
-                    }
-                });
+                    page.render({ canvasContext: context, viewport }).promise.then(() => {
+                        const thumbnailUrl = canvas.toDataURL();
+                        setFilePreview(thumbnailUrl);
+                    });
+                }
             });
-        };
-        fileReader.readAsArrayBuffer(file);
+        });
     };
 
     useEffect(() => {
@@ -66,9 +83,18 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
 
     useEffect(() => {
         if (value) {
-            setFilePreview(`${props.storageUrl}/${value}`);
+            const fullUrl = `${props.storageUrl}/${value}`;
+            const isPdf = value.endsWith(".pdf");
+            setIsPDF(isPdf);
+            setDownloadUrl(fullUrl);
+
+            if (isPdf) {
+                generatePDFThumbnail(fullUrl);
+            } else {
+                setFilePreview(fullUrl);
+            }
         }
-    }, [value]);
+    }, [value, props.storageUrl]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -94,30 +120,30 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
             <input {...getInputProps()} />
             {filePreview ? (
                 <div>
-                    {isPDF ? (
-                        <img
-                            src={filePreview}
-                            alt="PDF Preview"
+                    <img
+                        src={filePreview}
+                        alt={isPDF ? "PDF Preview" : "Image Preview"}
+                        style={{
+                            maxWidth: "100%",
+                            maxHeight: "150px",
+                            display: "block",
+                            margin: "10px auto",
+                            borderRadius: "8px",
+                        }}
+                    />
+                    {downloadUrl && (
+                        <a
+                            href={downloadUrl}
+                            download
                             style={{
-                                maxWidth: "100%",
-                                maxHeight: "150px",
                                 display: "block",
-                                margin: "10px auto",
-                                borderRadius: "8px",
+                                marginTop: "10px",
+                                textDecoration: "none",
+                                color: "#007BFF",
                             }}
-                        />
-                    ) : (
-                        <img
-                            src={filePreview}
-                            alt="Image Preview"
-                            style={{
-                                maxWidth: "100%",
-                                maxHeight: "150px",
-                                display: "block",
-                                margin: "10px auto",
-                                borderRadius: "8px",
-                            }}
-                        />
+                        >
+                            Download File
+                        </a>
                     )}
                     <p>Click or drag to replace the file</p>
                 </div>
