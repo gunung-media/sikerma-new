@@ -14,6 +14,7 @@ import { FacultySelector } from "@/features/Faculty";
 import { StudyProgramSelector } from "@/features/StudyProgram";
 import { App } from "@/types/enum";
 import { kebabToTitle } from "@/utils/StringRalated";
+import { UserRole } from "@/features/User/components/UserRole";
 
 export default function User({ roles, data }: PageProps & {
     data: UserType[],
@@ -151,11 +152,12 @@ export default function User({ roles, data }: PageProps & {
                         }}
                         slots={{
                             3: (value: number) => (
-                                <div className="d-flex flex-column">
-                                    <span className="emp_name text-truncate">{data[value]?.role ?? ""}</span>
-                                    <small className="emp_post text-truncate text-muted">
+                                <div>
+                                    <UserRole value={data[value]?.role ?? App.Enums.RoleEnum.SUPER_ADMIN} />
+                                    <br />
+                                    <small className="text-truncate text-muted mt-5">
                                         {data[value]?.faculty_id ? data[value].faculty?.name : ""}
-                                        {data[value]?.study_program_id ? data[value].studyProgram?.name : ""}
+                                        {data[value]?.study_program_id ? data[value].study_program?.name : ""}
                                     </small>
                                 </div>
                             ),
@@ -219,7 +221,7 @@ export default function User({ roles, data }: PageProps & {
                         label="Role"
                         onChange={(val) => setUser({ ...user, role: val as App.Enums.RoleEnum })}
                         className="mb-3"
-                        options={roles.map((role) => ({ value: role.name.toLowerCase().replace(' ', '-'), label: role.name }))}
+                        options={roles.map((role) => ({ value: role.name.toLowerCase().replace(' ', '-'), label: kebabToTitle(role.name) }))}
                         errorMessage={errors.role}
                         value={user?.role}
                     />

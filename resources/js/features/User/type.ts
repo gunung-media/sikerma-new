@@ -10,5 +10,5 @@ export interface UserType extends BaseTableInterface {
     study_program_id?: number
 
     faculty?: FacultyType
-    studyProgram?: StudyProgramType
+    study_program?: StudyProgramType
 }
