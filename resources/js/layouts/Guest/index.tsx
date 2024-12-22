@@ -21,11 +21,11 @@ export const GuestLayout: FC<LayoutProps> = ({ children, title = "Login" }) => {
                         <div className="card px-sm-6 px-0">
                             <div className="card-body">
                                 <div className="app-brand justify-content-center">
-                                    <a href="index-2.html" className="app-brand-link gap-2">
+                                    <a href="#" className="app-brand-link gap-2">
                                         <span className="app-brand-logo demo">
                                             <Logo />
                                         </span>
-                                        <span className="app-brand-text demo text-heading fw-bold">{title}</span>
+                                        <span className="app-brand-text demo text-heading fw-bold">SIKERMA</span>
                                     </a>
                                 </div>
                                 {children}

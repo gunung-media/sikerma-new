@@ -50,7 +50,7 @@ export const Sidebar = () => {
             <div className="app-brand demo">
                 <a href={route("dashboard")} className="app-brand-link">
                     <span className="app-brand-logo demo"><Logo /></span>
-                    <span className="app-brand-text demo menu-text fw-bold ms-2">sneat</span >
+                    <span className="app-brand-text demo menu-text fw-bold ms-2">SIKERMA</span >
                 </a>
 
                 <a
