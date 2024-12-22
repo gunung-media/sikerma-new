@@ -1,4 +1,4 @@
-import { PartnershipType } from "@/features/Partnership"
+import { PartnershipStatus, PartnershipType } from "@/features/Partnership"
 import { AuthenticatedLayout } from "@/layouts/Authenticated"
 import { PageProps } from "@/types"
 import DataTable from "datatables.net-react";
@@ -108,8 +108,8 @@ export default function Partnership({ data }: PageProps & {
                                     <span className="emp_post text-truncate"> {new Date(data[value]?.start_date).toLocaleDateString()}  - {new Date(data[value]?.end_date).toLocaleDateString()}</span>
                                 </div>
                             ),
-                            4: (value: string) => (
-                                <span className="badge bg-label-primary">{value}</span>
+                            4: (value: App.Enums.PartnershipStatusEnum) => (
+                                <PartnershipStatus value={value} />
                             ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
