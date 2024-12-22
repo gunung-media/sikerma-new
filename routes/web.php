@@ -14,6 +14,7 @@ Route::name('auth.')->group(function () {
         Route::post('login', [AuthenticationController::class, 'loginPost'])->name('login.post');
     });
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout')->middleware('auth');
+    Route::post('changePassword', [AuthenticationController::class, 'changePassword'])->name('changePassword')->middleware('auth');
 });
 
 Route::middleware('auth')->group(function () {

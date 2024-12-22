@@ -6,6 +6,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthenticationController extends Controller
 {
@@ -35,5 +38,27 @@ class AuthenticationController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect(route('auth.login'));
+    }
+
+    public function changePassword(Request $request)
+    {
+
+        $request->validate([
+            'current_password' => 'required|string|min:6',
+            'new_password' => 'required|string|min:6',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'error' => 'Current password is incorrect.'
+            ], 400);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response(status: 200);
     }
 }
