@@ -76,7 +76,7 @@ export default function StudyProgram({ data }: PageProps & {
         <AuthenticatedLayout title="Prodi">
             <h4 className="mb-1">List Prodi</h4>
 
-            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what faculty needs.</p>
+            <p className="mb-6">List prodi yang ada di aplikasi ini</p>
 
             <div className="card">
                 <div className="card-header d-flex align-items-center justify-content-between">

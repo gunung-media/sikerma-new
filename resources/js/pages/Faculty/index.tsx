@@ -74,7 +74,7 @@ export default function Faculty({ data }: PageProps & {
         <AuthenticatedLayout title="Fakultas">
             <h4 className="mb-1">List Fakultas</h4>
 
-            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what faculty needs.</p>
+            <p className="mb-6">List fakultas yang ada di aplikasi ini</p>
 
             <div className="card">
                 <div className="card-header d-flex align-items-center justify-content-between">

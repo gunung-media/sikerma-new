@@ -56,7 +56,8 @@ export default function Partnership({ data }: PageProps & {
         <AuthenticatedLayout title="Kerjasama">
             <h4 className="mb-1">List Kerjasama</h4>
 
-            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what faculty needs.</p>
+            <p className="mb-6">List kerjasama yang ada di aplikasi ini</p>
+
             <div className="row g-6">
                 {Object.keys(count).map((item, index) => (
                     <div className="col-xl-4 col-lg-6 col-md-6" >

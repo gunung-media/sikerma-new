@@ -87,7 +87,7 @@ export default function User({ roles, data }: PageProps & {
         <AuthenticatedLayout title="User">
             <h4 className="mb-1">Users List</h4>
 
-            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what user needs.</p>
+            <p className="mb-6">List user aplikasi sistem ini</p>
 
             <div className="row g-6">
                 {roles.map((role, index) => (
