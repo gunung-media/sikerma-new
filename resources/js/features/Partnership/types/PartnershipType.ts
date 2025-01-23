@@ -8,6 +8,7 @@ import { BaseTableInterface } from "@/interfaces/BaseTableInterface";
 export interface PartnershipType extends BaseTableInterface {
     type: App.Enums.PartnershipTypeEnum;
     document_number: string;
+    document_fundamental?: string | null;
     title: string;
     description: string;
     user_id: number;

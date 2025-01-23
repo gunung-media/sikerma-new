@@ -69,6 +69,7 @@ class Partnership extends Model
         'executor',
         'faculty_id',
         'study_program_id',
+        'document_fundamental'
     ];
 
     protected $casts = [

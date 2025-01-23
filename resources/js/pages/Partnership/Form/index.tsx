@@ -33,6 +33,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
     const [data, setData] = useState<PartnershipDto>({
         type: App.Enums.PartnershipTypeEnum.MOU,
         document_number: '',
+        document_fundamental: null,
         title: '',
         description: '',
         status: App.Enums.PartnershipStatusEnum.ACTIVE,
@@ -102,7 +103,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 successToast(response.data.message);
                 router.visit(route('partnerships.index'));
             }
@@ -143,6 +144,11 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
 
     }, [partnership])
+
+    useEffect(() => {
+        console.log(data.type)
+        console.log(data.type === App.Enums.PartnershipTypeEnum.MOA)
+    }, [data.type])
 
     return (
         <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
@@ -231,6 +237,15 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         onChange={(value) => setData({ ...data, type: value })}
                                         className="mb-3 "
                                     />
+                                    {(data.type === App.Enums.PartnershipTypeEnum.MOA || data.type === App.Enums.PartnershipTypeEnum.IA) && (
+                                        <Input
+                                            label="Dasar Dokumen Kerjasama"
+                                            value={data.document_fundamental ?? undefined}
+                                            onChange={(e) => setData({ ...data, document_fundamental: e.target.value })}
+                                            errorMessage={errors.document_fundamental}
+                                            className="mb-3"
+                                        />
+                                    )}
                                     <Input
                                         label="Nomor Dokumen"
                                         value={data.document_number ?? undefined}
