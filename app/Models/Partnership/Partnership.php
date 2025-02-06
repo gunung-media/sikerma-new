@@ -4,6 +4,7 @@ namespace App\Models\Partnership;
 
 use App\Enums\PartnershipStatusEnum;
 use App\Enums\PartnershipTypeEnum;
+use App\Models\Master\Institute;
 use App\Models\Master\StudyProgram;
 use App\Models\Master\Faculty;
 use App\Models\User;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -52,8 +53,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUserId($value)
- * @mixin \Eloquent
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property string|null $document_fundamental
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDocumentFundamental($value)
+ * @property int|null $institute_id
+ * @property-read Institute|null $institute
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereInstituteId($value)
+ * @mixin \Eloquent
  */
 class Partnership extends Model
 {
@@ -67,9 +73,8 @@ class Partnership extends Model
         'start_date',
         'end_date',
         'executor',
-        'faculty_id',
-        'study_program_id',
-        'document_fundamental'
+        'document_fundamental',
+        'institute_id',
     ];
 
     protected $casts = [
@@ -84,14 +89,9 @@ class Partnership extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function faculty(): BelongsTo
+    public function institute(): BelongsTo
     {
-        return $this->belongsTo(Faculty::class);
-    }
-
-    public function studyProgram(): BelongsTo
-    {
-        return $this->belongsTo(StudyProgram::class);
+        return $this->belongsTo(Institute::class);
     }
 
     public function activities(): HasMany

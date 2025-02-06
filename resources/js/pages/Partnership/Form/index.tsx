@@ -6,9 +6,7 @@ import { router } from "@inertiajs/react";
 import axios, { AxiosError } from "axios";
 import { FormEventHandler, useEffect, useState } from "react";
 import { App } from "@/types/enum"
-import { FacultySelector } from "@/features/Faculty";
 import { Button } from "@/components/Button";
-import { StudyProgramSelector } from "@/features/StudyProgram";
 import { Input } from "@/components/Input";
 import { DatePicker } from "@/components/DatePicker";
 import { TextArea } from "@/components/Textarea";
@@ -16,6 +14,7 @@ import { PartnerDto, PartnerForm } from "@/features/Partner";
 import { ActivitySelector } from "@/features/PartnershipActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
+import { InstituteSelector } from "@/features/Institute";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const [errors, setErrors] = useState<any>({})
@@ -40,10 +39,9 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         start_date: new Date().toISOString(),
         end_date: new Date(new Date().getTime() + 60000).toISOString(),
         executor: null,
-        faculty_id: null,
-        study_program_id: null,
         partners: [defaultPartner],
-        activities: []
+        activities: [],
+        institute_id: null
     })
     const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
@@ -103,12 +101,11 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                 }
             );
 
-            if (response.status === 201) {
-                successToast(response.data.message);
-                router.visit(route('partnerships.index'));
-            }
+            successToast(response.data.message);
+            router.visit(route('partnerships.index'));
 
         } catch (error) {
+            console.error(error)
             if (error instanceof AxiosError) {
                 if (error.response?.status === 422) {
                     console.error(error.response?.data.errors);
@@ -136,10 +133,10 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             start_date: partnership.start_date,
             end_date: partnership.end_date,
             executor: partnership.executor,
-            faculty_id: partnership.faculty_id,
-            study_program_id: partnership.study_program_id,
+            institute_id: partnership.institute_id,
             partners: partnership.partners,
-            activities: partnership.activities
+            activities: partnership.activities,
+            document_fundamental: partnership.document_fundamental
         })
 
 
@@ -173,19 +170,12 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                             <strong>Data Perguruan Tinggi</strong>
                                         </div>
                                         <div className="card-body">
-                                            <FacultySelector
+                                            <InstituteSelector
                                                 className="mb-3 mt-3"
-                                                value={data?.faculty_id ?? undefined}
-                                                onChange={(value) => setData({ ...data, faculty_id: value })}
+                                                value={data?.institute_id ?? undefined}
+                                                onChange={(value) => setData({ ...data, institute_id: value })}
                                                 error={errors.faculty_id}
-                                                description="* Biarkan kosong jika pelaksana bukan Fakultas "
-                                            />
-                                            <StudyProgramSelector
-                                                value={data?.study_program_id ?? undefined}
-                                                onChange={(value) => setData({ ...data, study_program_id: value })}
-                                                error={errors.study_program_id}
-                                                description="* Biarkan kosong jika pelaksana bukan Prodi"
-                                                className="mb-3"
+                                                description="* Biarkan kosong jika pelaksana bukan dari Institusi "
                                             />
                                             <Input
                                                 label="Lainnya"

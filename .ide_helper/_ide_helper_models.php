@@ -22,7 +22,7 @@ namespace App\Models\Master{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Master\StudyProgram> $studyPrograms
  * @property-read int|null $study_programs_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty newQuery()
@@ -32,8 +32,21 @@ namespace App\Models\Master{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 	class Faculty extends \Eloquent {}
+}
+
+namespace App\Models\Master{
+/**
+ * 
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute query()
+ */
+	class Institute extends \Eloquent {}
 }
 
 namespace App\Models\Master{
@@ -46,7 +59,7 @@ namespace App\Models\Master{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Master\Faculty $faculty
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram newQuery()
@@ -56,6 +69,8 @@ namespace App\Models\Master{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudyProgram whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 	class StudyProgram extends \Eloquent {}
 }
@@ -66,7 +81,7 @@ namespace App\Models\Partnership{
  *
  * @property int $id
  * @property int $partnership_id
- * @property \App\Enums\AgencyTypeEnum $agency_type
+ * @property AgencyTypeEnum $agency_type
  * @property string $agency_name
  * @property string $agency_address
  * @property string $signatory_name
@@ -90,6 +105,8 @@ namespace App\Models\Partnership{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partner whereSignatoryName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partner whereSignatoryPosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partner whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 	class Partner extends \Eloquent {}
 }
@@ -99,12 +116,12 @@ namespace App\Models\Partnership{
  * 
  *
  * @property int $id
- * @property \App\Enums\PartnershipTypeEnum $type
+ * @property PartnershipTypeEnum $type
  * @property string $document_number
  * @property string $title
  * @property string|null $description
  * @property int|null $user_id
- * @property \App\Enums\PartnershipStatusEnum $status
+ * @property PartnershipStatusEnum $status
  * @property \Illuminate\Support\Carbon $start_date
  * @property \Illuminate\Support\Carbon $end_date
  * @property string|null $executor
@@ -114,11 +131,11 @@ namespace App\Models\Partnership{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partnership\PartnershipActivity> $activities
  * @property-read int|null $activities_count
- * @property-read \App\Models\Master\Faculty|null $faculty
+ * @property-read Faculty|null $faculty
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partnership\Partner> $partners
  * @property-read int|null $partners_count
- * @property-read \App\Models\Master\StudyProgram|null $studyProgram
- * @property-read \App\Models\User|null $user
+ * @property-read StudyProgram|null $studyProgram
+ * @property-read User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership query()
@@ -136,6 +153,10 @@ namespace App\Models\Partnership{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUserId($value)
+ * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property string|null $document_fundamental
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDocumentFundamental($value)
  */
 	class Partnership extends \Eloquent {}
 }
@@ -146,7 +167,7 @@ namespace App\Models\Partnership{
  *
  * @property int $id
  * @property int $partnership_id
- * @property \App\Enums\PartnershipActivityTypeEnum $activity_type
+ * @property PartnershipActivityTypeEnum $activity_type
  * @property string $document_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -160,6 +181,8 @@ namespace App\Models\Partnership{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnershipActivity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnershipActivity wherePartnershipId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnershipActivity whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 	class PartnershipActivity extends \Eloquent {}
 }
@@ -175,13 +198,13 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Enums\RoleEnum $role
+ * @property RoleEnum $role
  * @property int|null $faculty_id
  * @property int|null $study_program_id
- * @property-read \App\Models\Master\Faculty|null $faculty
+ * @property-read Faculty|null $faculty
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Master\StudyProgram|null $studyProgram
+ * @property-read StudyProgram|null $studyProgram
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -196,6 +219,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStudyProgramId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
+ * @mixin \Eloquent
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 	class User extends \Eloquent {}
 }

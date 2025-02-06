@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereUpdatedAt($value)
- * @mixin \Eloquent
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin \Eloquent
  */
 class Faculty extends Model
 {

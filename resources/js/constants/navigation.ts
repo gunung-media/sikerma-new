@@ -28,15 +28,9 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'single',
-        label: 'Fakultas',
-        icon: 'bxs-school',
-        url: 'master.faculties.index'
-    },
-    {
-        type: 'single',
-        label: 'Prodi',
+        label: 'Institusi',
         icon: 'bxs-buildings',
-        url: 'master.study-programs.index'
+        url: 'master.institutes.index'
     },
     {
         type: 'header',

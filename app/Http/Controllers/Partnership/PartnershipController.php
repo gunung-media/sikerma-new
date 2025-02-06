@@ -51,8 +51,7 @@ class PartnershipController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
-            'faculty_id' => 'nullable|exists:faculties,id',
-            'study_program_id' => 'nullable|exists:study_programs,id',
+            'institute_id' => 'nullable|exists:institutes,id',
             'partners' => 'required|array',
             'partners.*.agency_type' => 'required|in:' . implode(',', AgencyTypeEnum::getValues()),
             'partners.*.agency_name' => 'required|string|max:255',
@@ -80,8 +79,7 @@ class PartnershipController extends Controller
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
                 'executor' => $validatedData['executor'] ?? null,
-                'faculty_id' => $validatedData['faculty_id'] ?? null,
-                'study_program_id' => $validatedData['study_program_id'] ?? null,
+                'institute_id' => $validatedData['institute_id'] ?? null,
             ]);
 
             foreach ($validatedData['partners'] as $partnerData) {
@@ -135,8 +133,7 @@ class PartnershipController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
-            'faculty_id' => 'nullable|exists:faculties,id',
-            'study_program_id' => 'nullable|exists:study_programs,id',
+            'institute_id' => 'nullable|exists:institutes,id',
             'partners' => 'nullable|array',
             'partners.*.id' => 'nullable|exists:partners,id',
             'partners.*.agency_type' => 'required|in:' . implode(',', AgencyTypeEnum::getValues()),
@@ -168,8 +165,7 @@ class PartnershipController extends Controller
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
                 'executor' => $validatedData['executor'] ?? null,
-                'faculty_id' => $validatedData['faculty_id'] ?? null,
-                'study_program_id' => $validatedData['study_program_id'] ?? null,
+                'institute_id' => $validatedData['institute_id'] ?? null,
             ]);
 
             if (isset($validatedData['partners'])) {
