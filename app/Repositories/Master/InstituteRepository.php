@@ -16,6 +16,7 @@ class InstituteRepository implements BaseRepositoryInterface
     public function getAll(): Collection
     {
         $query = $this->model->query();
+        $query->with(['partnerships']);
 
         return $query->get();
     }

@@ -10,6 +10,7 @@ import { router, usePage } from "@inertiajs/react";
 import { basicErrorToast, errorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
 import { CustomSelect } from "@/components/Select";
+import { App } from "@/types/enum";
 
 export default function Institute({ data }: PageProps & {
     data: InstituteType[],
@@ -23,7 +24,7 @@ export default function Institute({ data }: PageProps & {
         is_active: true
     })
 
-    const cols = ["#", "Name", "Action"];
+    const cols = ["#", "Name", "MoU", "MoA", "IA", "Total", "Action"];
 
     const handleEdit = (index: number) => {
         setInstitute(data[index])
@@ -88,8 +89,8 @@ export default function Institute({ data }: PageProps & {
                 <div className="card-datatable table-responsive">
                     <DataTable
                         className="datatables-basic table border-top"
-                        data={data.map((item, index) => [
-                            index + 1, index, index
+                        data={data.map((_, index) => [
+                            index + 1, index, index, index, index, index, index
                         ])}
                         options={{
                             responsive: true,
@@ -102,6 +103,19 @@ export default function Institute({ data }: PageProps & {
                                         {data[value]?.type}
                                     </small>
                                 </div>
+                            ),
+                            2: (value: number) => (
+                                <span>{data[value].partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.MOU).length ?? 0}</span>
+                            ),
+                            3: (value: number) => (
+                                <span>{data[value].partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.MOA).length ?? 0}</span>
+
+                            ),
+                            4: (value: number) => (
+                                <span>{data[value].partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.IA).length ?? 0}</span>
+                            ),
+                            5: (value: number) => (
+                                <span>{data[value].partnerships?.length}</span>
                             ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
