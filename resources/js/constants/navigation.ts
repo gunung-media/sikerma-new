@@ -17,6 +17,12 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         url: 'dashboard'
     },
     {
+        type: 'single',
+        label: 'Analytic',
+        icon: 'bx-line-chart',
+        url: 'analytic'
+    },
+    {
         type: 'header',
         label: 'Master Data'
     },
