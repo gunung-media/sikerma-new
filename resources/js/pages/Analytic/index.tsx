@@ -8,23 +8,15 @@ import { App } from "@/types/enum";
 import { getSlug } from "@/utils/StringRalated";
 
 import DataTable from "datatables.net-react";
-import { useEffect } from "react";
 
 export default function Analytic({
     partnershipCalendar,
     dueDateCalendar,
     data,
-    count
 }: PageProps & {
     partnershipCalendar: { date: string, count: number }[],
     dueDateCalendar: { date: string, count: number }[],
     data: PartnershipType[],
-    count: {
-        user: number,
-        faculty: number,
-        studyProgram: number,
-        partnership: number
-    }
 }) {
 
     const categories = Object.values(App.Enums.PartnershipTypeEnum).map((item) => getSlug(item))
@@ -55,15 +47,6 @@ export default function Analytic({
 
             return acc;
         }, [0, 0, 0]);
-
-    useEffect(() => {
-        const a = [
-            { label: 'Aktif', values: seriesGenerator(App.Enums.PartnershipStatusEnum.ACTIVE) },
-            { label: 'Tidak Aktif', values: seriesGenerator(App.Enums.PartnershipStatusEnum.INACTIVE, App.Enums.PartnershipStatusEnum.EXPIRED) },
-            { label: 'Dalam Perpanjangan', values: seriesGenerator(App.Enums.PartnershipStatusEnum.IN_RENEWAL) },
-        ]
-        console.log(a)
-    }, [])
 
     return (
         <AuthenticatedLayout title="Dashboard">
