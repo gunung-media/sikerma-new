@@ -8,12 +8,14 @@ use App\Models\Master\Institute;
 use App\Models\Master\StudyProgram;
 use App\Models\Master\Faculty;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -59,6 +61,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int|null $institute_id
  * @property-read Institute|null $institute
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereInstituteId($value)
+ * @property-read mixed $year
  * @mixin \Eloquent
  */
 class Partnership extends Model
@@ -83,6 +86,15 @@ class Partnership extends Model
         'start_date' => 'date',
         'end_date' => 'date',
     ];
+
+    protected $appends = ['year'];
+
+    protected function year(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Carbon::parse($this->start_date)->year,
+        );
+    }
 
     public function user(): BelongsTo
     {

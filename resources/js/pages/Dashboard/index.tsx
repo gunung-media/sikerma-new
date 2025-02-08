@@ -1,3 +1,5 @@
+import PartnershipGrowthChart from "@/components/PartnershipGrowthChart";
+import PartnershipStatusChart from "@/components/PartnershipStatusChart";
 import { PartnershipType } from "@/features/Partnership";
 import { AuthenticatedLayout } from "@/Layouts/Authenticated"
 import { PageProps } from "@/types"
@@ -5,7 +7,8 @@ import { App } from "@/types/enum";
 import { getSlug } from "@/utils/StringRalated";
 
 export default function Dashboard({
-    count
+    count,
+    data
 }: PageProps & {
     partnershipCalendar: { date: string, count: number }[],
     dueDateCalendar: { date: string, count: number }[],
@@ -84,6 +87,31 @@ export default function Dashboard({
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-12 col-md-4 mb-6">
+                    <div className="card">
+                        <div className="card-header d-flex align-items-center justify-content-between">
+                            <h5 className="card-title m-0 me-2">
+                                Status Kerjasama
+                            </h5>
+                        </div>
+                        <div className="card-body">
+                            <PartnershipStatusChart partnerships={data} />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-12 col-md-8 mb-6">
+                    <div className="card">
+                        <div className="card-header d-flex align-items-center justify-content-between">
+                            <h5 className="card-title m-0 me-2">
+                                Status Kerjasama
+                            </h5>
+                        </div>
+                        <div className="card-body">
+                            <PartnershipGrowthChart partnerships={data} />
                         </div>
                     </div>
                 </div>

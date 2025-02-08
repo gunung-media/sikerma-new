@@ -13,6 +13,7 @@ export interface PartnershipType extends BaseTableInterface {
     user_id: number;
     status: App.Enums.PartnershipStatusEnum;
     start_date: string;
+    year?: number | null;
     end_date: string;
     executor?: string | null;
     user: UserType;
