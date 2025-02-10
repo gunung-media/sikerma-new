@@ -105,17 +105,17 @@ export default function Institute({ data }: PageProps & {
                                 </div>
                             ),
                             2: (value: number) => (
-                                <span>{data[value].partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.MOU).length ?? 0}</span>
+                                <span>{data[value]?.partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.MOU).length ?? 0}</span>
                             ),
                             3: (value: number) => (
-                                <span>{data[value].partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.MOA).length ?? 0}</span>
+                                <span>{data[value]?.partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.MOA).length ?? 0}</span>
 
                             ),
                             4: (value: number) => (
-                                <span>{data[value].partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.IA).length ?? 0}</span>
+                                <span>{data[value]?.partnerships?.filter((item) => item.type === App.Enums.PartnershipTypeEnum.IA).length ?? 0}</span>
                             ),
                             5: (value: number) => (
-                                <span>{data[value].partnerships?.length}</span>
+                                <span>{data[value]?.partnerships?.length}</span>
                             ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">

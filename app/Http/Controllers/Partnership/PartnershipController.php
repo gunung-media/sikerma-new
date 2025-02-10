@@ -71,7 +71,7 @@ class PartnershipController extends Controller
             $partnership = $this->partnershipRepository->create([
                 'type' => $validatedData['type'],
                 'document_number' => $validatedData['document_number'],
-                'document_fundamental' => $validatedData['document_fundamental'],
+                'document_fundamental' => $validatedData['document_fundamental'] ?? null,
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
                 'user_id' => auth()->guard('web')->user()->id,
@@ -157,7 +157,7 @@ class PartnershipController extends Controller
             $this->partnershipRepository->update($id, [
                 'type' => $validatedData['type'],
                 'document_number' => $validatedData['document_number'],
-                'document_fundamental' => $validatedData['document_fundamental'],
+                'document_fundamental' => $validatedData['document_fundamental'] ?? null,
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'] ?? null,
                 'user_id' => $validatedData['user_id'] ?? auth()->guard('web')->user()->id,
