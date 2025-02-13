@@ -54,6 +54,12 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         url: 'master.institutes.index'
     },
     {
+        type: 'single',
+        label: 'Bidang Kegiatan',
+        icon: 'bxs-buildings',
+        url: 'master.field-activities.index'
+    },
+    {
         type: 'header',
         label: 'Menu'
     },

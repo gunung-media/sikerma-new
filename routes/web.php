@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticController;
+use App\Http\Controllers\Master\FieldActivityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('faculties', FacultyController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('study-programs', StudyProgramController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('institutes', InstituteController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('field-activities', FieldActivityController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
     Route::resource('partnerships', PartnershipController::class);
