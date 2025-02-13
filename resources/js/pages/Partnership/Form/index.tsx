@@ -11,7 +11,7 @@ import { Input } from "@/components/Input";
 import { DatePicker } from "@/components/DatePicker";
 import { TextArea } from "@/components/Textarea";
 import { PartnerDto, PartnerForm } from "@/features/Partner";
-import { ActivitySelector } from "@/features/PartnershipActivity";
+import { ActivitySelector } from "@/features/FieldActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
 import { InstituteSelector } from "@/features/Institute";
@@ -307,15 +307,15 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
                             <div className="card-body">
                                 <ActivitySelector
-                                    onChange={(value) => {
-                                        setData({ ...data, activities: [...data.activities, { activity_type: value, partnership_id: 0 }] })
+                                    onChange={(value, name) => {
+                                        setData({ ...data, activities: [...data.activities, { field_activity_id: value, partnership_id: name }] })
                                     }}
                                 />
 
                                 {data.activities.map((activity, index) => (
                                     <div className="card mt-5" key={index}>
                                         <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                                            <small>{kebabToTitle(activity.activity_type)}</small>
+                                            <small>{kebabToTitle(activity.partnership_id.toString())}</small>
                                         </div>
                                         <div className="card-body mt-5">
                                             <Dropzone

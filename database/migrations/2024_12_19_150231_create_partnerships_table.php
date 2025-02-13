@@ -30,6 +30,8 @@ return new class extends Migration
             $table->unsignedBigInteger('faculty_id')->nullable();
             $table->unsignedBigInteger('study_program_id')->nullable();
 
+            $table->string('document_path')->nullable();
+
             $table->timestamps();
 
 

@@ -33,6 +33,21 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         url: 'master.users.index'
     },
     {
+        type: 'multiple',
+        label: 'Kampus',
+        icon: 'bx-calendar',
+        items: [
+            {
+                label: 'Fakultas',
+                url: 'master.faculties.index'
+            },
+            {
+                label: 'Prodi',
+                url: 'master.study-programs.index'
+            }
+        ]
+    },
+    {
         type: 'single',
         label: 'Institusi',
         icon: 'bxs-buildings',

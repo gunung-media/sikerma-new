@@ -3,11 +3,12 @@
 namespace App\Models\Partnership;
 
 use App\Enums\PartnershipActivityTypeEnum;
+use App\Models\Master\FieldActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $partnership_id
@@ -32,16 +33,17 @@ class PartnershipActivity extends Model
 {
     protected $fillable = [
         'partnership_id',
-        'activity_type',
+        'field_activity_id',
         'document_path',
-    ];
-
-    protected $casts = [
-        'activity_type' => PartnershipActivityTypeEnum::class,
     ];
 
     public function partnership(): BelongsTo
     {
         return $this->belongsTo(Partnership::class);
+    }
+
+    public function fieldActivity(): BelongsTo
+    {
+        return $this->belongsTo(FieldActivity::class);
     }
 }

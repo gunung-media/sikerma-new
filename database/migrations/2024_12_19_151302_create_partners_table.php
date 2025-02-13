@@ -16,12 +16,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('partnership_id');
             $table->enum('agency_type', AgencyTypeEnum::getValues())->default(AgencyTypeEnum::COLAGE->value);
-            $table->string('agency_name');
-            $table->string('agency_address');
-            $table->string('signatory_name');
-            $table->string('signatory_position');
-            $table->string('responsible_name')->nullable();
-            $table->string('responsible_position')->nullable();
+            $table->text('agency_name');
+            $table->text('agency_address');
+            $table->text('signatory_name');
+            $table->text('signatory_position');
+            $table->text('responsible_name')->nullable();
+            $table->text('responsible_position')->nullable();
             $table->timestamps();
 
             $table->foreign('partnership_id')->references('id')->on('partnerships')->onDelete('cascade');
