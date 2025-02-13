@@ -42,7 +42,7 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
                 url: 'master.faculties.index'
             },
             {
-                label: 'Prodi',
+                label: 'Program Studi',
                 url: 'master.study-programs.index'
             }
         ]
@@ -56,7 +56,7 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     {
         type: 'single',
         label: 'Bidang Kegiatan',
-        icon: 'bxs-buildings',
+        icon: 'bx-walk',
         url: 'master.field-activities.index'
     },
     {

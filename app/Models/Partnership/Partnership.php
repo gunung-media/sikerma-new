@@ -62,6 +62,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Institute|null $institute
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereInstituteId($value)
  * @property-read mixed $year
+ * @property string|null $document_path
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDocumentPath($value)
  * @mixin \Eloquent
  */
 class Partnership extends Model
@@ -78,6 +80,7 @@ class Partnership extends Model
         'executor',
         'document_fundamental',
         'institute_id',
+        'document_path',
     ];
 
     protected $casts = [

@@ -32,6 +32,11 @@ class PartnershipRepository implements BaseRepositoryInterface
 
     public function create(array $data): Partnership
     {
+        if (isset($data['document_path']) && $data['document_path'] instanceof \Illuminate\Http\UploadedFile) {
+            $filePath = $data['document_path']->store('partnership_documents', 'public');
+            $data['document_path'] = $filePath;
+        }
+
         return $this->model->create($data);
     }
 

@@ -52,6 +52,7 @@ class PartnershipController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
+            'document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
             'partners' => 'required|array',
             'partners.*.agency_type' => 'required|in:' . implode(',', AgencyTypeEnum::getValues()),
             'partners.*.agency_name' => 'required|string|max:255',
@@ -61,7 +62,7 @@ class PartnershipController extends Controller
             'partners.*.responsible_name' => 'nullable|string|max:255',
             'partners.*.responsible_position' => 'nullable|string|max:255',
             'activities' => 'nullable|array',
-            'activities.*.activity_type' => 'required|in:' . implode(',', PartnershipActivityTypeEnum::getValues()),
+            'activities.*.field_activity_id' => 'required',
             'activities.*.file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 
@@ -72,6 +73,7 @@ class PartnershipController extends Controller
                 'type' => $validatedData['type'],
                 'document_number' => $validatedData['document_number'],
                 'document_fundamental' => $validatedData['document_fundamental'] ?? null,
+                'document_path' => $validatedData['document_path'] ?? null,
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
                 'user_id' => auth()->guard('web')->user()->id,
@@ -88,6 +90,7 @@ class PartnershipController extends Controller
 
             if (isset($validatedData['activities'])) {
                 foreach ($validatedData['activities'] as $activityData) {
+                    $activityData['partnership_id'] = null;
                     $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
                 }
             }
@@ -145,7 +148,6 @@ class PartnershipController extends Controller
             'partners.*.responsible_position' => 'nullable|string|max:255',
             'activities' => 'nullable|array',
             'activities.*.id' => 'nullable|exists:partnership_activities,id',
-            'activities.*.activity_type' => 'required|in:' . implode(',', PartnershipActivityTypeEnum::getValues()),
             'activities.*.file' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 

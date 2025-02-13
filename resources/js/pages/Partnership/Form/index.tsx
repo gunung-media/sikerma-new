@@ -41,7 +41,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         executor: null,
         partners: [defaultPartner],
         activities: [],
-        institute_id: null
+        institute_id: null,
+        document_path: null,
     })
     const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
@@ -105,7 +106,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             router.visit(route('partnerships.index'));
 
         } catch (error) {
-            console.error(error)
+            console.error(error);
             if (error instanceof AxiosError) {
                 if (error.response?.status === 422) {
                     console.error(error.response?.data.errors);
@@ -123,7 +124,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
     useEffect(() => {
         if (!isEditing) return
 
-        console.log(partnership)
         setData({
             type: partnership.type,
             document_number: partnership.document_number,
@@ -136,16 +136,12 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             institute_id: partnership.institute_id,
             partners: partnership.partners,
             activities: partnership.activities,
-            document_fundamental: partnership.document_fundamental
+            document_fundamental: partnership.document_fundamental,
+            document_path: partnership.document_path
         })
 
 
     }, [partnership])
-
-    useEffect(() => {
-        console.log(data.type)
-        console.log(data.type === App.Enums.PartnershipTypeEnum.MOA)
-    }, [data.type])
 
     return (
         <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
@@ -187,7 +183,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         </div>
                                     </div>
 
-                                    <div className="card">
+                                    <div className="card mb-4">
                                         <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
                                             <strong>Masa Berlaku</strong>
                                         </div>
@@ -216,6 +212,21 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                 className="mb-3"
                                                 inline={false}
                                                 minDate={new Date(data.start_date)}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="card">
+                                        <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                                            <strong>Dokumen</strong>
+                                        </div>
+                                        <div className="card-body">
+                                            <Dropzone
+                                                className="mt-5"
+                                                value={typeof data.document_path === "string" ? data.document_path : null}
+                                                onChange={(file) => {
+                                                    setData({ ...data, document_path: file });
+                                                }}
                                             />
                                         </div>
                                     </div>
@@ -314,8 +325,23 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
                                 {data.activities.map((activity, index) => (
                                     <div className="card mt-5" key={index}>
-                                        <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                                        <div className="card-header header-elements" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
                                             <small>{kebabToTitle(activity.partnership_id.toString())}</small>
+
+                                            <div className="card-header-elements ms-auto">
+                                                <Button
+                                                    value="Delete"
+                                                    icon="bx-trash"
+                                                    isIcon
+                                                    size="xs"
+                                                    onClick={() => {
+                                                        setData({
+                                                            ...data,
+                                                            activities: data.activities.filter((_, i) => i !== index)
+                                                        });
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                         <div className="card-body mt-5">
                                             <Dropzone

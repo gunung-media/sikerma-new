@@ -16,6 +16,7 @@ export interface PartnershipType extends BaseTableInterface {
     year?: number | null;
     end_date: string;
     executor?: string | null;
+    document_path?: string | null | File;
     user: UserType;
     activities: PartnershipActivityType[];
     partners: PartnerType[];
