@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Partnership;
 
-use App\Enums\PartnershipActivityTypeEnum;
 use App\Enums\AgencyTypeEnum;
 use App\Enums\PartnershipStatusEnum;
 use App\Enums\PartnershipTypeEnum;
@@ -148,7 +147,9 @@ class PartnershipController extends Controller
             'partners.*.responsible_position' => 'nullable|string|max:255',
             'activities' => 'nullable|array',
             'activities.*.id' => 'nullable|exists:partnership_activities,id',
+            'activities.*.field_activity_id' => 'required',
             'activities.*.file' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx',
+            'activities.*.document_path' => 'nullable',
         ]);
 
         DB::beginTransaction();
@@ -171,32 +172,47 @@ class PartnershipController extends Controller
             ]);
 
             if (isset($validatedData['partners'])) {
+                $existingPartnerIds = $this->partnerRepository->findByAttributes(['partnership_id' => $partnership->id])->pluck('id')->toArray();
+
+                $incomingPartnerIds = [];
                 foreach ($validatedData['partners'] as $partnerData) {
                     if (isset($partnerData['id'])) {
                         $this->partnerRepository->update($partnerData['id'], $partnerData);
+                        $incomingPartnerIds[] = $partnerData['id'];
                     } else {
-                        $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
+                        $newPartner = $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
+                        $incomingPartnerIds[] = $newPartner->id;
                     }
                 }
 
-                $existingPartnerIds = collect($validatedData['partners'])->pluck('id')->filter()->toArray();
-                $partnership->partners()->whereNotIn('id', $existingPartnerIds)->delete();
+                $partnersToDelete = array_diff($existingPartnerIds, $incomingPartnerIds);
+                foreach ($partnersToDelete as $partnerId) {
+                    $this->partnerRepository->delete($partnerId);
+                }
             }
 
             if (isset($validatedData['activities'])) {
+                $existingActivityIds = $this->partnershipActivityRepository->findByAttributes(['partnership_id' => $partnership->id])->pluck('id')->toArray();
+
+                $incomingActivityIds = [];
                 foreach ($validatedData['activities'] as $activityData) {
                     if (isset($activityData['id'])) {
                         $this->partnershipActivityRepository->update($activityData['id'], $activityData);
+                        $incomingActivityIds[] = $activityData['id'];
                     } else {
-                        $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
+                        $newActivity = $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
+                        $incomingActivityIds[] = $newActivity->id;
                     }
                 }
 
-                $existingActivityIds = collect($validatedData['activities'])->pluck('id')->filter()->toArray();
-                $partnership->activities()->whereNotIn('id', $existingActivityIds)->delete();
+                $activitiesToDelete = array_diff($existingActivityIds, $incomingActivityIds);
+                foreach ($activitiesToDelete as $activityId) {
+                    $this->partnershipActivityRepository->delete($activityId);
+                }
             }
 
             DB::commit();
+
 
             return response()->json([
                 'message' => 'Partnership updated successfully.',

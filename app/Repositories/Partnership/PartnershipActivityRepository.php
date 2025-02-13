@@ -41,6 +41,13 @@ class PartnershipActivityRepository implements BaseRepositoryInterface
 
     public function update($id, array $data): bool
     {
+        if (isset($data['file']) && $data['file'] instanceof \Illuminate\Http\UploadedFile) {
+            $filePath = $data['file']->store('partnership_activities/documents', 'public');
+            $data['document_path'] = $filePath;
+        }
+
+        unset($data['file']);
+
         $query = $this->findById($id);
 
         return $query->update($data);
