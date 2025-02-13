@@ -42,7 +42,7 @@ export const AuthenticatedLayout: FC<LayoutProps> = ({ title, children }) => {
                 <div className="layout-overlay layout-menu-toggle"></div>
                 <div className="drag-target"></div>
             </div>
-            <SnackbarProvider maxSnack={3} />
+            <SnackbarProvider maxSnack={3} autoHideDuration={3000} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} />
         </Fragment>
     )
 }
