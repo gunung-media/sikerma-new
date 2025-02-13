@@ -7,9 +7,10 @@ import { PageProps } from "@/types";
 interface DropzoneProps {
     onChange: (file: File) => void;
     value?: string | null;
+    className?: string;
 }
 
-export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
+export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className }) => {
     const { props } = usePage<PageProps>();
 
     const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -108,6 +109,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value }) => {
     return (
         <div
             {...getRootProps()}
+            className={className}
             style={{
                 border: "2px dashed gray",
                 padding: "20px",
