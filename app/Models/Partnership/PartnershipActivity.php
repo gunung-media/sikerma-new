@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $partnership_id
@@ -39,6 +39,8 @@ class PartnershipActivity extends Model
         'field_activity_id',
         'document_path',
     ];
+
+    protected $with = ["fieldActivity"];
 
     public function partnership(): BelongsTo
     {

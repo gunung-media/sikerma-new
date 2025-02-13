@@ -319,14 +319,21 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                             <div className="card-body">
                                 <ActivitySelector
                                     onChange={(value, name) => {
-                                        setData({ ...data, activities: [...data.activities, { field_activity_id: value, partnership_id: name }] })
+                                        setData({
+                                            ...data, activities: [...data.activities, {
+                                                field_activity_id: value, partnership_id: name, field_activity: {
+                                                    id: 0,
+                                                    name: name
+                                                }
+                                            }]
+                                        })
                                     }}
                                 />
 
                                 {data.activities.map((activity, index) => (
                                     <div className="card mt-5" key={index}>
                                         <div className="card-header header-elements" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                                            <small>{kebabToTitle(activity.partnership_id.toString())}</small>
+                                            <small>{kebabToTitle(activity.field_activity?.name ?? "")}</small>
 
                                             <div className="card-header-elements ms-auto">
                                                 <Button
