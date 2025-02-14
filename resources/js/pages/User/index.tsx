@@ -15,6 +15,7 @@ import { StudyProgramSelector } from "@/features/StudyProgram";
 import { App } from "@/types/enum";
 import { kebabToTitle } from "@/utils/StringRalated";
 import { UserRole } from "@/features/User/components/UserRole";
+import { InstituteSelector } from "@/features/Institute";
 
 export default function User({ roles, data }: PageProps & {
     data: UserType[],
@@ -158,6 +159,7 @@ export default function User({ roles, data }: PageProps & {
                                     <small className="text-truncate text-muted mt-5">
                                         {data[value]?.faculty_id ? data[value].faculty?.name : ""}
                                         {data[value]?.study_program_id ? data[value].study_program?.name : ""}
+                                        {data[value]?.institute_id ? data[value].institute?.name : ""}
                                     </small>
                                 </div>
                             ),
@@ -221,7 +223,7 @@ export default function User({ roles, data }: PageProps & {
                         label="Role"
                         onChange={(val) => setUser({ ...user, role: val as App.Enums.RoleEnum })}
                         className="mb-3"
-                        options={roles.map((role) => ({ value: role.name.toLowerCase().replace(' ', '-'), label: kebabToTitle(role.name) }))}
+                        options={Object.values(App.Enums.RoleEnum).map((role) => ({ value: role.toString().toLowerCase().replace(' ', '-'), label: kebabToTitle(role.toString()) }))}
                         errorMessage={errors.role}
                         value={user?.role}
                     />
@@ -241,6 +243,15 @@ export default function User({ roles, data }: PageProps & {
                             onChange={(val) => setUser({ ...user, study_program_id: val })}
                             value={user?.study_program_id}
                             error={errors.study_program_id}
+                        />
+                    )}
+
+                    {user?.role === App.Enums.RoleEnum.INSTITUTE_ADMIN && (
+                        <InstituteSelector
+                            className="mb-3"
+                            onChange={(val) => setUser({ ...user, institute_id: val })}
+                            value={user?.institute_id}
+                            error={errors.institute_id}
                         />
                     )}
 

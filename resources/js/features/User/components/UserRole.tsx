@@ -11,7 +11,8 @@ export const UserRole: FC<{
             "badge",
             (value === App.Enums.RoleEnum.SUPER_ADMIN) && "bg-label-danger",
             (value === App.Enums.RoleEnum.FACULTY_ADMIN) && "bg-label-warning",
-            (value === App.Enums.RoleEnum.STUDY_PROGRAM_ADMIN) && "bg-label-success"
+            (value === App.Enums.RoleEnum.STUDY_PROGRAM_ADMIN) && "bg-label-success",
+            (value === App.Enums.RoleEnum.INSTITUTE_ADMIN) && "bg-label-primary"
         )}>{kebabToTitle(value)}</span>
     )
 }

@@ -18,7 +18,7 @@ class UserRepository implements BaseRepositoryInterface
     {
         $query = $this->model->query();
 
-        $query->with('faculty', 'studyProgram');
+        $query->with('faculty', 'studyProgram', 'institute');
 
         return $query->get();
     }

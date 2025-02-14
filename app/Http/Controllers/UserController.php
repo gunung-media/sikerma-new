@@ -35,6 +35,7 @@ class UserController extends Controller
             'password' => 'required',
             'role' => 'required|in:' . implode(',', RoleEnum::getValues()),
             'faculty_id' => 'exists:faculties,id',
+            'institute_id' => 'exists:institutes,id',
             'study_program_id' => 'exists:study_programs,id',
 
         ]);
@@ -57,6 +58,7 @@ class UserController extends Controller
             'username' => 'required|unique:users,username,' . $user->id,
             'role' => 'required|in:' . implode(',', RoleEnum::getValues()),
             'faculty_id' => 'nullable|exists:faculties,id',
+            'institute_id' => 'exists:institutes,id',
             'study_program_id' => 'nullable|exists:study_programs,id',
 
         ]);

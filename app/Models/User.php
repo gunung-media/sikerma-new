@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Enums\RoleEnum;
 use App\Models\Master\Faculty;
+use App\Models\Master\Institute;
 use App\Models\Master\StudyProgram;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -54,6 +55,7 @@ class User extends Authenticatable
         'role',
         'faculty_id',
         'study_program_id',
+        'institute_id',
     ];
 
     protected $hidden = [
@@ -77,5 +79,10 @@ class User extends Authenticatable
     public function studyProgram(): BelongsTo|null
     {
         return $this->belongsTo(StudyProgram::class);
+    }
+
+    public function institute(): BelongsTo|null
+    {
+        return $this->belongsTo(Institute::class);
     }
 }

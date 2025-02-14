@@ -7,6 +7,7 @@ enum RoleEnum: string
     case SUPER_ADMIN = 'super-admin';
     case FACULTY_ADMIN = 'faculty-admin';
     case STUDY_PROGRAM_ADMIN = 'study-program-admin';
+    case INSTITUTE_ADMIN = 'institute-admin';
 
 
     public static function getValues(): array
@@ -15,6 +16,7 @@ enum RoleEnum: string
             self::SUPER_ADMIN->value,
             self::FACULTY_ADMIN->value,
             self::STUDY_PROGRAM_ADMIN->value,
+            self::INSTITUTE_ADMIN->value
         ];
     }
 }
