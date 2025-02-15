@@ -6,6 +6,7 @@ use App\Enums\RoleEnum;
 use App\Models\Master\Faculty;
 use App\Models\Master\Institute;
 use App\Models\Master\StudyProgram;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,6 +43,10 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property int|null $institute_id
+ * @property-read Institute|null $institute
+ * @property-read mixed $is_super_admin
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereInstituteId($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -71,6 +76,8 @@ class User extends Authenticatable
         ];
     }
 
+    protected $appends = ['is_super_admin'];
+
     public function faculty(): BelongsTo|null
     {
         return $this->belongsTo(Faculty::class);
@@ -84,5 +91,12 @@ class User extends Authenticatable
     public function institute(): BelongsTo|null
     {
         return $this->belongsTo(Institute::class);
+    }
+
+    public function isSuperAdmin(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->role === RoleEnum::SUPER_ADMIN->value
+        );
     }
 }

@@ -1,46 +1,63 @@
 import { sidebarNavigation, SidebarNavigationItem } from "@/constants/navigation"
 import { mergeClass } from "@/utils/UIRalated"
 import { Logo } from "../Logo";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 
 export const Sidebar = () => {
+    const { props: { auth: { user } } } = usePage<PageProps>();
     const compareUrl = (url: string) => route().current() === url
 
-    const renderHeader = ({ label }: SidebarNavigationItem, index: number) => (
-        <li className="menu-header small text-uppercase" key={index}>
-            <span className="menu-header-text" data-i18n={label}>{label}</span>
-        </li>
-    );
+    const renderHeader = ({ label, isSuperAdmin }: SidebarNavigationItem, index: number) => {
+        if (isSuperAdmin && isSuperAdmin !== user?.is_super_admin) {
+            return null;
+        }
+        return (
+            <li className="menu-header small text-uppercase" key={index}>
+                <span className="menu-header-text" data-i18n={label}>{label}</span>
+            </li>
+        );
+    };
 
-    const renderSingle = (item: SidebarNavigationItem, index: number) => (
-        <li className={mergeClass("menu-item", compareUrl(item.url!) ? "active" : "")} key={index}>
-            <Link href={route(item.url!)} className="menu-link">
-                <i className={mergeClass("menu-icon tf-icons bx", item.icon)}></i>
-                <div data-i18n={item.label} className="text-truncate">{item.label}</div>
-            </Link>
-        </li>
-    );
+    const renderSingle = (item: SidebarNavigationItem, index: number) => {
+        if (item.isSuperAdmin && item.isSuperAdmin !== user?.is_super_admin) {
+            return null;
+        }
+        return (
+            <li className={mergeClass("menu-item", compareUrl(item.url!) ? "active" : "")} key={index}>
+                <Link href={route(item.url!)} className="menu-link">
+                    <i className={mergeClass("menu-icon tf-icons bx", item.icon)}></i>
+                    <div data-i18n={item.label} className="text-truncate">{item.label}</div>
+                </Link>
+            </li>
+        )
+    };
 
-    const renderMultiple = (item: SidebarNavigationItem, index: number) => (
-        <li className={mergeClass(
-            "menu-item",
-            (item.items ?? []).some((sub) => compareUrl(sub.url!)) ? "open active" : ""
-        )} key={index}>
-            <a href="#" className="menu-link menu-toggle">
-                <i className={mergeClass("menu-icon tf-icons bx", item.icon)}></i>
-                <div data-i18n={item.label} className="text-truncate">{item.label}</div>
-            </a>
-            <ul className="menu-sub">
-                {(item.items ?? []).map((sub, idx) => (
-                    <li className={mergeClass("menu-item", compareUrl(sub.url!) ? "active" : "")} key={idx}>
-                        <Link href={route(sub.url)} className="menu-link">
-                            <div className="text-truncate" data-i18n={sub.label}>{sub.label}</div>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </li>
-    );
+    const renderMultiple = (item: SidebarNavigationItem, index: number) => {
+        if (item.isSuperAdmin && item.isSuperAdmin !== user?.is_super_admin) {
+            return null;
+        }
+        return (
+            <li className={mergeClass(
+                "menu-item",
+                (item.items ?? []).some((sub) => compareUrl(sub.url!)) ? "open active" : ""
+            )} key={index}>
+                <a href="#" className="menu-link menu-toggle">
+                    <i className={mergeClass("menu-icon tf-icons bx", item.icon)}></i>
+                    <div data-i18n={item.label} className="text-truncate">{item.label}</div>
+                </a>
+                <ul className="menu-sub">
+                    {(item.items ?? []).map((sub, idx) => (
+                        <li className={mergeClass("menu-item", compareUrl(sub.url!) ? "active" : "")} key={idx}>
+                            <Link href={route(sub.url)} className="menu-link">
+                                <div className="text-truncate" data-i18n={sub.label}>{sub.label}</div>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </li>
+        )
+    };
 
     return (
         <aside

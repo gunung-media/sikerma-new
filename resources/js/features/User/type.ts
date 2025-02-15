@@ -11,7 +11,9 @@ export interface UserType extends BaseTableInterface {
     study_program_id?: number
     institute_id?: number
 
+
     faculty?: FacultyType
     study_program?: StudyProgramType
     institute?: InstituteType
+    is_super_admin: boolean
 }

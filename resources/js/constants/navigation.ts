@@ -7,6 +7,7 @@ export type SidebarNavigationItem = {
         label: string;
         url: string;
     }[];
+    isSuperAdmin?: boolean;
 };
 
 export const sidebarNavigation: SidebarNavigationItem[] = [
@@ -24,18 +25,22 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'header',
-        label: 'Master Data'
+        label: 'Master Data',
+        isSuperAdmin: true
     },
     {
         type: 'single',
         label: 'User',
         icon: 'bxs-user',
-        url: 'master.users.index'
+        url: 'master.users.index',
+        isSuperAdmin: true
+
     },
     {
         type: 'multiple',
         label: 'Kampus',
         icon: 'bx-calendar',
+        isSuperAdmin: true,
         items: [
             {
                 label: 'Fakultas',
@@ -51,13 +56,15 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         type: 'single',
         label: 'Institusi',
         icon: 'bxs-buildings',
-        url: 'master.institutes.index'
+        url: 'master.institutes.index',
+        isSuperAdmin: true,
     },
     {
         type: 'single',
         label: 'Bidang Kegiatan',
         icon: 'bx-walk',
-        url: 'master.field-activities.index'
+        url: 'master.field-activities.index',
+        isSuperAdmin: true,
     },
     {
         type: 'header',
