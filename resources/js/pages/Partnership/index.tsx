@@ -115,6 +115,13 @@ export default function Partnership({ data }: PageProps & {
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
+                                    <Button
+                                        value="Download"
+                                        type="info"
+                                        icon="bx-download"
+                                        isIcon
+                                        onClick={() => window.open(route('partnerships.print', data[value].id), '_blank')}
+                                    />
                                     <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
                                 </div>
                             ),
