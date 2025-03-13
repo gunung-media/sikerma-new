@@ -96,7 +96,7 @@ class User extends Authenticatable
     public function isSuperAdmin(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->role === RoleEnum::SUPER_ADMIN->value
+            get: fn() => $this->role === RoleEnum::SUPER_ADMIN
         );
     }
 }
