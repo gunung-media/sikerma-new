@@ -320,6 +320,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                 <ActivitySelector
                                     onChange={(value, name) => {
                                         setData({
+                                            // @ts-expect-error
                                             ...data, activities: [...data.activities, {
                                                 field_activity_id: value, partnership_id: name, field_activity: {
                                                     id: 0,
