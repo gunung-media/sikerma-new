@@ -36,4 +36,5 @@ Route::middleware('auth')->group(function () {
         });
 
     Route::resource('partnerships', PartnershipController::class);
+    Route::get('partnerships_print/{id}', [PartnershipController::class, 'print'])->name('partnerships.print');
 });

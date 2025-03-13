@@ -237,4 +237,11 @@ class PartnershipController extends Controller
             return back()->withErrors(['error' => $th->getMessage()]);
         }
     }
+
+    public function print(string $id): InertiaResponse
+    {
+        return Inertia::render('Partnership/printable', [
+            'partnership' => $this->partnershipRepository->findById($id),
+        ]);
+    }
 }
