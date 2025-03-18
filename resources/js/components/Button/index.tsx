@@ -13,6 +13,7 @@ type ButtonProps = {
     icon?: string
     isIcon?: boolean
     onClick?: () => void
+    disabled?: boolean
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -27,6 +28,7 @@ export const Button: FC<ButtonProps> = ({
     icon,
     isIcon,
     onClick,
+    disabled
 }) => {
     return (
         <button
@@ -40,10 +42,12 @@ export const Button: FC<ButtonProps> = ({
                     isRounded && 'rounded-pill',
                     isActive && 'active',
                     isIcon && 'btn-icon',
-                    className
+                    className,
+                    disabled && 'btn-disabled'
                 )
             }
             onClick={onClick}
+            disabled={disabled}
         >
             {!isIcon && icon && <span className={`tf-icons bx bx-18px me-2 ${icon}`}></span>}
             {!isIcon && <span>{value}</span>}

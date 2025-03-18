@@ -18,6 +18,7 @@ import { InstituteSelector } from "@/features/Institute";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const [errors, setErrors] = useState<any>({})
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const defaultPartner: PartnerDto = {
         partnership_id: 0,
         agency_type: App.Enums.AgencyTypeEnum.COLAGE,
@@ -50,7 +51,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
-
+        setIsLoading(true);
         const formData = new FormData();
 
         if (isEditing) {
@@ -118,6 +119,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             } else {
                 errorToast("Something went wrong!");
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -145,6 +148,22 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
     return (
         <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
+            {isLoading && (
+                <div className="loading-overlay position-fixed d-flex justify-content-center align-items-center"
+                    style={{
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 9999
+                    }}>
+                    <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
+
             <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
             <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what user needs.</p>
 
@@ -155,7 +174,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                             <h5 className="mb-0 me-2"></h5>
 
                             <div className="card-header-elements ms-auto">
-                                <Button value="Simpan" icon="bx-save" isSubmit />
+                                <Button value="Simpan" icon="bx-save" isSubmit disabled={isLoading} />
                             </div>
                         </div>
                         <div className="card-body">
@@ -303,6 +322,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                     className="mt-4"
                                     value="Tambah Penggiat"
                                     onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
+                                    disabled={isLoading}
                                 />
                             </div>
                         </div>
@@ -348,6 +368,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                             activities: data.activities.filter((_, i) => i !== index)
                                                         });
                                                     }}
+                                                    disabled={isLoading}
                                                 />
                                             </div>
                                         </div>
