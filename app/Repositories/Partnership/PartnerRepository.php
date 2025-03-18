@@ -6,6 +6,7 @@ use App\Interfaces\BaseRepositoryInterface;
 use App\Models\Partnership\Partner;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\TModel;
 
 class PartnerRepository implements BaseRepositoryInterface
 {
@@ -66,5 +67,18 @@ class PartnerRepository implements BaseRepositoryInterface
         $query = $this->model->query();
 
         return $query->where($attributes)->exists();
+    }
+    /**
+     * @return Collection<int,TModel>
+     */
+    public function search(string $search, ?array $attributes = null): Collection
+    {
+        $query = $this->model->query();
+
+        if ($attributes) {
+            $query->where($attributes);
+        }
+
+        return $query->where('agency_name', 'like', "%{$search}%")->get();
     }
 }
