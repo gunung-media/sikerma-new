@@ -1,7 +1,9 @@
-import CreatableSelect from 'react-select/creatable';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import { FC, useEffect, useState } from "react";
 import { App } from '@/types/enum';
 import { kebabToTitle } from '@/utils/StringRalated';
+import axios from 'axios';
+import { PartnerType } from '../types';
 
 type PartnerSelectorProps = {
     className?: string
@@ -23,10 +25,25 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
     description
 }) => {
     const [types, setTypes] = useState<string[]>([])
+    const [selectedType, setSelectedType] = useState<string | null>(null)
 
     useEffect(() => {
         setTypes(Object.values(App.Enums.AgencyTypeEnum))
     }, [])
+
+    const searchPartner = async () => {
+        try {
+            const { data: { partners } } = await axios.get<{ partners: PartnerType[] }>(route('api.partners'))
+
+            return partners.map((partner) => ({
+                label: partner.agency_name,
+                value: partner.agency_name
+            }))
+
+        } catch (error) {
+            return []
+        }
+    }
 
     return (
         <div className={className}>
@@ -40,7 +57,10 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
             >
                 <select
                     value={typeValue}
-                    onChange={(e) => onChangeType(e.target.value)}
+                    onChange={(e) => {
+                        onChangeType(e.target.value);
+                        setSelectedType(e.target.value);
+                    }}
                     style={{
                         padding: '8px',
                         borderRadius: '4px',
@@ -58,11 +78,12 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
                 </select>
 
                 <div style={{ flex: 1, marginLeft: '-1px' }}>
-                    <CreatableSelect
+                    <AsyncCreatableSelect
                         value={value ? { label: value, value } : null}
                         onChange={(newVal: any) => onChangeValue(newVal ? newVal.value : null)}
                         onCreateOption={(newValue: string) => onChangeValue(newValue)}
-                        options={[]}
+                        defaultOptions
+                        loadOptions={searchPartner}
                         placeholder="Select or type to create"
                         styles={{
                             control: (provided) => ({

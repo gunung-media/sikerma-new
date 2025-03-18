@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { PartnerDto } from "../dtos";
 import { PartnerSelector } from "./PartnerSelector";
 import { Collapse } from "react-bootstrap";
