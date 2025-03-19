@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -81,6 +81,7 @@ class Partnership extends Model
         'document_fundamental',
         'institute_id',
         'document_path',
+        'final_document_path',
     ];
 
     protected $casts = [

@@ -36,11 +36,25 @@ class PartnershipRepository implements BaseRepositoryInterface
             $data['document_path'] = $filePath;
         }
 
+        if (isset($data['final_document_path']) && $data['final_document_path'] instanceof \Illuminate\Http\UploadedFile) {
+            $filePath = $data['final_document_path']->store('partnership_final_documents', 'public');
+            $data['final_document_path'] = $filePath;
+        }
+
         return $this->model->create($data);
     }
 
     public function update($id, array $data): bool
     {
+        if (isset($data['document_path']) && $data['document_path'] instanceof \Illuminate\Http\UploadedFile) {
+            $filePath = $data['document_path']->store('partnership_documents', 'public');
+            $data['document_path'] = $filePath;
+        }
+
+        if (isset($data['final_document_path']) && $data['final_document_path'] instanceof \Illuminate\Http\UploadedFile) {
+            $filePath = $data['final_document_path']->store('partnership_final_documents', 'public');
+            $data['final_document_path'] = $filePath;
+        }
         $query = $this->findById($id);
 
         return $query->update($data);

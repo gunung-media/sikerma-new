@@ -54,6 +54,7 @@ class PartnershipController extends Controller
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
             'document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
+            'final_document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
 
             'partners' => 'required|array',
             'partners.*.agency_type' => ['required', Rule::in(AgencyTypeEnum::getValues())],
@@ -91,6 +92,7 @@ class PartnershipController extends Controller
                 'document_number' => $validatedData['document_number'],
                 'document_fundamental' => $validatedData['document_fundamental'] ?? null,
                 'document_path' => $validatedData['document_path'] ?? null,
+                'final_document_path' => $validatedData['final_document_path'] ?? null,
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
                 'user_id' => auth()->guard('web')->user()->id,
@@ -156,6 +158,8 @@ class PartnershipController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
+            'document_path' => 'nullable',
+            'final_document_path' => 'nullable',
 
             // Partners Validation
             'partners' => 'nullable|array',
@@ -196,6 +200,8 @@ class PartnershipController extends Controller
                 'type' => $validatedData['type'],
                 'document_number' => $validatedData['document_number'],
                 'document_fundamental' => $validatedData['document_fundamental'] ?? null,
+                'document_path' => $validatedData['document_path'] ?? null,
+                'final_document_path' => $validatedData['final_document_path'] ?? null,
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'] ?? null,
                 'user_id' => $validatedData['user_id'] ?? auth()->guard('web')->user()->id,

@@ -43,6 +43,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         activities: [],
         institute_id: null,
         document_path: null,
+        final_document_path: null
     })
     const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
@@ -139,7 +140,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             partners: partnership.partners,
             activities: partnership.activities,
             document_fundamental: partnership.document_fundamental,
-            document_path: partnership.document_path
+            document_path: partnership.document_path,
+            final_document_path: partnership.final_document_path
         })
 
 
@@ -268,6 +270,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                     </div>
                 </div>
 
+
                 {(data.type === App.Enums.PartnershipTypeEnum.MOA || data.type === App.Enums.PartnershipTypeEnum.IA) && (
 
                     <div className="col-12 row mt-8">
@@ -369,6 +372,23 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                         </div>
                     </div>
                 )}
+
+                <div className="col-12 mt-8">
+                    <div className="card" style={{ padding: 0, margin: 0 }}>
+                        <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                            <strong>Dokumen Laporan Akhir</strong>
+                        </div>
+                        <div className="card-body">
+                            <Dropzone
+                                className="mt-5"
+                                value={typeof data.final_document_path === "string" ? data.final_document_path : null}
+                                onChange={(file) => {
+                                    setData({ ...data, final_document_path: file });
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
             </form >
         </AuthenticatedLayout >
     )
