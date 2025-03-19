@@ -9,6 +9,8 @@ import { FormEventHandler, useState } from "react";
 
 export default function Login() {
     const { errors } = usePage<PageProps>().props
+    const [isOpenPassword, setIsOpenPassword] = useState<boolean>(false)
+
     const [data, setData] = useState({
         username: '',
         password: '',
@@ -56,7 +58,7 @@ export default function Login() {
                 </div>
                 <div className="mb-6">
                     <Input
-                        type="password"
+                        type={isOpenPassword ? 'text' : 'password'}
                         name="password"
                         label="Password"
                         placeholder="**********"
@@ -65,7 +67,9 @@ export default function Login() {
                         value={data.password}
                         onChange={handleInputChange}
                     >
-                        <span className="input-group-text cursor-pointer"><i className="bx bx-hide"></i></span>
+                        <span className="input-group-text cursor-pointer" onClick={() => setIsOpenPassword(!isOpenPassword)}>
+                            <i className={`bx bx-${isOpenPassword ? 'hide' : 'show'}`}></i>
+                        </span>
                     </Input>
                 </div>
                 <div className="mb-8">
