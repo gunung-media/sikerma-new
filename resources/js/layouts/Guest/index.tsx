@@ -13,7 +13,7 @@ export const GuestLayout: FC<LayoutProps> = ({ children, title = "Login" }) => {
     return (
         <Fragment>
             <Head>
-                <title>{title}</title>
+                <title>{`SIKERMA | ${title}`}</title>
             </Head>
             <div className="container-xxl">
                 <div className="authentication-wrapper authentication-basic container-p-y">

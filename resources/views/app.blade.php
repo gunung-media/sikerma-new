@@ -18,18 +18,17 @@
     <meta property="og:title" content="Sikerma - Sistem Kerjasama Universitas Palangkaraya" />
     <meta property="og:description"
         content="Kelola dokumen kerjasama seperti MoU, MoA, dan IA dengan mudah menggunakan Sikerma." />
-    <meta property="og:image" content="https://yourdomain.com/sikerma-logo.png" />
-    <meta property="og:url" content="https://yourdomain.com/sikerma" />
+    <meta property="og:image" content="{{ asset('android-chrome-512x512.png') }}" />
+    <meta property="og:url" content="https://sikerma.upr.ac.id/" />
     <meta property="og:type" content="website" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Sikerma - Sistem Kerjasama Universitas Palangkaraya" />
     <meta name="twitter:description" content="Sistem untuk mengelola dokumen kerjasama seperti MoU, MoA, dan IA." />
-    <meta name="twitter:image" content="https://yourdomain.com/sikerma-logo.png" />
+    <meta name="twitter:image" content="{{ asset('android-chrome-512x512.png') }}" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon"
-        href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />

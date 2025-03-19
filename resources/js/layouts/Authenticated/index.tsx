@@ -18,7 +18,7 @@ export const AuthenticatedLayout: FC<LayoutProps> = ({ title, children }) => {
     return (
         <Fragment>
             <Head>
-                <title>{title}</title>
+                <title>{`SIKERMA | ${title}`}</title>
             </Head>
             <div className="layout-wrapper layout-content-navbar">
                 <div className="layout-container">
