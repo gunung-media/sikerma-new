@@ -8,9 +8,10 @@ type PartnershipTypeSelectorProps = {
     error?: string
     value?: string
     description?: string
+    disabled?: boolean
 }
 
-export const PartnershipTypeSelector: FC<PartnershipTypeSelectorProps> = ({ className, onChange, error, value, description }) => {
+export const PartnershipTypeSelector: FC<PartnershipTypeSelectorProps> = ({ className, onChange, error, value, description, disabled }) => {
     const [status, setType] = useState<string[]>([]);
 
     useEffect(() => {
@@ -26,6 +27,7 @@ export const PartnershipTypeSelector: FC<PartnershipTypeSelectorProps> = ({ clas
             className={className}
             errorMessage={error}
             description={description}
+            disabled={disabled}
         />
     );
 };

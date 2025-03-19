@@ -13,9 +13,10 @@ type SelectProps = {
     errorMessage?: string;
     description?: string;
     className?: string;
+    disabled?: boolean
 };
 
-export const CustomSelect: FC<SelectProps> = ({ label, name, value, options, onChange, errorMessage, description, className }) => {
+export const CustomSelect: FC<SelectProps> = ({ label, name, value, options, onChange, errorMessage, description, className, disabled }) => {
 
     const selectedOption = options.find((option) => option.value === value) || null;
 
@@ -36,6 +37,7 @@ export const CustomSelect: FC<SelectProps> = ({ label, name, value, options, onC
                 value={selectedOption}
                 onChange={handleChange}
                 className={mergeClass(errorMessage ? 'is-invalid' : '')}
+                isDisabled={disabled}
             />
             {errorMessage && <div className="invalid-feedback">{errorMessage}</div>}
             {description && <div className="form-text">{description}</div>}
