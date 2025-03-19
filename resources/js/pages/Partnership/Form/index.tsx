@@ -1,4 +1,4 @@
-import { PartnershipDto, PartnershipStatusSelector, PartnershipType, PartnershipTypeSelector } from "@/features/Partnership";
+import { PartnershipDto, PartnershipSelector, PartnershipStatusSelector, PartnershipType, PartnershipTypeSelector } from "@/features/Partnership";
 import { AuthenticatedLayout } from "@/layouts/Authenticated";
 import { PageProps } from "@/types";
 import { errorToast, successToast } from "@/utils/Toast";
@@ -14,7 +14,6 @@ import { PartnerDto, PartnerForm } from "@/features/Partner";
 import { ActivitySelector } from "@/features/FieldActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
-import { InstituteSelector } from "@/features/Institute";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const [errors, setErrors] = useState<any>({})
@@ -182,28 +181,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                 <div className="col-12 col-md-4">
                                     <div className="card mb-4">
                                         <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                                            <strong>Data Perguruan Tinggi</strong>
-                                        </div>
-                                        <div className="card-body">
-                                            <InstituteSelector
-                                                className="mb-3 mt-3"
-                                                value={data?.institute_id ?? undefined}
-                                                onChange={(value) => setData({ ...data, institute_id: value })}
-                                                error={errors.faculty_id}
-                                                description="* Biarkan kosong jika pelaksana bukan dari Institusi "
-                                            />
-                                            <Input
-                                                label="Lainnya"
-                                                placeholder=' Masukkan "," jika pelaksana lebih dari satu'
-                                                value={data.executor ?? undefined}
-                                                onChange={(e) => setData({ ...data, executor: e.target.value })}
-                                                description="* Inputan ini juga berfungsi apabila jika pelaksana bukan Fakultas / Prodi, Misal : Rektorat, UPT, dll"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="card mb-4">
-                                        <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
                                             <strong>Masa Berlaku</strong>
                                         </div>
                                         <div className="card-body">
@@ -256,13 +233,13 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         value={data?.type ?? undefined}
                                         onChange={(value) => setData({ ...data, type: value })}
                                         className="mb-3 "
+                                        disabled={isEditing}
                                     />
                                     {(data.type === App.Enums.PartnershipTypeEnum.MOA || data.type === App.Enums.PartnershipTypeEnum.IA) && (
-                                        <Input
-                                            label="Dasar Dokumen Kerjasama"
+                                        <PartnershipSelector
                                             value={data.document_fundamental ?? undefined}
-                                            onChange={(e) => setData({ ...data, document_fundamental: e.target.value })}
-                                            errorMessage={errors.document_fundamental}
+                                            onChange={(e) => setData({ ...data, document_fundamental: e })}
+                                            error={errors.document_fundamental}
                                             className="mb-3"
                                         />
                                     )}
@@ -284,7 +261,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         label="Deskripsi"
                                         value={data.description ?? undefined}
                                         onChange={(e) => setData({ ...data, description: e })}
-                                        height={500}
                                     />
                                 </div>
                             </div>
@@ -292,103 +268,107 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                     </div>
                 </div>
 
-                <div className="col-12 row mt-8">
-                    <div className="col-12 col-md-6">
-                        <div className="card">
-                            <div className="card-header">
-                                <h5 className="mb-0 me-2">
-                                    <strong>Penggiat Kerjasama</strong>
-                                </h5>
-                            </div>
+                {(data.type === App.Enums.PartnershipTypeEnum.MOA || data.type === App.Enums.PartnershipTypeEnum.IA) && (
 
-                            <div className="card-body">
-                                {data.partners.map((partner, index) => (
-                                    <PartnerForm
-                                        key={index}
-                                        index={index}
-                                        partner={partner}
-                                        selectedPartner={selectedPartner}
-                                        errors={errors}
-                                        setSelectedPartner={(value) => setSelectedPartner(value)}
-                                        onChange={(index, value) => {
-                                            const newPartners = [...data.partners];
-                                            newPartners[index] = value;
-                                            setData({ ...data, partners: newPartners });
-                                        }}
+                    <div className="col-12 row mt-8">
+                        <div className="col-12 col-md-6">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h5 className="mb-0 me-2">
+                                        <strong>Penggiat Kerjasama</strong>
+                                    </h5>
+                                </div>
+
+                                <div className="card-body">
+                                    {data.partners.map((partner, index) => (
+                                        <PartnerForm
+                                            key={index}
+                                            index={index}
+                                            partner={partner}
+                                            selectedPartner={selectedPartner}
+                                            errors={errors}
+                                            setSelectedPartner={(value) => setSelectedPartner(value)}
+                                            onChange={(index, value) => {
+                                                const newPartners = [...data.partners];
+                                                newPartners[index] = value;
+                                                setData({ ...data, partners: newPartners });
+                                            }}
+                                            onDelete={(index) => setData({ ...data, partners: data.partners.filter((_, i) => i !== index) })}
+                                        />
+                                    ))}
+
+                                    <Button
+                                        className="mt-4"
+                                        value="Tambah Penggiat"
+                                        onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
+                                        disabled={isLoading}
                                     />
-                                ))}
-
-                                <Button
-                                    className="mt-4"
-                                    value="Tambah Penggiat"
-                                    onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
-                                    disabled={isLoading}
-                                />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="col-12 col-md-6">
-                        <div className="card">
-                            <div className="card-header">
-                                <h5 className="mb-0 me-2">
-                                    <strong>Bentuk Kegiatan</strong>
-                                </h5>
-                            </div>
+                        <div className="col-12 col-md-6">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h5 className="mb-0 me-2">
+                                        <strong>Bentuk Kegiatan</strong>
+                                    </h5>
+                                </div>
 
-                            <div className="card-body">
-                                <ActivitySelector
-                                    onChange={(value, name) => {
-                                        setData({
-                                            // @ts-expect-error
-                                            ...data, activities: [...data.activities, {
-                                                field_activity_id: value, partnership_id: name, field_activity: {
-                                                    id: 0,
-                                                    name: name
-                                                }
-                                            }]
-                                        })
-                                    }}
-                                />
+                                <div className="card-body">
+                                    <ActivitySelector
+                                        onChange={(value, name) => {
+                                            setData({
+                                                // @ts-expect-error
+                                                ...data, activities: [...data.activities, {
+                                                    field_activity_id: value, partnership_id: name, field_activity: {
+                                                        id: 0,
+                                                        name: name
+                                                    }
+                                                }]
+                                            })
+                                        }}
+                                    />
 
-                                {data.activities.map((activity, index) => (
-                                    <div className="card mt-5" key={index}>
-                                        <div className="card-header header-elements" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                                            <small>{kebabToTitle(activity.field_activity?.name ?? "")}</small>
+                                    {data.activities.map((activity, index) => (
+                                        <div className="card mt-5" key={index}>
+                                            <div className="card-header header-elements" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                                                <small>{kebabToTitle(activity.field_activity?.name ?? "")}</small>
 
-                                            <div className="card-header-elements ms-auto">
-                                                <Button
-                                                    value="Delete"
-                                                    icon="bx-trash"
-                                                    isIcon
-                                                    size="xs"
-                                                    onClick={() => {
-                                                        setData({
-                                                            ...data,
-                                                            activities: data.activities.filter((_, i) => i !== index)
-                                                        });
+                                                <div className="card-header-elements ms-auto">
+                                                    <Button
+                                                        value="Delete"
+                                                        icon="bx-trash"
+                                                        isIcon
+                                                        size="xs"
+                                                        onClick={() => {
+                                                            setData({
+                                                                ...data,
+                                                                activities: data.activities.filter((_, i) => i !== index)
+                                                            });
+                                                        }}
+                                                        disabled={isLoading}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="card-body mt-5">
+                                                <Dropzone
+                                                    value={activity.document_path}
+                                                    onChange={(file) => {
+                                                        const newActivities = [...data.activities];
+                                                        newActivities[index] = { ...activity, file: file };
+                                                        setData({ ...data, activities: newActivities });
                                                     }}
-                                                    disabled={isLoading}
                                                 />
                                             </div>
                                         </div>
-                                        <div className="card-body mt-5">
-                                            <Dropzone
-                                                value={activity.document_path}
-                                                onChange={(file) => {
-                                                    const newActivities = [...data.activities];
-                                                    newActivities[index] = { ...activity, file: file };
-                                                    setData({ ...data, activities: newActivities });
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))}
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </form >
         </AuthenticatedLayout >
     )

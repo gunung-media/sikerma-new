@@ -6,7 +6,6 @@ use App\Interfaces\BaseRepositoryInterface;
 use App\Models\Partnership\Partnership;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\TModel;
 use Illuminate\Support\Facades\DB;
 
 class PartnershipRepository implements BaseRepositoryInterface
@@ -74,6 +73,14 @@ class PartnershipRepository implements BaseRepositoryInterface
         $query = $this->model->query();
 
         return $query->where($attributes)->exists();
+    }
+
+    public function getByAttributes(array $attributes)
+    {
+        $query = $this->model->query();
+
+
+        return $query->where($attributes)->get();
     }
 
     public function getYearlyPartnerships(?int $year = null): Collection

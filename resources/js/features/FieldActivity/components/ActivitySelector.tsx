@@ -17,7 +17,6 @@ export const ActivitySelector: FC<ActivitySelectorProps> = ({ className, onChang
 
     const getActivity = async () => {
         const { data } = await axios.get(route('api.activities'))
-        console.log(data)
         setActivity(data.activities)
     }
 

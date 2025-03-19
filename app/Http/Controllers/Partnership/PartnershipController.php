@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Partnership;
 
+use Illuminate\Validation\Rule;
 use App\Enums\AgencyTypeEnum;
 use App\Enums\PartnershipStatusEnum;
 use App\Enums\PartnershipTypeEnum;
@@ -39,29 +40,46 @@ class PartnershipController extends Controller
 
     public function store(Request $request): JsonResponse|RedirectResponse
     {
+
         $validatedData = $request->validate([
-            'type' => 'required|in:' . implode(',', PartnershipTypeEnum::getValues()),
+            'type' => ['required', Rule::in(PartnershipTypeEnum::getValues())],
             'document_number' => 'required|string|max:255',
             'document_fundamental' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'user_id' => 'nullable|exists:users,id',
-            'status' => 'required|in:' . implode(',', PartnershipStatusEnum::getValues()),
+            'status' => ['required', Rule::in(PartnershipStatusEnum::getValues())],
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
             'document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
+
             'partners' => 'required|array',
-            'partners.*.agency_type' => 'required|in:' . implode(',', AgencyTypeEnum::getValues()),
-            'partners.*.agency_name' => 'required|string|max:255',
-            'partners.*.agency_address' => 'required|string|max:255',
-            'partners.*.signatory_name' => 'required|string|max:255',
-            'partners.*.signatory_position' => 'required|string|max:255',
+            'partners.*.agency_type' => ['required', Rule::in(AgencyTypeEnum::getValues())],
+
+            'partners.*.agency_name' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+            'partners.*.agency_address' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+            'partners.*.signatory_name' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+            'partners.*.signatory_position' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+
             'partners.*.responsible_name' => 'nullable|string|max:255',
             'partners.*.responsible_position' => 'nullable|string|max:255',
+
             'activities' => 'nullable|array',
-            'activities.*.field_activity_id' => 'required',
+            'activities.*.field_activity_id' => 'required|integer',
             'activities.*.file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 
@@ -83,14 +101,16 @@ class PartnershipController extends Controller
                 'institute_id' => $validatedData['institute_id'] ?? null,
             ]);
 
-            foreach ($validatedData['partners'] as $partnerData) {
-                $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
-            }
+            if ($validatedData['type'] !== PartnershipTypeEnum::MOU->value) {
+                foreach ($validatedData['partners'] as $partnerData) {
+                    $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
+                }
 
-            if (isset($validatedData['activities'])) {
-                foreach ($validatedData['activities'] as $activityData) {
-                    $activityData['partnership_id'] = null;
-                    $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
+                if (isset($validatedData['activities'])) {
+                    foreach ($validatedData['activities'] as $activityData) {
+                        $activityData['partnership_id'] = null;
+                        $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
+                    }
                 }
             }
 
@@ -125,33 +145,48 @@ class PartnershipController extends Controller
     public function update(Request $request, string $id): JsonResponse|RedirectResponse
     {
         $validatedData = $request->validate([
-            'type' => 'required|in:' . implode(',', PartnershipTypeEnum::getValues()),
+            'type' => ['required', Rule::in(PartnershipTypeEnum::getValues())],
             'document_number' => 'required|string|max:255',
             'document_fundamental' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'user_id' => 'nullable|exists:users,id',
-            'status' => 'required|in:' . implode(',', PartnershipStatusEnum::getValues()),
+            'status' => ['required', Rule::in(PartnershipStatusEnum::getValues())],
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
+
+            // Partners Validation
             'partners' => 'nullable|array',
             'partners.*.id' => 'nullable|exists:partners,id',
-            'partners.*.agency_type' => 'required|in:' . implode(',', AgencyTypeEnum::getValues()),
-            'partners.*.agency_name' => 'required|string|max:255',
-            'partners.*.agency_address' => 'required|string|max:255',
-            'partners.*.signatory_name' => 'required|string|max:255',
-            'partners.*.signatory_position' => 'required|string|max:255',
+            'partners.*.agency_type' => ['nullable', Rule::in(AgencyTypeEnum::getValues())],
+            'partners.*.agency_name' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+            'partners.*.agency_address' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+            'partners.*.signatory_name' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
+            'partners.*.signatory_position' => [
+                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
+                'max:255'
+            ],
             'partners.*.responsible_name' => 'nullable|string|max:255',
             'partners.*.responsible_position' => 'nullable|string|max:255',
+
+            // Activities Validation
             'activities' => 'nullable|array',
             'activities.*.id' => 'nullable|exists:partnership_activities,id',
-            'activities.*.field_activity_id' => 'required',
-            'activities.*.file' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx',
-            'activities.*.document_path' => 'nullable',
+            'activities.*.field_activity_id' => 'required|integer',
+            'activities.*.file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
+            'activities.*.document_path' => 'nullable|string',
         ]);
-
         DB::beginTransaction();
 
         try {
