@@ -63,7 +63,7 @@ export const Sidebar = () => {
         <aside
             id="layout-menu"
             className="layout-menu menu-vertical menu bg-menu-theme"
-            style={{ zIndex: 1059 }}
+            style={{ zIndex: 9999 }}
         >
             <div className="app-brand demo">
                 <a href={route("dashboard")} className="app-brand-link">

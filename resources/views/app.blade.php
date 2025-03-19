@@ -64,6 +64,11 @@
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+    <style>
+        .swal2-container.swal2-center.swal2-backdrop-show {
+            z-index: 9999
+        }
+    </style>
 
     @routes
     @viteReactRefresh
