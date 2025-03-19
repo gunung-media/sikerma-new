@@ -33,7 +33,7 @@ export const DatePicker: FC<DatePickerProps> = ({
                 onChange={([date]) => onChange(date)}
                 options={{
                     inline: inline,
-                    dateFormat: inline ? "Y-m-d" : "Y-m-d H:i",
+                    dateFormat: inline ? "Y-m-d" : "Y-m-d",
                     enableTime: enableTime,
                     minDate: minDate,
                     maxDate: maxDate
