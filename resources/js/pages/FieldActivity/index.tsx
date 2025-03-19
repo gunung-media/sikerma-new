@@ -71,16 +71,16 @@ export default function FieldActivity({ data }: PageProps & {
 
 
     return (
-        <AuthenticatedLayout title="Bidang Kegiatan">
-            <h4 className="mb-1">List Bidang Kegiatan</h4>
+        <AuthenticatedLayout title="Bentuk Kegiatan">
+            <h4 className="mb-1">List Bentuk Kegiatan</h4>
 
-            <p className="mb-6">List fakultas yang ada di aplikasi ini</p>
+            <p className="mb-6">List bentuk kegiatan yang ada di aplikasi ini</p>
 
             <div className="card">
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    <Button value="Tambah Bidang Kegiatan" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
+                    <Button value="Tambah Bentuk Kegiatan" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable
@@ -119,7 +119,7 @@ export default function FieldActivity({ data }: PageProps & {
                     setSelectedId(null)
                     setShowForm(false)
                 }}
-                title={selectedId ? "Edit Bidang Kegiatan" : "Tambah Bidang Kegiatan"}
+                title={selectedId ? "Edit Bentuk Kegiatan" : "Tambah Bentuk Kegiatan"}
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input

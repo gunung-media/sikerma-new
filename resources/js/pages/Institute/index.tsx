@@ -78,7 +78,7 @@ export default function Institute({ data }: PageProps & {
         <AuthenticatedLayout title="Institusi">
             <h4 className="mb-1">List Institusi</h4>
 
-            <p className="mb-6">List fakultas yang ada di aplikasi ini</p>
+            <p className="mb-6">List Institusi yang ada di aplikasi ini</p>
 
             <div className="card">
                 <div className="card-header d-flex align-items-center justify-content-between">
