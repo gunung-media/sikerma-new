@@ -11,6 +11,7 @@ type PartnerFormProps = {
     selectedPartner: number | null
     setSelectedPartner: (value: number | null) => void,
     onChange: (index: number, value: PartnerDto) => void
+    onDelete: (index: number) => void
     errors?: any
 }
 
@@ -21,6 +22,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
     selectedPartner,
     setSelectedPartner,
     onChange,
+    onDelete,
     errors,
 }) => {
     return (
@@ -29,6 +31,15 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                 <p className="mb-0 me-2">Pihak {`${index + 1} (${partner.agency_type})`}</p>
 
                 <div className="card-header-elements ms-auto">
+                    {index !== 0 && (
+                        <Button
+                            value="Delete"
+                            icon="bx-trash"
+                            isIcon
+                            size="xs"
+                            onClick={() => onDelete(index)}
+                        />
+                    )}
                     <Button
                         value="Collapse"
                         icon={selectedPartner === index ? "bx-chevron-up" : "bx-chevron-down"}
@@ -66,30 +77,27 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                         <hr />
                         <h6 className="mb-0">Penandatangan</h6>
                         <small className="mt-0 text-xs">Pejabat yang menandatangani dokumen</small>
-                        <div className="row mt-4">
-                            <Input
-                                label="Nama"
-                                placeholder="Nama Pejabat"
-                                value={partner.signatory_name ?? undefined}
-                                onChange={(e) => {
-                                    onChange(index, { ...partner, signatory_name: e.target.value })
-                                }}
-                                className="col-6"
-                                errorMessage={errors?.[`partners.${index}.signatory_name`]}
-                            />
+                        <Input
+                            label="Nama"
+                            placeholder="Nama Pejabat"
+                            value={partner.signatory_name ?? undefined}
+                            onChange={(e) => {
+                                onChange(index, { ...partner, signatory_name: e.target.value })
+                            }}
+                            className="mt-4"
+                            errorMessage={errors?.[`partners.${index}.signatory_name`]}
+                        />
 
-                            <Input
-                                label="Jabatan"
-                                placeholder="Jabatan Pejabat"
-                                value={partner.signatory_position ?? undefined}
-                                onChange={(e) => {
-                                    onChange(index, { ...partner, signatory_position: e.target.value })
-                                }}
-                                className="col-6"
-                                errorMessage={errors?.[`partners.${index}.signatory_position`]}
-                            />
-                        </div>
-
+                        <Input
+                            label="Jabatan"
+                            placeholder="Jabatan Pejabat"
+                            value={partner.signatory_position ?? undefined}
+                            onChange={(e) => {
+                                onChange(index, { ...partner, signatory_position: e.target.value })
+                            }}
+                            className="mt-4"
+                            errorMessage={errors?.[`partners.${index}.signatory_position`]}
+                        />
                         <hr />
                         <h6 className="mb-0">Penanggung Jawab (Jika Ada)
                             <i
@@ -102,7 +110,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                         </h6>
 
                         <Collapse in={partner.responsible_name !== null}>
-                            <div className="row mt-4">
+                            <div>
                                 <Input
                                     label="Nama"
                                     placeholder="Nama Pejabat"
@@ -110,7 +118,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                     onChange={(e) => {
                                         onChange(index, { ...partner, signatory_name: e.target.value })
                                     }}
-                                    className="col-6"
+                                    className="mt-4"
                                 />
 
                                 <Input
@@ -120,7 +128,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                     onChange={(e) => {
                                         onChange(index, { ...partner, signatory_position: e.target.value })
                                     }}
-                                    className="col-6"
+                                    className="mt-4"
                                 />
                             </div>
                         </Collapse>
