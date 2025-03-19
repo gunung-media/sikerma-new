@@ -35,7 +35,7 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
     };
 
     useEffect(() => {
-        toPDF();
+        // toPDF();
     }, []);
 
     return (
@@ -64,9 +64,9 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
                             </td>
                         </tr>
                         <tr>
-                            <td className="fw-bold text-center align-top" rowSpan={partnership.partners?.length ? partnership.partners.length + 1 : 2}>3.</td>
-                            <td className="fw-bold align-top" rowSpan={partnership.partners?.length ? partnership.partners.length + 1 : 2}>MITRA KERJA SAMA</td>
-                            <td className="fw-bold text-center align-top" rowSpan={partnership.partners?.length ? partnership.partners.length + 1 : 2}>:</td>
+                            <td className="fw-bold text-center align-top" rowSpan={partnership.partners?.length ? partnership.partners.length + 1 : 1}>3.</td>
+                            <td className="fw-bold align-top" rowSpan={partnership.partners?.length ? partnership.partners.length + 1 : 1}>MITRA KERJA SAMA</td>
+                            <td className="fw-bold text-center align-top" rowSpan={partnership.partners?.length ? partnership.partners.length + 1 : 1}>:</td>
                             {!partnership.partners?.length && <td>-</td>}
                         </tr>
                         {partnership.partners?.map((partner, index) => (
@@ -75,9 +75,9 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
                             </tr>
                         ))}
                         <tr>
-                            <td className="fw-bold text-center align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 2}>4.</td>
-                            <td className="fw-bold align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 2}>RUANG LINGKUP</td>
-                            <td className="fw-bold text-center align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 2}>:</td>
+                            <td className="fw-bold text-center align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 1}>4.</td>
+                            <td className="fw-bold align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 1}>RUANG LINGKUP</td>
+                            <td className="fw-bold text-center align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 1}>:</td>
                             {!partnership.activities?.length && <td>-</td>}
                         </tr>
                         {partnership.activities?.map((activity, index) => (
