@@ -9,6 +9,7 @@ import { Margin, usePDF } from 'react-to-pdf';
 export default function Printable({ partnership }: PageProps<{ partnership: PartnershipType }>) {
     const { props } = usePage<PageProps>();
     const containerRef = useRef<HTMLDivElement>(null);
+    const documentLength = ((partnership?.activities.length ?? 0) + 1) + (partnership.document_path ? 1 : 0) + (partnership.final_document_path ? 1 : 0)
 
     const { toPDF, targetRef } = usePDF({
         filename: `laporan-kerja-sama-${partnership.document_number?.replace(/\//g, '-') || 'dokumen'}.pdf`,
@@ -98,10 +99,16 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
                             </td>
                         </tr>
                         <tr>
-                            <td className="fw-bold text-center align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 2}>6.</td>
-                            <td className="fw-bold align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 2}>TAUTAN/LINK DOKUMENTASI KEGIATAN</td>
-                            <td className="fw-bold text-center align-top" rowSpan={partnership.activities?.length ? partnership.activities.length + 1 : 2}>:</td>
-                            {!partnership.activities?.length && <td>-</td>}
+                            <td className="fw-bold text-center align-top" rowSpan={documentLength}>6.</td>
+                            <td className="fw-bold align-top" rowSpan={documentLength}>TAUTAN/LINK DOKUMENTASI KEGIATAN</td>
+                            <td className="fw-bold text-center align-top" rowSpan={documentLength}>:</td>
+                        </tr>
+                        <tr>
+                            <td>Dokumen: {partnership.document_path ? <a href={`${props.storageUrl}/${partnership.document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Dokumen Laporan Akhir: {partnership.final_document_path ? <a href={`${props.storageUrl}/${partnership.final_document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
                         </tr>
                         {partnership.activities?.map((activity, index) => (
                             <tr key={`activity-doc-${index}`}>
