@@ -36,7 +36,7 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
     };
 
     useEffect(() => {
-        // toPDF();
+        toPDF();
     }, []);
 
     return (
