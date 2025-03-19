@@ -103,13 +103,17 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
                             <td className="fw-bold align-top" rowSpan={documentLength}>TAUTAN/LINK DOKUMENTASI KEGIATAN</td>
                             <td className="fw-bold text-center align-top" rowSpan={documentLength}>:</td>
                         </tr>
-                        <tr>
-                            <td>Dokumen: {partnership.document_path ? <a href={`${props.storageUrl}/${partnership.document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
+                        {partnership.document_path && (
+                            <tr>
+                                <td>Dokumen: {partnership.document_path ? <a href={`${props.storageUrl}/${partnership.document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
 
-                        </tr>
-                        <tr>
-                            <td>Dokumen Laporan Akhir: {partnership.final_document_path ? <a href={`${props.storageUrl}/${partnership.final_document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
-                        </tr>
+                            </tr>
+                        )}
+                        {partnership.final_document_path && (
+                            <tr>
+                                <td>Dokumen Laporan Akhir: {partnership.final_document_path ? <a href={`${props.storageUrl}/${partnership.final_document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
+                            </tr>
+                        )}
                         {partnership.activities?.map((activity, index) => (
                             <tr key={`activity-doc-${index}`}>
                                 <td>
