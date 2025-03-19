@@ -38,7 +38,7 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'multiple',
-        label: 'Kampus',
+        label: 'Universitas',
         icon: 'bx-calendar',
         isSuperAdmin: true,
         items: [
@@ -61,7 +61,7 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'single',
-        label: 'Bidang Kegiatan',
+        label: 'Bentuk Kegiatan',
         icon: 'bx-walk',
         url: 'master.field-activities.index',
         isSuperAdmin: true,
