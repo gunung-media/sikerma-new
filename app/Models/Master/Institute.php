@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute newQuery()
@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute whereWebsite($value)
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Partnership> $partnerships
  * @property-read int|null $partnerships_count
+ * @mixin \Illuminate\Database\Eloquent\Builder
  * @mixin \Eloquent
  */
 class Institute extends Model

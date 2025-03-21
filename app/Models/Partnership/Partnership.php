@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -64,6 +64,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read mixed $year
  * @property string|null $document_path
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDocumentPath($value)
+ * @property string|null $final_document_path
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereFinalDocumentPath($value)
  * @mixin \Eloquent
  */
 class Partnership extends Model

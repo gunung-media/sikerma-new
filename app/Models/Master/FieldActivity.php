@@ -5,7 +5,7 @@ namespace App\Models\Master;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldActivity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldActivity whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldActivity whereUpdatedAt($value)
+ * @mixin \Illuminate\Database\Eloquent\Builder
  * @mixin \Eloquent
  */
 class FieldActivity extends Model

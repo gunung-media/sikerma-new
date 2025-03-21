@@ -167,7 +167,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             )}
 
             <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
-            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what user needs.</p>
+            <p className="mb-6">Kerjasama</p>
 
             <form className="row" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="col-12 ">
