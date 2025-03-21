@@ -138,6 +138,7 @@ export default function Institute({ data }: PageProps & {
                 handleClose={() => {
                     setSelectedId(null)
                     setShowForm(false)
+                    setInstitute({ name: '', type: '', is_active: true })
                 }}
                 title={selectedId ? "Edit Institusi" : "Tambah Institusi"}
             >

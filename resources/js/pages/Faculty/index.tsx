@@ -121,6 +121,7 @@ export default function Faculty({ data }: PageProps & {
                 handleClose={() => {
                     setSelectedId(null)
                     setShowForm(false)
+                    setFaculty({ name: '' })
                 }}
                 title={selectedId ? "Edit Fakultas" : "Tambah Fakultas"}
             >

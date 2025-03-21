@@ -118,6 +118,7 @@ export default function FieldActivity({ data }: PageProps & {
                 handleClose={() => {
                     setSelectedId(null)
                     setShowForm(false)
+                    setFieldActivity({ name: '' })
                 }}
                 title={selectedId ? "Edit Bentuk Kegiatan" : "Tambah Bentuk Kegiatan"}
             >

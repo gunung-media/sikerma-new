@@ -115,6 +115,7 @@ export default function StudyProgram({ data }: PageProps & {
                 handleClose={() => {
                     setSelectedId(null)
                     setShowForm(false)
+                    setStudyProgram({ name: '', faculty_id: 0 })
                 }}
                 title={selectedId ? "Edit Fakultas" : "Tambah Fakultas"}
             >

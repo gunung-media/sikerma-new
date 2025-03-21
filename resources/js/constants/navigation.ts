@@ -67,6 +67,12 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         isSuperAdmin: true,
     },
     {
+        type: 'single',
+        label: 'Document',
+        icon: 'bx-file',
+        url: 'master.documents.index',
+    },
+    {
         type: 'header',
         label: 'Menu'
     },
