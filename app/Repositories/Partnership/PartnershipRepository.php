@@ -17,6 +17,11 @@ class PartnershipRepository implements BaseRepositoryInterface
     public function getAll(): Collection
     {
         $query = $this->model->query();
+        $user = auth()->guard('web')->user();
+
+        if (!$user->is_super_admin) {
+            $query->where('user_id', $user->id);
+        }
 
         return $query->get();
     }
