@@ -58,24 +58,10 @@ class PartnershipController extends Controller
 
             'partners' => 'required|array',
             'partners.*.agency_type' => ['required', Rule::in(AgencyTypeEnum::getValues())],
-
-            'partners.*.agency_name' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-            'partners.*.agency_address' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-            'partners.*.signatory_name' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-            'partners.*.signatory_position' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-
+            'partners.*.agency_name' => ['required', 'max:255'],
+            'partners.*.agency_address' => ['required', 'max:255'],
+            'partners.*.signatory_name' => ['required', 'max:255'],
+            'partners.*.signatory_position' => ['required', 'max:255'],
             'partners.*.responsible_name' => 'nullable|string|max:255',
             'partners.*.responsible_position' => 'nullable|string|max:255',
 
@@ -103,11 +89,11 @@ class PartnershipController extends Controller
                 'institute_id' => $validatedData['institute_id'] ?? null,
             ]);
 
-            if ($validatedData['type'] !== PartnershipTypeEnum::MOU->value) {
-                foreach ($validatedData['partners'] as $partnerData) {
-                    $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
-                }
+            foreach ($validatedData['partners'] as $partnerData) {
+                $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
+            }
 
+            if ($validatedData['type'] !== PartnershipTypeEnum::MOU->value) {
                 if (isset($validatedData['activities'])) {
                     foreach ($validatedData['activities'] as $activityData) {
                         $activityData['partnership_id'] = null;
@@ -165,22 +151,10 @@ class PartnershipController extends Controller
             'partners' => 'nullable|array',
             'partners.*.id' => 'nullable|exists:partners,id',
             'partners.*.agency_type' => ['nullable', Rule::in(AgencyTypeEnum::getValues())],
-            'partners.*.agency_name' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-            'partners.*.agency_address' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-            'partners.*.signatory_name' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
-            'partners.*.signatory_position' => [
-                Rule::requiredIf($request->input('type') !== PartnershipTypeEnum::MOU->value),
-                'max:255'
-            ],
+            'partners.*.agency_name' => ['required', 'max:255'],
+            'partners.*.agency_address' => ['required', 'max:255'],
+            'partners.*.signatory_name' => ['required', 'max:255'],
+            'partners.*.signatory_position' => ['required', 'max:255'],
             'partners.*.responsible_name' => 'nullable|string|max:255',
             'partners.*.responsible_position' => 'nullable|string|max:255',
 

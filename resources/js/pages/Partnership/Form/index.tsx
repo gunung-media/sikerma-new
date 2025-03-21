@@ -48,6 +48,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
     const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
     const isEditing = !!partnership
+    const isNotMOU = data.type !== App.Enums.PartnershipTypeEnum.MOU
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
@@ -237,7 +238,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         className="mb-3 "
                                         disabled={isEditing}
                                     />
-                                    {(data.type === App.Enums.PartnershipTypeEnum.MOA || data.type === App.Enums.PartnershipTypeEnum.IA) && (
+                                    {(isNotMOU) && (
                                         <PartnershipSelector
                                             value={data.document_fundamental ?? undefined}
                                             onChange={(e) => setData({ ...data, document_fundamental: e })}
@@ -269,47 +270,44 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                         </div>
                     </div>
                 </div>
+                <div className="col-12 row mt-8">
+                    <div className={`col-12 col-md-${isNotMOU ? 6 : 12}`}>
+                        <div className="card">
+                            <div className="card-header">
+                                <h5 className="mb-0 me-2">
+                                    <strong>Penggiat Kerjasama</strong>
+                                </h5>
+                            </div>
 
-
-                {(data.type === App.Enums.PartnershipTypeEnum.MOA || data.type === App.Enums.PartnershipTypeEnum.IA) && (
-
-                    <div className="col-12 row mt-8">
-                        <div className="col-12 col-md-6">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h5 className="mb-0 me-2">
-                                        <strong>Penggiat Kerjasama</strong>
-                                    </h5>
-                                </div>
-
-                                <div className="card-body">
-                                    {data.partners.map((partner, index) => (
-                                        <PartnerForm
-                                            key={index}
-                                            index={index}
-                                            partner={partner}
-                                            selectedPartner={selectedPartner}
-                                            errors={errors}
-                                            setSelectedPartner={(value) => setSelectedPartner(value)}
-                                            onChange={(index, value) => {
-                                                const newPartners = [...data.partners];
-                                                newPartners[index] = value;
-                                                setData({ ...data, partners: newPartners });
-                                            }}
-                                            onDelete={(index) => setData({ ...data, partners: data.partners.filter((_, i) => i !== index) })}
-                                        />
-                                    ))}
-
-                                    <Button
-                                        className="mt-4"
-                                        value="Tambah Penggiat"
-                                        onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
-                                        disabled={isLoading}
+                            <div className="card-body">
+                                {data.partners.map((partner, index) => (
+                                    <PartnerForm
+                                        key={index}
+                                        index={index}
+                                        partner={partner}
+                                        selectedPartner={selectedPartner}
+                                        errors={errors}
+                                        setSelectedPartner={(value) => setSelectedPartner(value)}
+                                        onChange={(index, value) => {
+                                            const newPartners = [...data.partners];
+                                            newPartners[index] = value;
+                                            setData({ ...data, partners: newPartners });
+                                        }}
+                                        onDelete={(index) => setData({ ...data, partners: data.partners.filter((_, i) => i !== index) })}
                                     />
-                                </div>
+                                ))}
+
+                                <Button
+                                    className="mt-4"
+                                    value="Tambah Penggiat"
+                                    onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
+                                    disabled={isLoading}
+                                />
                             </div>
                         </div>
+                    </div>
 
+                    {(isNotMOU) && (
                         <div className="col-12 col-md-6">
                             <div className="card">
                                 <div className="card-header">
@@ -370,25 +368,28 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                 </div>
                             </div>
                         </div>
+                    )}
+                </div>
+
+                {(isNotMOU) && (
+                    <div className="col-12 mt-8">
+                        <div className="card" style={{ padding: 0, margin: 0 }}>
+                            <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                                <strong>Dokumen Laporan Akhir</strong>
+                            </div>
+                            <div className="card-body">
+                                <Dropzone
+                                    className="mt-5"
+                                    value={typeof data.final_document_path === "string" ? data.final_document_path : null}
+                                    onChange={(file) => {
+                                        setData({ ...data, final_document_path: file });
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 )}
 
-                <div className="col-12 mt-8">
-                    <div className="card" style={{ padding: 0, margin: 0 }}>
-                        <div className="card-header" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                            <strong>Dokumen Laporan Akhir</strong>
-                        </div>
-                        <div className="card-body">
-                            <Dropzone
-                                className="mt-5"
-                                value={typeof data.final_document_path === "string" ? data.final_document_path : null}
-                                onChange={(file) => {
-                                    setData({ ...data, final_document_path: file });
-                                }}
-                            />
-                        </div>
-                    </div>
-                </div>
             </form >
         </AuthenticatedLayout >
     )
