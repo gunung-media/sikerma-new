@@ -34,6 +34,11 @@ Route::middleware('auth')->group(function () {
             Route::resource('study-programs', StudyProgramController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('institutes', InstituteController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('field-activities', FieldActivityController::class)->only(['index', 'store', 'update', 'destroy']);
+        });
+
+    Route::name('master.')
+        ->prefix('master')
+        ->group(function () {
             Route::resource('documents', DocumentController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 

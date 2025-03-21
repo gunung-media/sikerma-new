@@ -14,7 +14,7 @@ import { Dropzone } from "@/components/Dropzone";
 export default function Document({ data }: PageProps & {
     data: DocumentType[],
 }) {
-    const { errors, storageUrl } = usePage<PageProps>().props
+    const { errors, storageUrl, auth: { user } } = usePage<PageProps>().props
     const [showForm, setShowForm] = useState(false);
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [pathType, setPathType] = useState<string>('');
@@ -110,7 +110,9 @@ export default function Document({ data }: PageProps & {
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    <Button value="Tambah Document" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
+                    {user.is_super_admin && (
+                        <Button value="Tambah Document" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
+                    )}
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable
@@ -123,12 +125,13 @@ export default function Document({ data }: PageProps & {
                         }}
                         slots={{
                             2: (value: string) => <a href={value.startsWith('http') ? value : `${storageUrl}/${value}`} target="_blank" rel="noopener noreferrer">Download File</a>,
-                            [cols.length - 1]: (value: number) => (
+                            [cols.length - 1]: (value: number) => user.is_super_admin ? (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
                                     <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
                                 </div>
-                            ),
+                            ) : (
+                                <><p>-</p></>),
                         }}
                     >
                         <thead>
