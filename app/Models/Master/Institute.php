@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Institute newQuery()

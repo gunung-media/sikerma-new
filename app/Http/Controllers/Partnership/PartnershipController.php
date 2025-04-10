@@ -53,6 +53,7 @@ class PartnershipController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
+            'partner_criteria_id' => 'nullable|exists:partner_criterias,id',
             'document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
             'final_document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
 
@@ -87,6 +88,7 @@ class PartnershipController extends Controller
                 'end_date' => $validatedData['end_date'],
                 'executor' => $validatedData['executor'] ?? null,
                 'institute_id' => $validatedData['institute_id'] ?? null,
+                'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
             ]);
 
             foreach ($validatedData['partners'] as $partnerData) {
@@ -144,6 +146,7 @@ class PartnershipController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'institute_id' => 'nullable|exists:institutes,id',
+            'partner_criteria_id' => 'nullable|exists:partner_criterias,id',
             'document_path' => 'nullable',
             'final_document_path' => 'nullable',
 
@@ -184,6 +187,7 @@ class PartnershipController extends Controller
                 'end_date' => $validatedData['end_date'],
                 'executor' => $validatedData['executor'] ?? null,
                 'institute_id' => $validatedData['institute_id'] ?? null,
+                'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
             ]);
 
             if (isset($validatedData['partners'])) {

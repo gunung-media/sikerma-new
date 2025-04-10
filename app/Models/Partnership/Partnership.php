@@ -5,6 +5,7 @@ namespace App\Models\Partnership;
 use App\Enums\PartnershipStatusEnum;
 use App\Enums\PartnershipTypeEnum;
 use App\Models\Master\Institute;
+use App\Models\Master\PartnerCriteria;
 use App\Models\Master\StudyProgram;
 use App\Models\Master\Faculty;
 use App\Models\User;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -84,6 +85,7 @@ class Partnership extends Model
         'institute_id',
         'document_path',
         'final_document_path',
+        'partner_criteria_id'
     ];
 
     protected $casts = [
@@ -120,5 +122,10 @@ class Partnership extends Model
     public function partners(): HasMany
     {
         return $this->hasMany(Partner::class);
+    }
+
+    public function partnerCriteria(): BelongsTo
+    {
+        return $this->belongsTo(PartnerCriteria::class);
     }
 }

@@ -29,7 +29,7 @@ class PartnershipRepository implements BaseRepositoryInterface
     public function findById($id): mixed
     {
         $query = $this->model->query();
-        $query->with(['partners', 'activities', 'institute']);
+        $query->with(['partners', 'activities', 'institute', 'partnerCriteria']);
 
         return $query->find($id);
     }

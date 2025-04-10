@@ -68,6 +68,13 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     },
     {
         type: 'single',
+        label: 'Kriteria Mitra',
+        icon: 'bxs-buildings',
+        url: 'master.partner-criterias.index',
+        isSuperAdmin: true,
+    },
+    {
+        type: 'single',
         label: 'Document',
         icon: 'bx-file',
         url: 'master.documents.index',
