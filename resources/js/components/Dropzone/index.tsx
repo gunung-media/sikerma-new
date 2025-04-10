@@ -8,9 +8,11 @@ interface DropzoneProps {
     onChange: (file: File) => void;
     value?: string | null;
     className?: string;
+    error?: string;
 }
 
-export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className }) => {
+
+export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, error }) => {
     const { props } = usePage<PageProps>();
 
     const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -152,6 +154,8 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className }
             ) : (
                 <p>Drag and drop a file here, or click to select one</p>
             )}
+
+            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 };
