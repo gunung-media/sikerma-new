@@ -30,7 +30,7 @@ class StudyProgramController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'faculty_id' => 'required',
-            'weight' => 'required|numeric'
+            'weight' => 'numeric'
         ]);
 
         DB::beginTransaction();
@@ -49,7 +49,7 @@ class StudyProgramController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'faculty_id' => 'required',
-            'weight' => 'required|numeric'
+            'weight' => 'numeric'
         ]);
 
         DB::beginTransaction();

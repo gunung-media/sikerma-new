@@ -23,7 +23,7 @@ export default function StudyProgram({ data }: PageProps & {
         weight: '0'
     })
 
-    const cols = ["#", "Name", "Bobot", "Fakultas", "Action"];
+    const cols = ["#", "Name", "Fakultas", "Action"];
 
     const handleEdit = (index: number) => {
         setStudyProgram(data[index])
@@ -89,7 +89,7 @@ export default function StudyProgram({ data }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.name, item.weight, item.faculty.name, index
+                            index + 1, item.name, item.faculty.name, index
                         ])}
                         options={{
                             responsive: true,
