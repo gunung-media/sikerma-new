@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             FieldActivitySeeder::class,
             DocumentSeeder::class,
+            PartnerCriteriaSeeder::class,
         ]);
     }
 }
