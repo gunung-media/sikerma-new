@@ -3,6 +3,6 @@ import { BaseTableInterface } from "@/interfaces/BaseTableInterface";
 
 export interface PartnerCriteriaType extends BaseTableInterface {
     name: string
-    weight: string
+    weight: any
     partnerships?: PartnershipType[]
 }

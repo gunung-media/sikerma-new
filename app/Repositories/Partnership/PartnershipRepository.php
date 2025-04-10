@@ -22,7 +22,7 @@ class PartnershipRepository implements BaseRepositoryInterface
         if (!$user->is_super_admin) {
             $query->where('user_id', $user->id);
         }
-
+        $query->with(['partnerCriteria', 'studyProgram']);
         return $query->get();
     }
 

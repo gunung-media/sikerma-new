@@ -19,6 +19,8 @@ export default function Partnership({ data }: PageProps & {
         ia: 0,
     })
 
+    const dataStudyProgram = data.filter((item) => item.type !== App.Enums.PartnershipTypeEnum.MOU && item.study_program_id)
+
     const handleDelete = async (index: number) => {
         await confirmationDelete(() => {
             router.delete(route('partnerships.destroy', data[index].id), {
@@ -58,7 +60,7 @@ export default function Partnership({ data }: PageProps & {
 
             <p className="mb-6">List kerjasama yang ada di aplikasi ini</p>
 
-            <div className="row g-6">
+            <div className="row g-6 ">
                 {Object.keys(count).map((item, index) => (
                     <div className="col-xl-4 col-lg-6 col-md-6" >
                         <div className="card">
@@ -77,7 +79,8 @@ export default function Partnership({ data }: PageProps & {
                     </div>
                 ))}
             </div>
-            <div className="card mt-10">
+
+            <div className="card mt-10 mb-6">
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
@@ -131,6 +134,40 @@ export default function Partnership({ data }: PageProps & {
                             <tr>{cols.map((col, index) => <th key={index}>{col}</th>)}</tr>
                         </thead>
                     </DataTable>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-12" >
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <h5 className="fw-bold mb-0 text-body">NILAI PERHITUNGAN IKU 6</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-end">
+                                <div className="role-heading">
+                                    <table className="table">
+                                        <tr>
+                                            <th>Jumlah Kerja Sama</th>
+                                            <th><strong>{dataStudyProgram.length}</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Jumlah Nilai Bobot Mitra</th>
+                                            <th><strong>{dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0)}</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Jumlah Bobot Program Studi</th>
+                                            <th><strong>{dataStudyProgram.reduce((total, item) => total + item.study_program?.weight, 0)}</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Nilai IKU Kerjasama Program Studi</th>
+                                            <th><strong>{(dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0) / dataStudyProgram.reduce((total, item) => total + item.study_program?.weight, 0)) * 100}%</strong></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout >
