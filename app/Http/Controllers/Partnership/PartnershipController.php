@@ -267,4 +267,28 @@ class PartnershipController extends Controller
             'partnership' => $this->partnershipRepository->findById($id),
         ]);
     }
+
+    public function updatePartnerCriteria(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'partner_criteria_id' => 'required|exists:partner_criterias,id',
+        ]);
+        DB::beginTransaction();
+
+        try {
+            $partnership = $this->partnershipRepository->findById($id);
+
+            $this->partnershipRepository->update($id, [
+                'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
+            ]);
+
+            DB::commit();
+
+            return response(status: 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
 }

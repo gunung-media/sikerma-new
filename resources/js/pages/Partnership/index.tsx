@@ -8,6 +8,7 @@ import { basicErrorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
 import { useEffect, useState } from "react";
 import { App } from "@/types/enum";
+import { PartnerCriteriaSelector } from "@/features/PartnerCriteria";
 
 export default function Partnership({ data }: PageProps & {
     data: PartnershipType[],
@@ -18,6 +19,8 @@ export default function Partnership({ data }: PageProps & {
         mou: 0,
         ia: 0,
     })
+
+    const [partnerCriteria, setPartnerCriteria] = useState<(number | null)[]>([])
 
     const dataStudyProgram = data.filter((item) => item.type !== App.Enums.PartnershipTypeEnum.MOU && item.study_program_id)
 
@@ -52,6 +55,7 @@ export default function Partnership({ data }: PageProps & {
             mou,
             ia
         })
+
     }, [data])
 
     return (
@@ -94,6 +98,7 @@ export default function Partnership({ data }: PageProps & {
                         ])}
                         options={{
                             responsive: true,
+                            stateDuration: 0
                         }}
                         slots={{
                             1: (value: string) => (
@@ -116,16 +121,35 @@ export default function Partnership({ data }: PageProps & {
                                 <PartnershipStatus value={value} />
                             ),
                             [cols.length - 1]: (value: number) => (
-                                <div className="d-flex align-items-end gap-2">
-                                    <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
-                                    <Button
-                                        value="Download"
-                                        type="info"
-                                        icon="bx-download"
-                                        isIcon
-                                        onClick={() => window.open(route('partnerships.print', data[value].id), '_blank')}
-                                    />
-                                    <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
+                                <div>
+                                    {data[value].study_program_id && data[value].type != App.Enums.PartnershipTypeEnum.MOU && (
+                                        <div>
+                                            <PartnerCriteriaSelector
+                                                onChange={(newVal) => {
+                                                    router.post(route('partnerships.updatePartnerCriteria', data[value].id), {
+                                                        partner_criteria_id: newVal
+                                                    }, {
+                                                        onSuccess: () => {
+                                                            window.location.reload()
+                                                        }
+                                                    })
+                                                }}
+                                                value={data[value].partner_criteria_id}
+                                                className="mb-3"
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="d-flex align-items-end gap-2">
+                                        <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
+                                        <Button
+                                            value="Download"
+                                            type="info"
+                                            icon="bx-download"
+                                            isIcon
+                                            onClick={() => window.open(route('partnerships.print', data[value].id), '_blank')}
+                                        />
+                                        <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
+                                    </div>
                                 </div>
                             ),
                         }}
@@ -149,6 +173,10 @@ export default function Partnership({ data }: PageProps & {
                                     <table className="table">
                                         <tr>
                                             <th>Jumlah Kerja Sama</th>
+                                            <th><strong>{data.length}</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Jumlah Kerjasama Program Studi</th>
                                             <th><strong>{dataStudyProgram.length}</strong></th>
                                         </tr>
                                         <tr>
@@ -156,12 +184,8 @@ export default function Partnership({ data }: PageProps & {
                                             <th><strong>{dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0)}</strong></th>
                                         </tr>
                                         <tr>
-                                            <th>Jumlah Bobot Program Studi</th>
-                                            <th><strong>{dataStudyProgram.reduce((total, item) => total + item.study_program?.weight, 0)}</strong></th>
-                                        </tr>
-                                        <tr>
                                             <th>Nilai IKU Kerjasama Program Studi</th>
-                                            <th><strong>{(dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0) / dataStudyProgram.reduce((total, item) => total + item.study_program?.weight, 0)) * 100}%</strong></th>
+                                            <th><strong>{(dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0) / dataStudyProgram.length) * 100}%</strong></th>
                                         </tr>
                                     </table>
                                 </div>

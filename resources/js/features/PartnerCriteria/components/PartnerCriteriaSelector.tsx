@@ -7,7 +7,7 @@ type PartnerCriteriaSelectorProps = {
     className?: string
     onChange: (value: string | any) => void
     error?: string
-    value?: number
+    value?: number | null
     description?: string
 }
 
@@ -26,7 +26,7 @@ export const PartnerCriteriaSelector: FC<PartnerCriteriaSelectorProps> = ({ clas
     return (
         <CustomSelect
             label="Kriteria Partner"
-            options={partnerCriterias.map((institute) => ({ value: institute.id, label: institute.name }))}
+            options={partnerCriterias.map((institute) => ({ value: institute.id, label: `${institute.name} (${institute.weight})` }))}
             onChange={(value) => onChange(value)}
             value={value}
             className={className}

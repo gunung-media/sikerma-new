@@ -238,20 +238,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                 </div>
 
                                 <div className="col-12 col-md-8">
-                                    <PartnerCriteriaSelector
-                                        value={data?.partner_criteria_id ?? undefined}
-                                        onChange={(value) => setData({ ...data, partner_criteria_id: value })}
-                                        className="mb-3 "
-                                        error={errors.partner_criteria_id}
-                                    />
-                                    {data?.partner_criteria_id && (
-                                        <StudyProgramSelector
-                                            value={data?.study_program_id ?? undefined}
-                                            onChange={(value) => setData({ ...data, study_program_id: value })}
-                                            className="mb-3 "
-                                            error={errors.study_program_id}
-                                        />
-                                    )}
                                     <PartnershipTypeSelector
                                         value={data?.type ?? undefined}
                                         onChange={(value) => setData({ ...data, type: value })}
@@ -284,6 +270,15 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         label="Deskripsi"
                                         value={data.description ?? undefined}
                                         onChange={(e) => setData({ ...data, description: e })}
+                                        className="mb-3"
+                                    />
+
+                                    <StudyProgramSelector
+                                        value={data?.study_program_id ?? undefined}
+                                        onChange={(value) => setData({ ...data, study_program_id: value })}
+                                        className="mb-3 "
+                                        error={errors.study_program_id}
+                                        description="Tidak Wajib diisi"
                                     />
                                 </div>
                             </div>
