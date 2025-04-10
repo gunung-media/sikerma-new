@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $faculty_id
@@ -33,7 +33,8 @@ class StudyProgram extends Model
 {
     protected $fillable = [
         'faculty_id',
-        'name'
+        'name',
+        'weight'
     ];
 
     public function users(): HasMany

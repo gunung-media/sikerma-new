@@ -19,10 +19,11 @@ export default function StudyProgram({ data }: PageProps & {
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [studyProgram, setStudyProgram] = useState<StudyProgramDto>({
         name: '',
-        faculty_id: 0
+        faculty_id: 0,
+        weight: '0'
     })
 
-    const cols = ["#", "Name", "Fakultas", "Action"];
+    const cols = ["#", "Name", "Bobot", "Fakultas", "Action"];
 
     const handleEdit = (index: number) => {
         setStudyProgram(data[index])
@@ -88,12 +89,13 @@ export default function StudyProgram({ data }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.name, item.faculty.name, index
+                            index + 1, item.name, item.weight, item.faculty.name, index
                         ])}
                         options={{
                             responsive: true,
                         }}
                         slots={{
+                            2: (value: any) => <p>{value ?? 0}</p>,
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
@@ -115,7 +117,7 @@ export default function StudyProgram({ data }: PageProps & {
                 handleClose={() => {
                     setSelectedId(null)
                     setShowForm(false)
-                    setStudyProgram({ name: '', faculty_id: 0 })
+                    setStudyProgram({ name: '', faculty_id: 0, weight: "0" })
                 }}
                 title={selectedId ? "Edit Fakultas" : "Tambah Fakultas"}
             >
@@ -127,6 +129,16 @@ export default function StudyProgram({ data }: PageProps & {
                         value={studyProgram?.name}
                         errorMessage={errors.name}
                         onChange={(val) => setStudyProgram({ ...studyProgram, name: val.target.value })}
+                        className="mb-3"
+                    />
+
+                    <Input
+                        label="Bobot"
+                        name="weight"
+                        placeholder="Bobot"
+                        value={studyProgram?.weight}
+                        errorMessage={errors.weight}
+                        onChange={(val) => setStudyProgram({ ...studyProgram, weight: val.target.value })}
                         className="mb-3"
                     />
 
