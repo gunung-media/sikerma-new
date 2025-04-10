@@ -14,6 +14,7 @@ import { PartnerDto, PartnerForm } from "@/features/Partner";
 import { ActivitySelector } from "@/features/FieldActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
+import { PartnerCriteriaSelector } from "@/features/PartnerCriteria";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const [errors, setErrors] = useState<any>({})
@@ -43,7 +44,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         activities: [],
         institute_id: null,
         document_path: null,
-        final_document_path: null
+        final_document_path: null,
+        partner_criteria_id: null
     })
     const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
@@ -142,7 +144,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             activities: partnership.activities,
             document_fundamental: partnership.document_fundamental,
             document_path: partnership.document_path,
-            final_document_path: partnership.final_document_path
+            final_document_path: partnership.final_document_path,
+            partner_criteria_id: partnership.partner_criteria_id
         })
 
 
@@ -167,7 +170,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             )}
 
             <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
-            <p className="mb-6">Kerjasama</p>
+            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what user needs.</p>
 
             <form className="row" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="col-12 ">
@@ -232,6 +235,12 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                 </div>
 
                                 <div className="col-12 col-md-8">
+                                    <PartnerCriteriaSelector
+                                        value={data?.partner_criteria_id ?? undefined}
+                                        onChange={(value) => setData({ ...data, partner_criteria_id: value })}
+                                        className="mb-3 "
+                                        error={errors.partner_criteria_id}
+                                    />
                                     <PartnershipTypeSelector
                                         value={data?.type ?? undefined}
                                         onChange={(value) => setData({ ...data, type: value })}

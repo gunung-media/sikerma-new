@@ -2,7 +2,9 @@
 
 namespace App\Models\Master;
 
+use App\Models\Partnership\Partnership;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *
@@ -29,4 +31,9 @@ class PartnerCriteria extends Model
         'name',
         'weight',
     ];
+
+    public function partnerships(): HasMany
+    {
+        return $this->hasMany(Partnership::class);
+    }
 }
