@@ -85,7 +85,8 @@ class Partnership extends Model
         'institute_id',
         'document_path',
         'final_document_path',
-        'partner_criteria_id'
+        'partner_criteria_id',
+        'study_program_id',
     ];
 
     protected $casts = [
@@ -127,5 +128,10 @@ class Partnership extends Model
     public function partnerCriteria(): BelongsTo
     {
         return $this->belongsTo(PartnerCriteria::class);
+    }
+
+    public function studyProgram(): BelongsTo
+    {
+        return $this->belongsTo(StudyProgram::class);
     }
 }

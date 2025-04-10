@@ -2,6 +2,7 @@ import { InstituteType } from "@/features/Institute";
 import { PartnerType } from "@/features/Partner/types";
 import { PartnerCriteriaType } from "@/features/PartnerCriteria";
 import { PartnershipActivityType } from "@/features/PartnershipActivity";
+import { StudyProgramType } from "@/features/StudyProgram";
 import { UserType } from "@/features/User";
 import { BaseTableInterface } from "@/interfaces/BaseTableInterface";
 
@@ -26,4 +27,6 @@ export interface PartnershipType extends BaseTableInterface {
     institute?: InstituteType;
     partner_criteria_id?: number | null;
     partner_criteria?: PartnerCriteriaType
+    study_program_id?: number | null;
+    study_program?: StudyProgramType
 }

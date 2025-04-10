@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('partnerships', function (Blueprint $table) {
-            $table->unsignedBigInteger('partner_criteria_id')->nullable();
+            $table->unsignedBigInteger('study_program_id')->nullable();
 
-            $table->foreign('partner_criteria_id')->references('id')->on('partner_criterias');
+            $table->foreign('study_program_id')->references('id')->on('study_programs')->nullOnDelete();
         });
     }
 
@@ -24,8 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('partnerships', function (Blueprint $table) {
-            $table->dropForeign(['partner_criteria_id']);
-            $table->dropColumn('partner_criteria_id');
+            $table->dropForeign(['study_program_id']);
+            $table->dropColumn('study_program_id');
         });
     }
 };

@@ -15,6 +15,7 @@ import { ActivitySelector } from "@/features/FieldActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
 import { PartnerCriteriaSelector } from "@/features/PartnerCriteria";
+import { StudyProgramSelector } from "@/features/StudyProgram";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const [errors, setErrors] = useState<any>({})
@@ -45,7 +46,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
         institute_id: null,
         document_path: null,
         final_document_path: null,
-        partner_criteria_id: null
+        partner_criteria_id: null,
+        study_program_id: null
     })
     const [selectedPartner, setSelectedPartner] = useState<number | null>(0)
 
@@ -145,7 +147,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             document_fundamental: partnership.document_fundamental,
             document_path: partnership.document_path,
             final_document_path: partnership.final_document_path,
-            partner_criteria_id: partnership.partner_criteria_id
+            partner_criteria_id: partnership.partner_criteria_id,
+            study_program_id: partnership.study_program_id
         })
 
 
@@ -241,6 +244,14 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         className="mb-3 "
                                         error={errors.partner_criteria_id}
                                     />
+                                    {data?.partner_criteria_id && (
+                                        <StudyProgramSelector
+                                            value={data?.study_program_id ?? undefined}
+                                            onChange={(value) => setData({ ...data, study_program_id: value })}
+                                            className="mb-3 "
+                                            error={errors.study_program_id}
+                                        />
+                                    )}
                                     <PartnershipTypeSelector
                                         value={data?.type ?? undefined}
                                         onChange={(value) => setData({ ...data, type: value })}
