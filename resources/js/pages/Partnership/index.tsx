@@ -9,6 +9,7 @@ import { confirmationDelete } from "@/utils/Swal";
 import { useEffect, useState } from "react";
 import { App } from "@/types/enum";
 import { PartnerCriteriaSelector } from "@/features/PartnerCriteria";
+import { Tooltip } from "@/components/Tooltip";
 
 export default function Partnership({ data }: PageProps & {
     data: PartnershipType[],
@@ -90,7 +91,7 @@ export default function Partnership({ data }: PageProps & {
                     </div>
                     <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
                 </div>
-                <div className="card-datatable table-responsive">
+                <div className="card-datatable table-responsive" style={{ minHeight: '10rem' }}>
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
@@ -105,8 +106,8 @@ export default function Partnership({ data }: PageProps & {
                                 <span className="badge bg-label-primary">{value}</span>
                             ),
                             2: (value: number) => (
-                                <div className="d-flex flex-column">
-                                    <span className="emp_name text-truncate">{data[value]?.title}</span>
+                                <div className="d-flex flex-column" style={{ maxWidth: "20rem" }}>
+                                    <Tooltip value={data[value]?.title} />
                                     <small className="emp_post text-truncate text-muted">
                                         Nomor Dokumen: {data[value]?.document_number}
                                     </small>
@@ -121,9 +122,9 @@ export default function Partnership({ data }: PageProps & {
                                 <PartnershipStatus value={value} />
                             ),
                             [cols.length - 1]: (value: number) => (
-                                <div>
+                                <div >
                                     {data[value].study_program_id && data[value].type != App.Enums.PartnershipTypeEnum.MOU && (
-                                        <div>
+                                        <div style={{ width: "20rem" }}>
                                             <PartnerCriteriaSelector
                                                 onChange={(newVal) => {
                                                     router.post(route('partnerships.updatePartnerCriteria', data[value].id), {
