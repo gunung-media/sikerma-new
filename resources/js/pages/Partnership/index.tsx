@@ -11,8 +11,9 @@ import { App } from "@/types/enum";
 import { PartnerCriteriaSelector } from "@/features/PartnerCriteria";
 import { Tooltip } from "@/components/Tooltip";
 
-export default function Partnership({ data }: PageProps & {
+export default function Partnership({ data, isWeight = false }: PageProps & {
     data: PartnershipType[],
+    isWeight: boolean
 }) {
     const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "Action"];
     const [count, setCount] = useState({
@@ -20,8 +21,6 @@ export default function Partnership({ data }: PageProps & {
         mou: 0,
         ia: 0,
     })
-
-    const [partnerCriteria, setPartnerCriteria] = useState<(number | null)[]>([])
 
     const dataStudyProgram = data.filter((item) => item.type !== App.Enums.PartnershipTypeEnum.MOU && item.study_program_id)
 
@@ -89,7 +88,9 @@ export default function Partnership({ data }: PageProps & {
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
+                    {!isWeight && (
+                        <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
+                    )}
                 </div>
                 <div className="card-datatable table-responsive" style={{ minHeight: '10rem' }}>
                     <DataTable
@@ -123,7 +124,7 @@ export default function Partnership({ data }: PageProps & {
                             ),
                             [cols.length - 1]: (value: number) => (
                                 <div >
-                                    {data[value].study_program_id && data[value].type != App.Enums.PartnershipTypeEnum.MOU && (
+                                    {isWeight && data[value].study_program_id && data[value].type != App.Enums.PartnershipTypeEnum.MOU && (
                                         <div style={{ width: "20rem" }}>
                                             <PartnerCriteriaSelector
                                                 onChange={(newVal) => {
@@ -140,17 +141,19 @@ export default function Partnership({ data }: PageProps & {
                                             />
                                         </div>
                                     )}
-                                    <div className="d-flex align-items-end gap-2">
-                                        <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
-                                        <Button
-                                            value="Download"
-                                            type="info"
-                                            icon="bx-download"
-                                            isIcon
-                                            onClick={() => window.open(route('partnerships.print', data[value].id), '_blank')}
-                                        />
-                                        <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
-                                    </div>
+                                    {!isWeight && (
+                                        <div className="d-flex align-items-end gap-2">
+                                            <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
+                                            <Button
+                                                value="Download"
+                                                type="info"
+                                                icon="bx-download"
+                                                isIcon
+                                                onClick={() => window.open(route('partnerships.print', data[value].id), '_blank')}
+                                            />
+                                            <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
+                                        </div>
+                                    )}
                                 </div>
                             ),
                         }}
@@ -162,39 +165,42 @@ export default function Partnership({ data }: PageProps & {
                 </div>
             </div>
 
-            <div className="row">
-                <div className="col-12" >
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="d-flex justify-content-between align-items-center mb-4">
-                                <h5 className="fw-bold mb-0 text-body">NILAI PERHITUNGAN IKU 6</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-end">
-                                <div className="role-heading">
-                                    <table className="table">
-                                        <tr>
-                                            <th>Jumlah Kerja Sama</th>
-                                            <th><strong>{data.length}</strong></th>
-                                        </tr>
-                                        <tr>
-                                            <th>Jumlah Kerjasama Program Studi</th>
-                                            <th><strong>{dataStudyProgram.length}</strong></th>
-                                        </tr>
-                                        <tr>
-                                            <th>Jumlah Nilai Bobot Mitra</th>
-                                            <th><strong>{dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0)}</strong></th>
-                                        </tr>
-                                        <tr>
-                                            <th>Nilai IKU Kerjasama Program Studi</th>
-                                            <th><strong>{(dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0) / dataStudyProgram.length) * 100}%</strong></th>
-                                        </tr>
-                                    </table>
+
+            {isWeight && (
+                (<div className="row">
+                    <div className="col-12" >
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 className="fw-bold mb-0 text-body">NILAI PERHITUNGAN IKU 6</h5>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-end">
+                                    <div className="role-heading">
+                                        <table className="table">
+                                            <tr>
+                                                <th>Jumlah Kerja Sama</th>
+                                                <th><strong>{data.length}</strong></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Jumlah Kerjasama Program Studi</th>
+                                                <th><strong>{dataStudyProgram.length}</strong></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Jumlah Nilai Bobot Mitra</th>
+                                                <th><strong>{dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0)}</strong></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Nilai IKU Kerjasama Program Studi</th>
+                                                <th><strong>{(dataStudyProgram.reduce((total, item) => total + item.partner_criteria?.weight, 0) ?? 1 / dataStudyProgram.length) * 100}%</strong></th>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>)
+            )}
         </AuthenticatedLayout >
     )
 }

@@ -33,6 +33,13 @@ class PartnershipController extends Controller
         ]);
     }
 
+    public function weight(): InertiaResponse
+    {
+        return Inertia::render('Partnership/index', [
+            'data' => $this->partnershipRepository->getAll(),
+            'isWeight' => true,
+        ]);
+    }
     public function create(): InertiaResponse
     {
         return Inertia::render('Partnership/Form/index');

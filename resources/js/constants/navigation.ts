@@ -93,6 +93,10 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
                 url: 'partnerships.index'
             },
             {
+                label: 'Pembobotan Kerjasama',
+                url: 'partnerships.weight'
+            },
+            {
                 label: 'Tambah Kerjasama',
                 url: 'partnerships.create'
             }

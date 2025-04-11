@@ -47,4 +47,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('partnerships', PartnershipController::class);
     Route::get('partnerships_print/{id}', [PartnershipController::class, 'print'])->name('partnerships.print');
     Route::post('partnerships_update/{id}', [PartnershipController::class, 'updatePartnerCriteria'])->name('partnerships.updatePartnerCriteria');
+    Route::get('partnerships_weight', [PartnershipController::class, 'weight'])->name('partnerships.weight');
 });
