@@ -14,7 +14,6 @@ import { PartnerDto, PartnerForm } from "@/features/Partner";
 import { ActivitySelector } from "@/features/FieldActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
-import { PartnerCriteriaSelector } from "@/features/PartnerCriteria";
 import { StudyProgramSelector } from "@/features/StudyProgram";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
@@ -151,7 +150,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             study_program_id: partnership.study_program_id
         })
 
-
     }, [partnership])
 
     return (
@@ -173,7 +171,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
             )}
 
             <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
-            <p className="mb-6">A role provided access to predefined menus and features so that depending on assigned role an administrator can have access to what user needs.</p>
+            <p className="mb-6">Form Kerjasama</p>
 
             <form className="row" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="col-12 ">
@@ -232,6 +230,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                 onChange={(file) => {
                                                     setData({ ...data, document_path: file });
                                                 }}
+                                                error={errors.document_path}
                                             />
                                         </div>
                                     </div>
@@ -269,7 +268,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                     <TextArea
                                         label="Deskripsi"
                                         value={data.description ?? undefined}
-                                        onChange={(e) => setData({ ...data, description: e })}
+                                        onChange={(e) => !data.title && data.title != "" && setData({ ...data, description: e })}
                                         className="mb-3"
                                     />
 
@@ -375,6 +374,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                         newActivities[index] = { ...activity, file: file };
                                                         setData({ ...data, activities: newActivities });
                                                     }}
+                                                    error={errors[`activities.${index}.document_path`]}
+
                                                 />
                                             </div>
                                         </div>
@@ -399,6 +400,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                     onChange={(file) => {
                                         setData({ ...data, final_document_path: file });
                                     }}
+                                    error={errors.final_document_path}
                                 />
                             </div>
                         </div>
