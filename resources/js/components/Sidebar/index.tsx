@@ -47,13 +47,18 @@ export const Sidebar = () => {
                     <div data-i18n={item.label} className="text-truncate">{item.label}</div>
                 </a>
                 <ul className="menu-sub">
-                    {(item.items ?? []).map((sub, idx) => (
-                        <li className={mergeClass("menu-item", compareUrl(sub.url!) ? "active" : "")} key={idx}>
-                            <Link href={route(sub.url)} className="menu-link">
-                                <div className="text-truncate" data-i18n={sub.label}>{sub.label}</div>
-                            </Link>
-                        </li>
-                    ))}
+                    {(item.items ?? []).map((sub, idx) => {
+                        if (sub.isSuperAdmin && sub.isSuperAdmin !== user?.is_super_admin) {
+                            return null
+                        }
+                        return (
+                            <li className={mergeClass("menu-item", compareUrl(sub.url!) ? "active" : "")} key={idx}>
+                                <Link href={route(sub.url)} className="menu-link">
+                                    <div className="text-truncate" data-i18n={sub.label}>{sub.label}</div>
+                                </Link>
+                            </li>
+                        )
+                    })}
                 </ul>
             </li>
         )

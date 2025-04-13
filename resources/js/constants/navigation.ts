@@ -5,6 +5,7 @@ export type SidebarNavigationItem = {
     url?: string;
     items?: {
         label: string;
+        isSuperAdmin?: boolean;
         url: string;
     }[];
     isSuperAdmin?: boolean;
@@ -94,7 +95,8 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
             },
             {
                 label: 'Pembobotan Kerjasama',
-                url: 'partnerships.weight'
+                url: 'partnerships.weight',
+                isSuperAdmin: true,
             },
             {
                 label: 'Tambah Kerjasama',
