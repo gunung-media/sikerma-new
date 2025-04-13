@@ -25,7 +25,7 @@ export const FacultySelector: FC<FacultySelectorProps> = ({ className, onChange,
 
     return (
         <CustomSelect
-            label="Faculty"
+            label="Fakultas"
             options={faculties.map((type) => ({ value: type.id, label: type.name }))}
             onChange={(value) => onChange(value)}
             value={value}

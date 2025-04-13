@@ -35,7 +35,7 @@ export default function FieldActivity({ data }: PageProps & {
         if (isEditing) {
             router.put(route('master.field-activities.update', selectedId), faculty, {
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : 'Something went wrong')
+                    errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
                 onSuccess: () => {
                     successToast('Berhasil mengubah data')
@@ -124,9 +124,9 @@ export default function FieldActivity({ data }: PageProps & {
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input
-                        label="Name"
+                        label="Nama"
                         name="name"
-                        placeholder="Field Activity Name"
+                        placeholder="Bentuk Kegiatan"
                         value={faculty?.name}
                         errorMessage={errors.name}
                         onChange={(val) => setFieldActivity({ ...faculty, name: val.target.value })}

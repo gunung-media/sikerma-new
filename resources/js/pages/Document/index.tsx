@@ -54,7 +54,7 @@ export default function Document({ data }: PageProps & {
                     "Content-Type": "multipart/form-data",
                 },
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : "Something went wrong");
+                    errorToast(errors.error ? errors.error : "Maaf, terjadi kesalahan.");
                 },
                 onSuccess: () => {
                     successToast("Berhasil mengubah data");
@@ -154,9 +154,9 @@ export default function Document({ data }: PageProps & {
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input
-                        label="Name"
+                        label="Nama"
                         name="name"
-                        placeholder="Document Name"
+                        placeholder="Nama Dokumen"
                         value={document?.name}
                         errorMessage={errors.name}
                         onChange={(val) => setDocument({ ...document, name: val.target.value })}
@@ -164,7 +164,7 @@ export default function Document({ data }: PageProps & {
                     />
 
                     <div className="mb-3">
-                        <label >Path Type</label>
+                        <label>Jenis File</label>
                         <div className="form-check">
                             <input
                                 className="form-check-input"
@@ -197,9 +197,9 @@ export default function Document({ data }: PageProps & {
 
                     {pathType === "url" ? (
                         <Input
-                            label="Document URL"
+                            label="URL"
                             name="url"
-                            placeholder="Enter Document URL"
+                            placeholder="Masukan URL"
                             value={typeof document?.path === "string" ? document.path : ""}
                             errorMessage={errors.path}
                             onChange={(val) => setDocument({ ...document, path: val.target.value })}

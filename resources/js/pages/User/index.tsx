@@ -50,7 +50,7 @@ export default function User({ roles, data }: PageProps & {
         if (isEditing) {
             router.put(route('master.users.update', selectedId), user, {
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : 'Something went wrong')
+                    errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
                 onSuccess: () => {
                     successToast('Berhasil mengubah data')

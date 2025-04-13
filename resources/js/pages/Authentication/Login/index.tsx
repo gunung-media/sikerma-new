@@ -43,7 +43,7 @@ export default function Login() {
     return (
         <GuestLayout>
             <h4 className="mb-1">Login</h4>
-            <p className="mb-6">Please sign-in to your account and start the adventure</p>
+            <p className="mb-6">Silakan masuk ke akun Anda untuk mulai sistem</p>
             <form className="mb-6" onSubmit={handleSubmit}>
                 <div className="mb-6">
                     <Input
@@ -75,14 +75,11 @@ export default function Login() {
                 <div className="mb-8">
                     <div className="d-flex justify-content-between mt-8">
                         <Checkbox
-                            label="Remember Me"
+                            label="Ingat Saya"
                             checked={data.remember}
                             name="remember"
                             onChange={handleInputChange}
                         />
-                        <a href="#">
-                            <span>Forgot Password?</span>
-                        </a>
                     </div>
                 </div>
                 <div className="mb-6">

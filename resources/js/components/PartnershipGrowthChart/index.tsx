@@ -23,10 +23,10 @@ const PartnershipGrowthChart: React.FC<PartnershipChartProps> = ({ partnerships 
         },
         xaxis: {
             categories: years,
-            title: { text: "Year" },
+            title: { text: "Tahun" },
         },
         yaxis: {
-            title: { text: "Number of Partnerships" },
+            title: { text: "Jumlah Kerjasama" },
         },
         stroke: {
             width: 2,

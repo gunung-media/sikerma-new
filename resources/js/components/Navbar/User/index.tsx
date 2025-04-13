@@ -76,7 +76,7 @@ export const User = () => {
                             onClick={() => setShowSetting(true)}
                         >
                             <i className="bx bx-cog bx-md me-3"></i
-                            ><span>Settings</span>
+                            ><span>Pengaturan</span>
                         </a>
                     </li>
                     <li>

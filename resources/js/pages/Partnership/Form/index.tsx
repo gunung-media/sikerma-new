@@ -118,10 +118,10 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                     setErrors(error.response?.data.errors);
                     errorToast("Data not valid!");
                 } else {
-                    errorToast(error.response?.data.error ?? "Something went wrong!");
+                    errorToast(error.response?.data.error ?? "Maaf, terjadi kesalahan.");
                 }
             } else {
-                errorToast("Something went wrong!");
+                errorToast("Maaf, terjadi kesalahan.");
             }
         } finally {
             setIsLoading(false);

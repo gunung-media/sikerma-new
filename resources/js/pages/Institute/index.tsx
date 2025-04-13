@@ -39,7 +39,7 @@ export default function Institute({ data }: PageProps & {
         if (isEditing) {
             router.put(route('master.institutes.update', selectedId), institute, {
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : 'Something went wrong')
+                    errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
                 onSuccess: () => {
                     successToast('Berhasil mengubah data')

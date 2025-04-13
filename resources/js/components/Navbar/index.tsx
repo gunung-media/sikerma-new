@@ -23,13 +23,7 @@ export const Navbar = () => {
                         <a
                             className="nav-item nav-link search-toggler px-0"
                             href="#"
-                        >
-                            <i className="bx bx-search bx-sm"></i>
-                            <span
-                                className="d-none d-md-inline-block text-muted fw-normal ms-4"
-                            >Search (Ctrl+/)</span
-                            >
-                        </a>
+                        ></a>
                     </div>
                 </div>
 

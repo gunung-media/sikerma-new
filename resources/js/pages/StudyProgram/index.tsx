@@ -38,7 +38,7 @@ export default function StudyProgram({ data }: PageProps & {
         if (isEditing) {
             router.put(route('master.study-programs.update', selectedId), studyProgram, {
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : 'Something went wrong')
+                    errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan')
                 },
                 onSuccess: () => {
                     successToast('Berhasil mengubah data')
@@ -129,16 +129,6 @@ export default function StudyProgram({ data }: PageProps & {
                         value={studyProgram?.name}
                         errorMessage={errors.name}
                         onChange={(val) => setStudyProgram({ ...studyProgram, name: val.target.value })}
-                        className="mb-3"
-                    />
-
-                    <Input
-                        label="Bobot"
-                        name="weight"
-                        placeholder="Bobot"
-                        value={studyProgram?.weight}
-                        errorMessage={errors.weight}
-                        onChange={(val) => setStudyProgram({ ...studyProgram, weight: val.target.value })}
                         className="mb-3"
                     />
 

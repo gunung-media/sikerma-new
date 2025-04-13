@@ -32,7 +32,7 @@ const GroupedBarChart: React.FC<GroupedBarChartProps> = ({ data, categories }) =
         },
         yaxis: {
             title: {
-                text: 'Count',
+                text: 'Jumlah',
             },
         },
         fill: {

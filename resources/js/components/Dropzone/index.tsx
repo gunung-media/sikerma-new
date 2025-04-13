@@ -149,10 +149,10 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
                             Download File
                         </a>
                     )}
-                    <p>Click or drag to replace the file</p>
+                    <p>Klik atau drag dan drop file untuk menganti</p>
                 </div>
             ) : (
-                <p>Drag and drop a file here, or click to select one</p>
+                <p>Drag dan drop file di sini, atau klik untuk memilih file</p>
             )}
 
             {error && <div className="invalid-feedback">{error}</div>}

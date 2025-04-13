@@ -36,7 +36,7 @@ export default function PartnerCriteria({ data }: PageProps & {
         if (isEditing) {
             router.put(route('master.partner-criterias.update', selectedId), partnerCriteria, {
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : 'Something went wrong')
+                    errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
                 onSuccess: () => {
                     successToast('Berhasil mengubah data')
@@ -120,9 +120,9 @@ export default function PartnerCriteria({ data }: PageProps & {
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input
-                        label="Name"
+                        label="Nama"
                         name="name"
-                        placeholder="Name"
+                        placeholder="Kriteria Mitra"
                         value={partnerCriteria?.name}
                         errorMessage={errors.name}
                         onChange={(val) => setPartnerCriteria({ ...partnerCriteria, name: val.target.value })}

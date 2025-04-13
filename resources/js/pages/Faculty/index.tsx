@@ -35,7 +35,7 @@ export default function Faculty({ data }: PageProps & {
         if (isEditing) {
             router.put(route('master.faculties.update', selectedId), faculty, {
                 onError: (errors) => {
-                    errorToast(errors.error ? errors.error : 'Something went wrong')
+                    errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
                 onSuccess: () => {
                     successToast('Berhasil mengubah data')
@@ -127,9 +127,9 @@ export default function Faculty({ data }: PageProps & {
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input
-                        label="Name"
+                        label="Nama"
                         name="name"
-                        placeholder="Faculty Name"
+                        placeholder="Fakultas"
                         value={faculty?.name}
                         errorMessage={errors.name}
                         onChange={(val) => setFaculty({ ...faculty, name: val.target.value })}
