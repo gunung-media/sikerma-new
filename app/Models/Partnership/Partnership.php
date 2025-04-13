@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property PartnershipTypeEnum $type
@@ -67,6 +67,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereDocumentPath($value)
  * @property string|null $final_document_path
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereFinalDocumentPath($value)
+ * @property int|null $upt_id
+ * @property int|null $partner_criteria_id
+ * @property-read PartnerCriteria|null $partnerCriteria
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership wherePartnerCriteriaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Partnership whereUptId($value)
  * @mixin \Eloquent
  */
 class Partnership extends Model
@@ -82,10 +87,11 @@ class Partnership extends Model
         'end_date',
         'executor',
         'document_fundamental',
-        'institute_id',
         'document_path',
         'final_document_path',
         'partner_criteria_id',
+        'institute_id',
+        'faculty_id',
         'study_program_id',
     ];
 
@@ -110,11 +116,6 @@ class Partnership extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function institute(): BelongsTo
-    {
-        return $this->belongsTo(Institute::class);
-    }
-
     public function activities(): HasMany
     {
         return $this->hasMany(PartnershipActivity::class);
@@ -128,6 +129,16 @@ class Partnership extends Model
     public function partnerCriteria(): BelongsTo
     {
         return $this->belongsTo(PartnerCriteria::class);
+    }
+
+    public function institute(): BelongsTo
+    {
+        return $this->belongsTo(Institute::class);
+    }
+
+    public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(Faculty::class);
     }
 
     public function studyProgram(): BelongsTo

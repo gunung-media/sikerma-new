@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @mixin \Illuminate\Database\Eloquent\Builder
  * @mixin \Eloquent
  */
-class Institute extends Model
+class Upt extends Model
 {
     protected $fillable = [
         'name',

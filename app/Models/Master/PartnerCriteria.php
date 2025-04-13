@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnerCriteria whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PartnerCriteria whereWeight($value)
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Partnership> $partnerships
+ * @property-read int|null $partnerships_count
  * @mixin \Eloquent
  */
 class PartnerCriteria extends Model

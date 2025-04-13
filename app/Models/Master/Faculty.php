@@ -2,6 +2,7 @@
 
 namespace App\Models\Master;
 
+use App\Models\Partnership\Partnership;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faculty whereUpdatedAt($value)
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Partnership> $partnerships
+ * @property-read int|null $partnerships_count
  * @mixin \Eloquent
  */
 class Faculty extends Model
@@ -44,5 +47,10 @@ class Faculty extends Model
     public function studyPrograms(): HasMany
     {
         return $this->hasMany(StudyProgram::class);
+    }
+
+    public function partnerships(): HasMany
+    {
+        return $this->hasMany(Partnership::class);
     }
 }

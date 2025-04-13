@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -47,6 +47,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read Institute|null $institute
  * @property-read mixed $is_super_admin
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereInstituteId($value)
+ * @property string|null $password_raw
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePasswordRaw($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable

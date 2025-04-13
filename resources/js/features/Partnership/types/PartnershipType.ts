@@ -1,3 +1,4 @@
+import { FacultyType } from "@/features/Faculty";
 import { InstituteType } from "@/features/Institute";
 import { PartnerType } from "@/features/Partner/types";
 import { PartnerCriteriaType } from "@/features/PartnerCriteria";
@@ -23,10 +24,13 @@ export interface PartnershipType extends BaseTableInterface {
     user: UserType;
     activities: PartnershipActivityType[];
     partners: PartnerType[];
-    institute_id?: number | null;
-    institute?: InstituteType;
     partner_criteria_id?: number | null;
     partner_criteria?: PartnerCriteriaType
+
+    faculty_id?: number | null;
+    faculty?: FacultyType;
     study_program_id?: number | null;
     study_program?: StudyProgramType
+    institute_id?: number | null;
+    institute?: InstituteType;
 }
