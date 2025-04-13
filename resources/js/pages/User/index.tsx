@@ -34,7 +34,7 @@ export default function User({ roles, data }: PageProps & {
         password: '',
     })
 
-    const cols = ["#", "Name", "Username", "Role", "Action"];
+    const cols = ["#", "Name", "Username", "Password", "Role", "Action"];
 
     const handleEdit = (index: number) => {
         // @ts-expect-error
@@ -146,13 +146,14 @@ export default function User({ roles, data }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.name, item.username, index, index
+                            index + 1, item.name, item.username, item.password_raw, index, index
                         ])}
                         options={{
                             responsive: true,
                         }}
                         slots={{
-                            3: (value: number) => (
+                            3: (value: string) => <span className="text-muted">{value ?? '***'}</span>,
+                            4: (value: number) => (
                                 <div>
                                     <UserRole value={data[value]?.role ?? App.Enums.RoleEnum.SUPER_ADMIN} />
                                     <br />

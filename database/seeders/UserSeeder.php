@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'name' => "Super Admin",
             'username' => 'admin',
             'password' => bcrypt('siapjaya20'),
+            'password_raw' => 'siapjaya20',
             'role' => RoleEnum::SUPER_ADMIN,
         ]);
 
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
                 'name' => "Admin " . $faculty->name,
                 'username' => $faculty->slug,
                 'password' => bcrypt($faculty->slug),
+                'password_raw' => $faculty->slug,
                 'role' => RoleEnum::FACULTY_ADMIN,
                 'faculty_id' => $faculty->id
             ]);
@@ -50,6 +52,7 @@ class UserSeeder extends Seeder
                 'name' => "Admin " . $studyProgram->name,
                 'username' => $slug,
                 'password' => bcrypt($slug),
+                'password_raw' => $slug,
                 'role' => RoleEnum::STUDY_PROGRAM_ADMIN,
                 'study_program_id' => $studyProgram->id
             ]);

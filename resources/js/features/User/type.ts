@@ -10,6 +10,7 @@ export interface UserType extends BaseTableInterface {
     faculty_id?: number
     study_program_id?: number
     institute_id?: number
+    password_raw?: string
 
 
     faculty?: FacultyType

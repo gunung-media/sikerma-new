@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -57,6 +57,7 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
+        'password_raw',
         'role',
         'faculty_id',
         'study_program_id',
