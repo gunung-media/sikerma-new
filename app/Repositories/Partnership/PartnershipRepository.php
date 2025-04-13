@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Partnership;
 
+use App\Enums\RoleEnum;
 use App\Interfaces\BaseRepositoryInterface;
 use App\Models\Partnership\Partnership;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -21,6 +22,20 @@ class PartnershipRepository implements BaseRepositoryInterface
 
         if (!$user->is_super_admin) {
             $query->where('user_id', $user->id);
+            switch ($user->role) {
+                case RoleEnum::FACULTY_ADMIN->value:
+                    $query->orWhere('faculty_id', $user->faculty_id);
+                    break;
+                case RoleEnum::STUDY_PROGRAM_ADMIN->value:
+                    $query->orWhere('study_program_id', $user->study_program_id);
+                    break;
+                case RoleEnum::INSTITUTE_ADMIN->value:
+                    $query->orWhere('institute_id', $user->institute_id);
+                    break;
+                case RoleEnum::UPT_ADMIN->value:
+                    $query->orWhere('upt_id', $user->upt_id);
+                    break;
+            }
         }
         $query->with(['partnerCriteria', 'studyProgram']);
         return $query->get();

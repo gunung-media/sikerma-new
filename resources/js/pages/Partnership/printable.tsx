@@ -105,13 +105,13 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
                         </tr>
                         {partnership.document_path && (
                             <tr>
-                                <td>Dokumen: {partnership.document_path ? <a href={`${props.storageUrl}/${partnership.document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
+                                <td>Dokumen: {partnership.document_path ? <a href={`${props.storageUrl}/${partnership.document_path}`} target="_blank" rel="noopener noreferrer">{`${props.storageUrl}/${partnership.document_path}`}</a> : 'Tidak ada dokumen'}</td>
 
                             </tr>
                         )}
                         {partnership.final_document_path && (
                             <tr>
-                                <td>Dokumen Laporan Akhir: {partnership.final_document_path ? <a href={`${props.storageUrl}/${partnership.final_document_path}`} target="_blank" rel="noopener noreferrer">Dokumen</a> : 'Tidak ada dokumen'}</td>
+                                <td>Dokumen Laporan Akhir: {partnership.final_document_path ? <a href={`${props.storageUrl}/${partnership.final_document_path}`} target="_blank" rel="noopener noreferrer">{`${props.storageUrl}/${partnership.final_document_path}`}</a> : 'Tidak ada dokumen'}</td>
                             </tr>
                         )}
                         {partnership.activities?.map((activity, index) => (
@@ -124,7 +124,7 @@ export default function Printable({ partnership }: PageProps<{ partnership: Part
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            {kebabToTitle(activity.field_activity?.name ?? '')} - Dokumen
+                                            {kebabToTitle(activity.field_activity?.name ?? '')} - {`${props.storageUrl}/${activity.document_path}`}
                                         </a>
                                     ) : (
                                         <span>Tidak ada dokumen</span>

@@ -2,7 +2,7 @@ import { PartnershipDto, PartnershipSelector, PartnershipStatusSelector, Partner
 import { AuthenticatedLayout } from "@/layouts/Authenticated";
 import { PageProps } from "@/types";
 import { errorToast, successToast } from "@/utils/Toast";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import axios, { AxiosError } from "axios";
 import { FormEventHandler, useEffect, useState } from "react";
 import { App } from "@/types/enum"
@@ -17,6 +17,7 @@ import { kebabToTitle } from "@/utils/StringRalated";
 import { StudyProgramSelector } from "@/features/StudyProgram";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
+    const { props: { auth: { user } } } = usePage<PageProps>();
     const [errors, setErrors] = useState<any>({})
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const defaultPartner: PartnerDto = {
@@ -242,6 +243,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         onChange={(value) => setData({ ...data, type: value })}
                                         className="mb-3 "
                                         disabled={isEditing}
+                                        isSuperAdmin={user?.is_super_admin}
                                     />
                                     {(isNotMOU) && (
                                         <PartnershipSelector
@@ -273,13 +275,16 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         className="mb-3"
                                     />
 
-                                    <StudyProgramSelector
-                                        value={data?.study_program_id ?? undefined}
-                                        onChange={(value) => setData({ ...data, study_program_id: value })}
-                                        className="mb-3 "
-                                        error={errors.study_program_id}
-                                        description="Tidak Wajib diisi"
-                                    />
+                                    {user?.is_super_admin && (
+                                        <StudyProgramSelector
+                                            value={data?.study_program_id ?? undefined}
+                                            onChange={(value) => setData({ ...data, study_program_id: value })}
+                                            className="mb-3 "
+                                            error={errors.study_program_id}
+                                            description="Tidak Wajib diisi"
+                                        />
+                                    )}
+
                                 </div>
                             </div>
                         </div>

@@ -8,14 +8,19 @@ type PartnershipTypeSelectorProps = {
     error?: string
     value?: string
     description?: string
-    disabled?: boolean
+    disabled?: boolean,
+    isSuperAdmin?: boolean
 }
 
-export const PartnershipTypeSelector: FC<PartnershipTypeSelectorProps> = ({ className, onChange, error, value, description, disabled }) => {
+export const PartnershipTypeSelector: FC<PartnershipTypeSelectorProps> = ({ className, onChange, error, value, description, disabled, isSuperAdmin }) => {
     const [status, setType] = useState<string[]>([]);
 
     useEffect(() => {
         setType(Object.values(App.Enums.PartnershipTypeEnum))
+
+        if (!isSuperAdmin) {
+            setType(Object.values(App.Enums.PartnershipTypeEnum).filter((type) => type !== App.Enums.PartnershipTypeEnum.MOU))
+        }
     }, [])
 
     return (

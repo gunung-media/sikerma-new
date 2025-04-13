@@ -102,10 +102,10 @@ class PartnershipController extends Controller
                 'executor' => $validatedData['executor'] ?? null,
                 'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
 
-                'institute_id' => $validatedData['institute_id'] ?? null,
-                'upt_id' => $validatedData['upt_id'] ?? null,
-                'faculty_id' => $validatedData['faculty_id'] ?? null,
-                'study_program_id' => $validatedData['study_program_id'] ?? null,
+                'institute_id' => $validatedData['institute_id'] ?? auth()->guard('web')->user()->institute_id ?? null,
+                'upt_id' => $validatedData['upt_id'] ?? auth()->guard('web')->user()->upt_id ?? null,
+                'faculty_id' => $validatedData['faculty_id'] ?? auth()->guard('web')->user()->faculty_id ??  null,
+                'study_program_id' => $validatedData['study_program_id'] ?? auth()->guard('web')->user()->study_program_id ?? null,
             ]);
 
             foreach ($validatedData['partners'] as $partnerData) {
@@ -209,10 +209,10 @@ class PartnershipController extends Controller
                 'executor' => $validatedData['executor'] ?? null,
                 'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
 
-                'institute_id' => $validatedData['institute_id'] ?? null,
-                'upt_id' => $validatedData['upt_id'] ?? null,
-                'faculty_id' => $validatedData['faculty_id'] ?? null,
-                'study_program_id' => $validatedData['study_program_id'] ?? null,
+                'institute_id' => $validatedData['institute_id'] ?? auth()->guard('web')->user()->institute_id ?? null,
+                'upt_id' => $validatedData['upt_id'] ?? auth()->guard('web')->user()->upt_id ?? null,
+                'faculty_id' => $validatedData['faculty_id'] ?? auth()->guard('web')->user()->faculty_id ??  null,
+                'study_program_id' => $validatedData['study_program_id'] ?? auth()->guard('web')->user()->study_program_id ?? null,
             ]);
 
             if (isset($validatedData['partners'])) {

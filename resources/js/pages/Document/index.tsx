@@ -118,13 +118,63 @@ export default function Document({ data }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.name, item.path, index
+                            index + 1, item.name, index, index
                         ])}
                         options={{
                             responsive: true,
                         }}
                         slots={{
-                            2: (value: string) => <a href={value.startsWith('http') ? value : `${storageUrl}/${value}`} target="_blank" rel="noopener noreferrer">Download File</a>,
+                            2: (value: number) => {
+                                const path = data[value].path as string | null;
+
+                                if (!path) return <>-</>;
+
+                                const isYoutube = path.includes('youtube.com') || path.includes('youtu.be');
+                                const isPdf = path.endsWith('.pdf');
+                                const isFullUrl = path.startsWith('http');
+                                const fileUrl = isFullUrl ? path : `${storageUrl}/${path}`;
+
+                                if (isYoutube) {
+                                    // Get embed URL
+                                    const videoId = path.includes('youtu.be')
+                                        ? path.split('youtu.be/')[1]
+                                        : new URLSearchParams(new URL(path).search).get('v');
+                                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                                    return (
+                                        <iframe
+                                            width="300"
+                                            height="200"
+                                            src={embedUrl}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        />
+                                    );
+                                }
+
+                                if (isPdf) {
+                                    return (
+                                        <iframe
+                                            src={fileUrl}
+                                            width="100%"
+                                            height="400px"
+                                            title="PDF Preview"
+                                            style={{ border: '1px solid #ccc', borderRadius: '4px' }}
+                                        />
+                                    );
+                                }
+
+                                return (
+                                    <a
+                                        href={fileUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-outline-primary btn-sm"
+                                    >
+                                        Open File
+                                    </a>
+                                );
+                            },
                             [cols.length - 1]: (value: number) => user.is_super_admin ? (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
