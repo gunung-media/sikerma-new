@@ -161,6 +161,7 @@ export default function User({ roles, data }: PageProps & {
                                         {data[value]?.faculty_id ? data[value].faculty?.name : ""}
                                         {data[value]?.study_program_id ? data[value].study_program?.name : ""}
                                         {data[value]?.institute_id ? data[value].institute?.name : ""}
+                                        {data[value]?.upt_id ? data[value].upt?.name : ""}
                                     </small>
                                 </div>
                             ),
@@ -253,6 +254,15 @@ export default function User({ roles, data }: PageProps & {
                             onChange={(val) => setUser({ ...user, institute_id: val })}
                             value={user?.institute_id}
                             error={errors.institute_id}
+                        />
+                    )}
+
+                    {user?.role === App.Enums.RoleEnum.UPT_ADMIN && (
+                        <InstituteSelector
+                            className="mb-3"
+                            onChange={(val) => setUser({ ...user, upt_id: val })}
+                            value={user?.upt_id}
+                            error={errors.upt_id}
                         />
                     )}
 

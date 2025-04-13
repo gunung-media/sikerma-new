@@ -6,13 +6,14 @@ use App\Enums\RoleEnum;
 use App\Models\Master\Faculty;
 use App\Models\Master\Institute;
 use App\Models\Master\StudyProgram;
+use App\Models\Master\Upt;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -64,6 +65,7 @@ class User extends Authenticatable
         'faculty_id',
         'study_program_id',
         'institute_id',
+        'upt_id',
     ];
 
     protected $hidden = [
@@ -101,5 +103,10 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn() => $this->role === RoleEnum::SUPER_ADMIN
         );
+    }
+
+    public function Upt(): BelongsTo|null
+    {
+        return $this->belongsTo(Upt::class);
     }
 }

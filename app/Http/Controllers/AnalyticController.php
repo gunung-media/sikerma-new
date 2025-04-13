@@ -25,6 +25,7 @@ class AnalyticController extends Controller
             'partnershipCalendar' => $this->partnershipRepository->getYearlyPartnerships(),
             'dueDateCalendar' => $this->partnershipRepository->getYearlyDueDates(),
             'data' => $this->partnershipRepository->getAll(),
+            'roles' => $this->userRepository->getGroupByRole(),
         ];
 
         return Inertia::render('Analytic/index', $data);

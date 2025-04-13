@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Enums\RoleEnum;
 use App\Models\Master\Faculty;
+use App\Models\Master\Institute;
 use App\Models\Master\StudyProgram;
+use App\Models\Master\Upt;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -23,6 +25,39 @@ class UserSeeder extends Seeder
 
         $this->createFacultyAdmin();
         $this->createStudyProgramAdmin();
+        $this->createUnitKerjaAdmin();
+    }
+
+    public function createUnitKerjaAdmin(): void
+    {
+        $name = "Universitas Palangka Raya";
+        $slug = Str::slug($name);
+
+        $upt = Upt::create([
+            'name' => $name,
+        ]);
+
+        $institute = Institute::create([
+            'name' => $name,
+        ]);
+
+        foreach ([RoleEnum::UPT_ADMIN, RoleEnum::INSTITUTE_ADMIN] as $role) {
+            $data = [
+                'name' => $name,
+                'username' => $slug . '-' . $role->value,
+                'password' => bcrypt($slug . '-' . $role->value),
+                'password_raw' => $slug . '-' . $role->value,
+                'role' => $role,
+            ];
+
+            if ($role == RoleEnum::UPT_ADMIN) {
+                $data['upt_id'] = $upt->id;
+            } else {
+                $data['institute_id'] = $institute->id;
+            }
+
+            User::create($data);
+        }
     }
 
     private function createFacultyAdmin(): void
