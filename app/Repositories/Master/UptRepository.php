@@ -3,14 +3,16 @@
 namespace App\Repositories\Master;
 
 use App\Interfaces\BaseRepositoryInterface;
-use App\Models\Master\Institute;
+use App\Models\Master\Upt;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Concerns\TValue;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\TModel;
 
 class UptRepository implements BaseRepositoryInterface
 {
     public function __construct(
-        protected Institute $model,
+        protected Upt $model,
     ) {}
 
     public function getAll(): Collection
@@ -28,7 +30,7 @@ class UptRepository implements BaseRepositoryInterface
         return $query->find($id);
     }
 
-    public function create(array $data): Institute
+    public function create(array $data): Upt
     {
         return $this->model->create($data);
     }
@@ -54,7 +56,7 @@ class UptRepository implements BaseRepositoryInterface
         return $query->paginate($perPage);
     }
 
-    public function findByAttributes(array $attributes): ?Institute
+    public function findByAttributes(array $attributes): ?Upt
     {
         $query = $this->model->query();
 
@@ -69,7 +71,7 @@ class UptRepository implements BaseRepositoryInterface
         return $query->where($attributes)->exists();
     }
 
-    public function count()
+    public function count(): int
     {
         $query = $this->model->query();
 

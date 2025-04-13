@@ -54,11 +54,20 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         ]
     },
     {
-        type: 'single',
-        label: 'Institusi',
+        type: 'multiple',
+        label: 'Unit Kerja',
         icon: 'bxs-buildings',
-        url: 'master.institutes.index',
         isSuperAdmin: true,
+        items: [
+            {
+                label: 'Insitusi',
+                url: 'master.institutes.index'
+            },
+            {
+                label: 'UPT',
+                url: 'master.upts.index'
+            }
+        ]
     },
     {
         type: 'single',

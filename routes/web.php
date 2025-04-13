@@ -4,6 +4,7 @@ use App\Http\Controllers\AnalyticController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\Master\FieldActivityController;
 use App\Http\Controllers\Master\PartnerCriteriaController;
+use App\Http\Controllers\Master\UptController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('faculties', FacultyController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('study-programs', StudyProgramController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('institutes', InstituteController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('upts', UptController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('field-activities', FieldActivityController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('partner-criterias', PartnerCriteriaController::class)->only(['index', 'store', 'update', 'destroy']);
         });

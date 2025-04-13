@@ -1,4 +1,4 @@
-import { InstituteType, InstituteDto } from "@/features/Institute"
+import { UptType, UptDto } from "@/features/Upt"
 import { AuthenticatedLayout } from "@/layouts/Authenticated"
 import { PageProps } from "@/types"
 import { FormEventHandler, useState } from "react"
@@ -10,20 +10,20 @@ import { router, usePage } from "@inertiajs/react";
 import { basicErrorToast, errorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
 
-export default function Institute({ data }: PageProps & {
-    data: InstituteType[],
+export default function Upt({ data }: PageProps & {
+    data: UptType[],
 }) {
     const { errors } = usePage<PageProps>().props
     const [showForm, setShowForm] = useState(false);
     const [selectedId, setSelectedId] = useState<number | null>(null);
-    const [institute, setInstitute] = useState<InstituteDto>({
+    const [upt, setUpt] = useState<UptDto>({
         name: '',
     })
 
     const cols = ["#", "Name", "Action"];
 
     const handleEdit = (index: number) => {
-        setInstitute(data[index])
+        setUpt(data[index])
         setSelectedId(data[index].id)
         setShowForm(true);
     };
@@ -33,7 +33,7 @@ export default function Institute({ data }: PageProps & {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault()
         if (isEditing) {
-            router.put(route('master.institutes.update', selectedId), institute, {
+            router.put(route('master.upts.update', selectedId), upt, {
                 onError: (errors) => {
                     errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
@@ -41,12 +41,12 @@ export default function Institute({ data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
-                    setTimeout(() => router.visit(route('master.institutes.index')), 500)
+                    setTimeout(() => router.visit(route('master.upts.index')), 500)
                 }
             })
             return;
         }
-        router.post(route('master.institutes.store'), institute, {
+        router.post(route('master.upts.store'), upt, {
             onError: (errors) => {
                 console.error(errors)
                 basicErrorToast(errors)
@@ -54,14 +54,14 @@ export default function Institute({ data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.institutes.index')), 500)
+                setTimeout(() => router.visit(route('master.upts.index')), 500)
             }
         })
     }
 
     const handleDelete = async (index: number) => {
         await confirmationDelete(() => {
-            router.delete(route('master.institutes.destroy', data[index].id), {
+            router.delete(route('master.upts.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
                 }
@@ -71,16 +71,16 @@ export default function Institute({ data }: PageProps & {
 
 
     return (
-        <AuthenticatedLayout title="Institusi">
-            <h4 className="mb-1">List Institusi</h4>
+        <AuthenticatedLayout title="UPT">
+            <h4 className="mb-1">List UPT</h4>
 
-            <p className="mb-6">List Institusi yang ada di aplikasi ini</p>
+            <p className="mb-6">List UPT yang ada di aplikasi ini</p>
 
             <div className="card">
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    <Button value="Tambah Institusi" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
+                    <Button value="Tambah UPT" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable
@@ -118,18 +118,18 @@ export default function Institute({ data }: PageProps & {
                 handleClose={() => {
                     setSelectedId(null)
                     setShowForm(false)
-                    setInstitute({ name: '' })
+                    setUpt({ name: '' })
                 }}
-                title={selectedId ? "Edit Institusi" : "Tambah Institusi"}
+                title={selectedId ? "Edit UPT" : "Tambah UPT"}
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input
-                        label="Name"
+                        label="Nama"
                         name="name"
-                        placeholder="Institute Name"
-                        value={institute?.name}
+                        placeholder="UPT"
+                        value={upt?.name}
                         errorMessage={errors.name}
-                        onChange={(val) => setInstitute({ ...institute, name: val.target.value })}
+                        onChange={(val) => setUpt({ ...upt, name: val.target.value })}
                         className="mb-3"
                     />
                     <Button value="Save" type="primary" className="mt-4" isSubmit />
