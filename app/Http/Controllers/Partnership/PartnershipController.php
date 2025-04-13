@@ -50,7 +50,9 @@ class PartnershipController extends Controller
 
         $validatedData = $request->validate([
             'type' => ['required', Rule::in(PartnershipTypeEnum::getValues())],
-            'document_number' => 'required|string|max:255',
+            'document_number' => [
+                Rule::requiredIf($request->type === PartnershipTypeEnum::MOU->value),
+            ],
             'document_fundamental' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',

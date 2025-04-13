@@ -257,6 +257,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         onChange={(e) => setData({ ...data, document_number: e.target.value })}
                                         errorMessage={errors.document_number}
                                         className="mb-3"
+                                        description={isNotMOU ? "Tidak Wajib Diisi" : ""}
                                     />
                                     <Input
                                         label="Judul"
@@ -285,7 +286,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                     </div>
                 </div>
                 <div className="col-12 row mt-8">
-                    <div className={`col-12 col-md-${isNotMOU ? 6 : 12}`}>
+                    <div className={`col-12 col-md-12 mb-8`}>
                         <div className="card">
                             <div className="card-header">
                                 <h5 className="mb-0 me-2">
@@ -322,7 +323,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                     </div>
 
                     {(isNotMOU) && (
-                        <div className="col-12 col-md-6">
+                        <div className="col-12 col-md-12">
                             <div className="card">
                                 <div className="card-header">
                                     <h5 className="mb-0 me-2">
