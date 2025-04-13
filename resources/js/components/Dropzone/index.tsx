@@ -9,10 +9,11 @@ interface DropzoneProps {
     value?: string | null;
     className?: string;
     error?: string;
+    description?: string;
 }
 
 
-export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, error }) => {
+export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, error, description = "Batas ukuran file 2MB " }) => {
     const { props } = usePage<PageProps>();
 
     const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -109,53 +110,56 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
     });
 
     return (
-        <div
-            {...getRootProps()}
-            className={className}
-            style={{
-                border: "2px dashed gray",
-                padding: "20px",
-                textAlign: "center",
-                backgroundColor: isDragActive ? "#f0f0f0" : "#ffffff",
-                borderRadius: "8px",
-                cursor: "pointer",
-            }}
-        >
-            <input {...getInputProps()} />
-            {filePreview ? (
-                <div>
-                    <img
-                        src={filePreview}
-                        alt={isPDF ? "PDF Preview" : "Image Preview"}
-                        style={{
-                            maxWidth: "100%",
-                            maxHeight: "150px",
-                            display: "block",
-                            margin: "10px auto",
-                            borderRadius: "8px",
-                        }}
-                    />
-                    {downloadUrl && (
-                        <a
-                            href={downloadUrl}
-                            download
+        <div>
+            <div
+                {...getRootProps()}
+                className={className}
+                style={{
+                    border: error ? "2px dashed red" : "2px dashed gray",
+                    padding: "20px",
+                    textAlign: "center",
+                    backgroundColor: isDragActive ? "#f0f0f0" : "#ffffff",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                }}
+            >
+                <input {...getInputProps()} />
+                {filePreview ? (
+                    <div>
+                        <img
+                            src={filePreview}
+                            alt={isPDF ? "PDF Preview" : "Image Preview"}
                             style={{
+                                maxWidth: "100%",
+                                maxHeight: "150px",
                                 display: "block",
-                                marginTop: "10px",
-                                textDecoration: "none",
-                                color: "#007BFF",
+                                margin: "10px auto",
+                                borderRadius: "8px",
                             }}
-                        >
-                            Download File
-                        </a>
-                    )}
-                    <p>Klik atau drag dan drop file untuk menganti</p>
-                </div>
-            ) : (
-                <p>Drag dan drop file di sini, atau klik untuk memilih file</p>
-            )}
+                        />
+                        {downloadUrl && (
+                            <a
+                                href={downloadUrl}
+                                download
+                                style={{
+                                    display: "block",
+                                    marginTop: "10px",
+                                    textDecoration: "none",
+                                    color: "#007BFF",
+                                }}
+                            >
+                                Download File
+                            </a>
+                        )}
+                        <p>Klik atau drag dan drop file untuk menganti</p>
+                    </div>
+                ) : (
+                    <p>Drag dan drop file di sini, atau klik untuk memilih file</p>
+                )}
 
-            {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className="form-text" style={{ color: "red" }}>{error}</div>}
+            </div>
+            {description && <div className="form-text">{description}</div>}
         </div>
     );
 };
