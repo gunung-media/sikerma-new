@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-use App\Models\Master\Institute;
-use App\Repositories\Master\InstituteRepository;
+use App\Models\Master\Upt;
+use App\Repositories\Master\UptRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 
-class InstituteController extends Controller
+class UptController extends Controller
 {
     public function __construct(
-        protected InstituteRepository $instituteRepository,
+        protected UptRepository $uptRepository,
     ) {}
 
     public function index(): InertiaResponse
     {
-        return Inertia::render('Institute/index', ['data' => $this->instituteRepository->getAll()]);
+        return Inertia::render('Upt/index', ['data' => $this->uptRepository->getAll()]);
     }
 
     public function store(Request $request): Response|RedirectResponse
@@ -31,7 +31,7 @@ class InstituteController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->instituteRepository->create([...$validated,]);
+            $this->uptRepository->create([...$validated,]);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {
@@ -40,7 +40,7 @@ class InstituteController extends Controller
         }
     }
 
-    public function update(Request $request, Institute $institute): Response|RedirectResponse
+    public function update(Request $request, Upt $upt): Response|RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -48,7 +48,7 @@ class InstituteController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->instituteRepository->update($institute->id, $validated);
+            $this->uptRepository->update($upt->id, $validated);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {
@@ -57,11 +57,11 @@ class InstituteController extends Controller
         }
     }
 
-    public function destroy(Institute $institute): Response|RedirectResponse
+    public function destroy(Upt $upt): Response|RedirectResponse
     {
         DB::beginTransaction();
         try {
-            $this->instituteRepository->delete($institute->id);
+            $this->uptRepository->delete($upt->id);
             DB::commit();
             return response(status: 200);
         } catch (\Throwable $th) {

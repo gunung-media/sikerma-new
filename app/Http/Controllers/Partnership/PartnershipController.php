@@ -59,11 +59,14 @@ class PartnershipController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
-            'institute_id' => 'nullable|exists:institutes,id',
             'partner_criteria_id' => 'nullable|exists:partner_criterias,id',
-            'study_program_id' => 'nullable|exists:study_programs,id',
             'document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
             'final_document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
+
+            'institute_id' => 'nullable|exists:institutes,id',
+            'upt_id' => 'nullable|exists:upts,id',
+            'faculty_id' => 'nullable|exists:faculties,id',
+            'study_program_id' => 'nullable|exists:study_programs,id',
 
             'partners' => 'required|array',
             'partners.*.agency_type' => ['required', Rule::in(AgencyTypeEnum::getValues())],
@@ -95,8 +98,11 @@ class PartnershipController extends Controller
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
                 'executor' => $validatedData['executor'] ?? null,
-                'institute_id' => $validatedData['institute_id'] ?? null,
                 'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
+
+                'institute_id' => $validatedData['institute_id'] ?? null,
+                'upt_id' => $validatedData['upt_id'] ?? null,
+                'faculty_id' => $validatedData['faculty_id'] ?? null,
                 'study_program_id' => $validatedData['study_program_id'] ?? null,
             ]);
 
@@ -154,11 +160,14 @@ class PartnershipController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
-            'institute_id' => 'nullable|exists:institutes,id',
             'partner_criteria_id' => 'nullable|exists:partner_criterias,id',
-            'study_program_id' => 'nullable|exists:study_programs,id',
             'document_path' => 'nullable',
             'final_document_path' => 'nullable',
+
+            'institute_id' => 'nullable|exists:institutes,id',
+            'upt_id' => 'nullable|exists:upts,id',
+            'faculty_id' => 'nullable|exists:faculties,id',
+            'study_program_id' => 'nullable|exists:study_programs,id',
 
             // Partners Validation
             'partners' => 'nullable|array',
@@ -196,8 +205,11 @@ class PartnershipController extends Controller
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
                 'executor' => $validatedData['executor'] ?? null,
-                'institute_id' => $validatedData['institute_id'] ?? null,
                 'partner_criteria_id' => $validatedData['partner_criteria_id'] ?? null,
+
+                'institute_id' => $validatedData['institute_id'] ?? null,
+                'upt_id' => $validatedData['upt_id'] ?? null,
+                'faculty_id' => $validatedData['faculty_id'] ?? null,
                 'study_program_id' => $validatedData['study_program_id'] ?? null,
             ]);
 
