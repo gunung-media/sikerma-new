@@ -1,5 +1,3 @@
-import { Shortcut } from "./Shortcut"
-import { Notification } from "./Notification"
 import { User } from "./User"
 
 export const Navbar = () => {

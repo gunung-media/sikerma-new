@@ -9,6 +9,7 @@ export type SidebarNavigationItem = {
         url: string;
     }[];
     isSuperAdmin?: boolean;
+    canSupervisionAccess?: boolean
 };
 
 export const sidebarNavigation: SidebarNavigationItem[] = [
@@ -16,13 +17,15 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         type: 'single',
         label: 'Dashboard',
         icon: 'bx-home-smile',
-        url: 'dashboard'
+        url: 'dashboard',
+        canSupervisionAccess: true
     },
     {
         type: 'single',
         label: 'Analytic',
         icon: 'bx-line-chart',
-        url: 'analytic'
+        url: 'analytic',
+        canSupervisionAccess: true
     },
     {
         type: 'header',
@@ -88,15 +91,18 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
         label: 'Document',
         icon: 'bx-file',
         url: 'master.documents.index',
+        canSupervisionAccess: false,
     },
     {
         type: 'header',
-        label: 'Menu'
+        label: 'Menu',
+        canSupervisionAccess: false,
     },
     {
         type: 'multiple',
         label: 'Kerjasama',
         icon: 'bx-calendar',
+        canSupervisionAccess: false,
         items: [
             {
                 label: 'List Kerjasama',

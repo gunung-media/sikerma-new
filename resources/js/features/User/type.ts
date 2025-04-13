@@ -20,4 +20,5 @@ export interface UserType extends BaseTableInterface {
     institute?: InstituteType
     upt?: UptType
     is_super_admin: boolean
+    is_supervisor: boolean
 }

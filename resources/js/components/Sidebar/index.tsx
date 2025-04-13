@@ -8,21 +8,30 @@ export const Sidebar = () => {
     const { props: { auth: { user } } } = usePage<PageProps>();
     const compareUrl = (url: string) => route().current() === url
 
-    const renderHeader = ({ label, isSuperAdmin }: SidebarNavigationItem, index: number) => {
-        if (isSuperAdmin && isSuperAdmin !== user?.is_super_admin) {
+    const renderHeader = (item: SidebarNavigationItem, index: number) => {
+        if (user.is_supervisor && !item.canSupervisionAccess) {
+            return null;
+        }
+
+        if (!user.is_supervisor && !user.is_super_admin && item.isSuperAdmin) {
             return null;
         }
         return (
             <li className="menu-header small text-uppercase" key={index}>
-                <span className="menu-header-text" data-i18n={label}>{label}</span>
+                <span className="menu-header-text" data-i18n={item.label}>{item.label}</span>
             </li>
         );
     };
 
     const renderSingle = (item: SidebarNavigationItem, index: number) => {
-        if (item.isSuperAdmin && item.isSuperAdmin !== user?.is_super_admin) {
+        if (user.is_supervisor && !item.canSupervisionAccess) {
             return null;
         }
+
+        if (!user.is_supervisor && !user.is_super_admin && item.isSuperAdmin) {
+            return null;
+        }
+
         return (
             <li className={mergeClass("menu-item", compareUrl(item.url!) ? "active" : "")} key={index}>
                 <Link href={route(item.url!)} className="menu-link">
@@ -30,11 +39,15 @@ export const Sidebar = () => {
                     <div data-i18n={item.label} className="text-truncate">{item.label}</div>
                 </Link>
             </li>
-        )
+        );
     };
 
     const renderMultiple = (item: SidebarNavigationItem, index: number) => {
-        if (item.isSuperAdmin && item.isSuperAdmin !== user?.is_super_admin) {
+        if (user.is_supervisor && !item.canSupervisionAccess) {
+            return null;
+        }
+
+        if (!user.is_supervisor && !user.is_super_admin && item.isSuperAdmin) {
             return null;
         }
         return (

@@ -23,6 +23,14 @@ class UserSeeder extends Seeder
             'role' => RoleEnum::SUPER_ADMIN,
         ]);
 
+        User::create([
+            'name' => "Pimpinan",
+            'username' => 'supervisor',
+            'password' => bcrypt('siapjaya20'),
+            'password_raw' => 'siapjaya20',
+            'role' => RoleEnum::SUPERVISOR,
+        ]);
+
         $this->createFacultyAdmin();
         $this->createStudyProgramAdmin();
         $this->createUnitKerjaAdmin();
