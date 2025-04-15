@@ -81,7 +81,7 @@ class PartnershipController extends Controller
 
             'activities' => 'nullable|array',
             'activities.*.field_activity_id' => 'required|integer',
-            'activities.*.file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+            'activities.*.file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
         ]);
 
         DB::beginTransaction();
@@ -112,12 +112,10 @@ class PartnershipController extends Controller
                 $this->partnerRepository->create([...$partnerData, 'partnership_id' => $partnership->id]);
             }
 
-            if ($validatedData['type'] !== PartnershipTypeEnum::MOU->value) {
-                if (isset($validatedData['activities'])) {
-                    foreach ($validatedData['activities'] as $activityData) {
-                        $activityData['partnership_id'] = null;
-                        $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
-                    }
+            if (isset($validatedData['activities'])) {
+                foreach ($validatedData['activities'] as $activityData) {
+                    $activityData['partnership_id'] = null;
+                    $this->partnershipActivityRepository->create([...$activityData, 'partnership_id' => $partnership->id]);
                 }
             }
 
@@ -236,7 +234,7 @@ class PartnershipController extends Controller
             }
 
             if (isset($validatedData['activities'])) {
-                $existingActivityIds = $this->partnershipActivityRepository->findByAttributes(['partnership_id' => $partnership->id])->pluck('id')->toArray();
+                $existingActivityIds = $this->partnershipActivityRepository->findByAttributes(['partnership_id' => $partnership->id])?->pluck('id')->toArray() ?? [];
 
                 $incomingActivityIds = [];
                 foreach ($validatedData['activities'] as $activityData) {

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('partnership_id');
             $table->unsignedBigInteger('field_activity_id');
-            $table->string('document_path');
+            $table->string('document_path')->nullable();
             $table->timestamps();
 
             $table->foreign('partnership_id')->references('id')->on('partnerships')->onDelete('cascade');

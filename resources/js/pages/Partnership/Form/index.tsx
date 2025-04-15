@@ -259,7 +259,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         onChange={(e) => setData({ ...data, document_number: e.target.value })}
                                         errorMessage={errors.document_number}
                                         className="mb-3"
-                                        description={isNotMOU ? "Tidak Wajib Diisi" : ""}
                                     />
                                     <Input
                                         label="Judul"
@@ -281,7 +280,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                             onChange={(value) => setData({ ...data, study_program_id: value })}
                                             className="mb-3 "
                                             error={errors.study_program_id}
-                                            description="Tidak Wajib diisi"
                                         />
                                     )}
 
@@ -327,70 +325,55 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                         </div>
                     </div>
 
-                    {(isNotMOU) && (
-                        <div className="col-12 col-md-12">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h5 className="mb-0 me-2">
-                                        <strong>Bentuk Kegiatan</strong>
-                                    </h5>
-                                </div>
+                    <div className="col-12 col-md-12">
+                        <div className="card">
+                            <div className="card-header">
+                                <h5 className="mb-0 me-2">
+                                    <strong>Bentuk Kegiatan</strong>
+                                </h5>
+                            </div>
 
-                                <div className="card-body">
-                                    <ActivitySelector
-                                        onChange={(value, name) => {
-                                            setData({
-                                                // @ts-expect-error
-                                                ...data, activities: [...data.activities, {
-                                                    field_activity_id: value, partnership_id: name, field_activity: {
-                                                        id: 0,
-                                                        name: name
-                                                    }
-                                                }]
-                                            })
-                                        }}
-                                    />
+                            <div className="card-body">
+                                <ActivitySelector
+                                    onChange={(value, name) => {
+                                        setData({
+                                            ...data, activities: [...data.activities, {
+                                                field_activity_id: value, partnership_id: name, field_activity: {
+                                                    id: 0,
+                                                    name: name
+                                                }
+                                            }]
+                                        })
+                                    }}
+                                />
 
-                                    {data.activities.map((activity, index) => (
-                                        <div className="card mt-5" key={index}>
-                                            <div className="card-header header-elements" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
-                                                <small>{kebabToTitle(activity.field_activity?.name ?? "")}</small>
+                                {data.activities.map((activity, index) => (
+                                    <div className="card mt-5" key={index}>
+                                        <div className="card-header header-elements" style={{ borderBottom: "1px solid #e5e5e5", background: "#e5e5e5" }}>
+                                            <small>{kebabToTitle(activity.field_activity?.name ?? "")}</small>
 
-                                                <div className="card-header-elements ms-auto">
-                                                    <Button
-                                                        value="Delete"
-                                                        icon="bx-trash"
-                                                        isIcon
-                                                        size="xs"
-                                                        onClick={() => {
-                                                            setData({
-                                                                ...data,
-                                                                activities: data.activities.filter((_, i) => i !== index)
-                                                            });
-                                                        }}
-                                                        disabled={isLoading}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="card-body mt-5">
-                                                <Dropzone
-                                                    value={activity.document_path}
-                                                    onChange={(file) => {
-                                                        const newActivities = [...data.activities];
-                                                        newActivities[index] = { ...activity, file: file };
-                                                        setData({ ...data, activities: newActivities });
+                                            <div className="card-header-elements ms-auto">
+                                                <Button
+                                                    value="Delete"
+                                                    icon="bx-trash"
+                                                    isIcon
+                                                    size="xs"
+                                                    onClick={() => {
+                                                        setData({
+                                                            ...data,
+                                                            activities: data.activities.filter((_, i) => i !== index)
+                                                        });
                                                     }}
-                                                    error={errors[`activities.${index}.document_path`]}
-
+                                                    disabled={isLoading}
                                                 />
                                             </div>
                                         </div>
-                                    ))}
+                                    </div>
+                                ))}
 
-                                </div>
                             </div>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 {(isNotMOU) && (
