@@ -89,7 +89,7 @@ class PartnershipController extends Controller
         try {
             $partnership = $this->partnershipRepository->create([
                 'type' => $validatedData['type'],
-                'document_number' => $validatedData['document_number'],
+                'document_number' => $validatedData['document_number'] ?? '-',
                 'document_fundamental' => $validatedData['document_fundamental'] ?? null,
                 'document_path' => $validatedData['document_path'] ?? null,
                 'final_document_path' => $validatedData['final_document_path'] ?? null,
