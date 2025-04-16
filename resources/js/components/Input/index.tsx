@@ -72,7 +72,7 @@ export const Input: FC<InputType> = ({
 
     return (
         <div className={className}>
-            {label && <label className="form-label" htmlFor={id}>{label}</label>}
+            {label && <label className="form-label" htmlFor={id}>{label} {isRequired && <span className="text-danger">*</span>}</label>}
             {isGroup ? <div className="input-group input-group-merge">
                 {input}
                 {children}

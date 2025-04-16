@@ -135,7 +135,6 @@ export default function Document({ data }: PageProps & {
                                 const fileUrl = isFullUrl ? path : `${storageUrl}/${path}`;
 
                                 if (isYoutube) {
-                                    // Get embed URL
                                     const videoId = path.includes('youtu.be')
                                         ? path.split('youtu.be/')[1]
                                         : new URLSearchParams(new URL(path).search).get('v');
@@ -154,13 +153,24 @@ export default function Document({ data }: PageProps & {
 
                                 if (isPdf) {
                                     return (
-                                        <iframe
-                                            src={fileUrl}
-                                            width="100%"
-                                            height="400px"
-                                            title="PDF Preview"
-                                            style={{ border: '1px solid #ccc', borderRadius: '4px' }}
-                                        />
+                                        <>
+                                            <iframe
+                                                src={fileUrl}
+                                                width="100%"
+                                                height="400px"
+                                                title="PDF Preview"
+                                                style={{ border: '1px solid #ccc', borderRadius: '4px' }}
+                                            />
+
+                                            <a
+                                                href={fileUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-outline-primary btn-sm"
+                                            >
+                                                Open File
+                                            </a>
+                                        </>
                                     );
                                 }
 

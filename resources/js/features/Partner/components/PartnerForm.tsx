@@ -64,6 +64,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             onChangeValue={(value) => {
                                 onChange(index, { ...partner, agency_name: value })
                             }}
+                            isRequired
                         />
                         <Input
                             label="Alamat"
@@ -73,6 +74,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                 onChange(index, { ...partner, agency_address: e.target.value })
                             }}
                             errorMessage={errors?.[`partners.${index}.agency_address`]}
+                            isRequired
                         />
                         <hr />
                         <h6 className="mb-0">Penandatangan</h6>
@@ -86,6 +88,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             }}
                             className="mt-4"
                             errorMessage={errors?.[`partners.${index}.signatory_name`]}
+                            isRequired
                         />
 
                         <Input
@@ -97,6 +100,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             }}
                             className="mt-4"
                             errorMessage={errors?.[`partners.${index}.signatory_position`]}
+                            isRequired
                         />
                         <hr />
                         <h6 className="mb-0">Penanggung Jawab (Jika Ada)

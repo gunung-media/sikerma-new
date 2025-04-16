@@ -13,6 +13,7 @@ type PartnerSelectorProps = {
     onChangeValue: (value: string | any) => void
     error?: string
     description?: string
+    isRequired?: boolean
 }
 
 export const PartnerSelector: FC<PartnerSelectorProps> = ({
@@ -22,7 +23,8 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
     onChangeType,
     onChangeValue,
     error,
-    description
+    description,
+    isRequired
 }) => {
     const [types, setTypes] = useState<string[]>([])
     const [selectedType, setSelectedType] = useState<string | null>(null)
@@ -47,7 +49,7 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
 
     return (
         <div className={className}>
-            <label className="form-label" >Nama Instansi</label>
+            <label className="form-label" >Nama Instansi {isRequired && <span className="text-danger">*</span>}</label>
             <div
                 style={{
                     display: 'flex',
