@@ -79,6 +79,6 @@ class PartnerRepository implements BaseRepositoryInterface
             $query->where($attributes);
         }
 
-        return $query->where('agency_name', 'like', "%{$search}%")->distinct()->get();
+        return $query->where('agency_name', 'like', "%{$search}%")->get();
     }
 }

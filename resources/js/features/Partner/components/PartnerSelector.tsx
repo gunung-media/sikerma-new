@@ -37,7 +37,12 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
         try {
             const { data: { partners } } = await axios.get<{ partners: PartnerType[] }>(route('api.partners'))
 
-            return partners.map((partner) => ({
+
+            const unique = Array.from(new Map(
+                partners.map((partner) => [partner.agency_name, partner])
+            ).values());
+
+            return unique.map((partner) => ({
                 label: partner.agency_name,
                 value: partner.agency_name
             }))
