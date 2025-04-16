@@ -117,7 +117,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                 if (error.response?.status === 422) {
                     console.error(error.response?.data.errors);
                     setErrors(error.response?.data.errors);
-                    errorToast("Data not valid!");
+                    errorToast("Data harus diisi dengan benar. Pastikan tidak ada data yang kosong.");
                 } else {
                     errorToast(error.response?.data.error ?? "Maaf, terjadi kesalahan.");
                 }
