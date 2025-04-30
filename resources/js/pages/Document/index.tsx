@@ -157,18 +157,20 @@ export default function Document({ data }: PageProps & {
                                             <iframe
                                                 src={fileUrl}
                                                 width="100%"
-                                                height="400px"
+                                                height="200px"
                                                 title="PDF Preview"
                                                 style={{ border: '1px solid #ccc', borderRadius: '4px' }}
+                                                className="mb-3"
                                             />
 
                                             <a
                                                 href={fileUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="btn btn-outline-primary btn-sm"
+                                                className="btn btn-outline-primary "
+                                                style={{ width: '100%' }}
                                             >
-                                                Open File
+                                                Buka File
                                             </a>
                                         </>
                                     );
@@ -179,9 +181,10 @@ export default function Document({ data }: PageProps & {
                                         href={fileUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="btn btn-outline-primary btn-sm"
+                                        className="btn btn-outline-primary"
+                                        style={{ width: '100%' }}
                                     >
-                                        Open File
+                                        Buka File
                                     </a>
                                 );
                             },
