@@ -9,6 +9,7 @@ import { CustomOffcanvas } from "@/components/Offcanvas";
 import { router, usePage } from "@inertiajs/react";
 import { basicErrorToast, errorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
+import { kebabToTitle } from "@/utils/StringRalated";
 
 export default function FieldActivity({ data }: PageProps & {
     data: FieldActivityType[],
@@ -20,7 +21,7 @@ export default function FieldActivity({ data }: PageProps & {
         name: '',
     })
 
-    const cols = ["#", "Name", "Action"];
+    const cols = ["#", "Name", "hide_name", "Action"];
 
     const handleEdit = (index: number) => {
         setFieldActivity(data[index])
@@ -87,12 +88,24 @@ export default function FieldActivity({ data }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.name, index
+                            index + 1, item.name, item.name, index
                         ])}
                         options={{
                             responsive: true,
                         }}
+                        columns={cols.map((col, index) => ({
+                            title: col,
+                            visible: !col.startsWith("hide_"),
+                        }))}
                         slots={{
+                            1: (value: string) => (
+                                <div className="d-flex flex-column">
+                                    <span className="emp_name text-truncate">{kebabToTitle(value)}</span>
+                                    <small className="emp_post text-truncate text-muted">
+                                        {value}
+                                    </small>
+                                </div>
+                            ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
@@ -101,9 +114,6 @@ export default function FieldActivity({ data }: PageProps & {
                             ),
                         }}
                     >
-                        <thead>
-                            <tr>{cols.map((col, index) => <th key={index}>{col}</th>)}</tr>
-                        </thead>
                     </DataTable>
                 </div>
             </div>
