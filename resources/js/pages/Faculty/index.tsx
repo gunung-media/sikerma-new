@@ -20,7 +20,8 @@ export default function Faculty({ data }: PageProps & {
         name: '',
     })
 
-    const cols = ["#", "Name", "Action"];
+
+    const cols = ["#", "Name", "hide_name", "hide_slug", "Action"];
 
     const handleEdit = (index: number) => {
         setFaculty(data[index])
@@ -85,9 +86,13 @@ export default function Faculty({ data }: PageProps & {
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable
+                        columns={cols.map((col, index) => ({
+                            title: col,
+                            visible: !col.startsWith("hide_"),
+                        }))}
                         className="datatables-basic table border-top"
-                        data={data.map((item, index) => [
-                            index + 1, index, index
+                        data={data.map(({ name, slug }, index) => [
+                            index + 1, index, name, slug, index
                         ])}
                         options={{
                             responsive: true,
@@ -108,10 +113,8 @@ export default function Faculty({ data }: PageProps & {
                                 </div>
                             ),
                         }}
+
                     >
-                        <thead>
-                            <tr>{cols.map((col, index) => <th key={index}>{col}</th>)}</tr>
-                        </thead>
                     </DataTable>
                 </div>
             </div>

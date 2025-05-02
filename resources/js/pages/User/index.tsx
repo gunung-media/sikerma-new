@@ -34,7 +34,7 @@ export default function User({ roles, data }: PageProps & {
         password: '',
     })
 
-    const cols = ["#", "Name", "Username", "Password", "Role", "Action"];
+    const cols = ["#", "Name", "Username", "Password", "Role", "hide_role", "Action"];
 
     const handleEdit = (index: number) => {
         // @ts-expect-error
@@ -146,9 +146,13 @@ export default function User({ roles, data }: PageProps & {
                 </div>
                 <div className="card-datatable table-responsive">
                     <DataTable
+                        columns={cols.map((col, index) => ({
+                            title: col,
+                            visible: !col.startsWith("hide_"),
+                        }))}
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.name, item.username, item.password_raw, index, index
+                            index + 1, item.name, item.username, item.password_raw, index, item.role, index
                         ])}
                         options={{
                             responsive: true,
@@ -175,9 +179,6 @@ export default function User({ roles, data }: PageProps & {
                             ),
                         }}
                     >
-                        <thead>
-                            <tr>{cols.map((col, index) => <th key={index}>{col}</th>)}</tr>
-                        </thead>
                     </DataTable>
                 </div>
             </div>

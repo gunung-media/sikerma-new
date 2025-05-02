@@ -15,7 +15,7 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
     data: PartnershipType[],
     isWeight: boolean
 }) {
-    const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "Action"];
+    const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "hide_tipe", "hide_judul", "hide_nomor", "Action"];
     const [count, setCount] = useState({
         moa: 0,
         mou: 0,
@@ -96,12 +96,16 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.type, index, index, item.status, index
+                            index + 1, item.type, index, index, item.status, item.type, item.title, item.document_number, index
                         ])}
                         options={{
                             responsive: true,
                             stateDuration: 0
                         }}
+                        columns={cols.map((col, index) => ({
+                            title: col,
+                            visible: !col.startsWith("hide_"),
+                        }))}
                         slots={{
                             1: (value: string) => (
                                 <span className="badge bg-label-primary">{value}</span>
@@ -158,9 +162,6 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                             ),
                         }}
                     >
-                        <thead>
-                            <tr>{cols.map((col, index) => <th key={index}>{col}</th>)}</tr>
-                        </thead>
                     </DataTable>
                 </div>
             </div>

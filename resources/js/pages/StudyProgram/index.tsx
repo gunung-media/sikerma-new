@@ -96,7 +96,6 @@ export default function StudyProgram({ data }: PageProps & {
                             responsive: true,
                         }}
                         slots={{
-                            2: (value: any) => <p>{value ?? 0}</p>,
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />

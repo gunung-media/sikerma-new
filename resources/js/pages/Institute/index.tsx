@@ -86,18 +86,13 @@ export default function Institute({ data }: PageProps & {
                 <div className="card-datatable table-responsive">
                     <DataTable
                         className="datatables-basic table border-top"
-                        data={data.map((_, index) => [
-                            index + 1, index, index, index, index, index, index
+                        data={data.map(({ name }, index) => [
+                            index + 1, name, index
                         ])}
                         options={{
                             responsive: true,
                         }}
                         slots={{
-                            1: (value: number) => (
-                                <div className="d-flex flex-column">
-                                    <span className="emp_name text-truncate">{data[value]?.name}</span>
-                                </div>
-                            ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
