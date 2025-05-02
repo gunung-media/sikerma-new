@@ -60,7 +60,7 @@ export default function Document({ data }: PageProps & {
                     successToast("Berhasil mengubah data");
                     setSelectedId(null);
                     setShowForm(false);
-                    setTimeout(() => router.visit(route("master.documents.index")), 500);
+                    setTimeout(() => router.visit(route("master.documents.index")), 0);
                 },
             });
             return;
@@ -84,7 +84,7 @@ export default function Document({ data }: PageProps & {
             onSuccess: () => {
                 successToast("Berhasil menambahkan data");
                 setShowForm(false);
-                setTimeout(() => router.visit(route("master.documents.index")), 500);
+                router.visit(route("master.documents.index"))
             },
         });
     };
@@ -94,6 +94,7 @@ export default function Document({ data }: PageProps & {
             router.delete(route('master.documents.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
+                    router.visit(route("master.documents.index"))
                 }
             })
         })
@@ -125,7 +126,7 @@ export default function Document({ data }: PageProps & {
                         }}
                         slots={{
                             2: (value: number) => {
-                                const path = data[value].path as string | null;
+                                const path = data[value]?.path as string | null;
 
                                 if (!path) return <>-</>;
 
@@ -153,26 +154,23 @@ export default function Document({ data }: PageProps & {
 
                                 if (isPdf) {
                                     return (
-                                        <>
+                                        <div className="d-flex flex-column align-items-center gap-2" style={{ width: 300 }}>
                                             <iframe
                                                 src={fileUrl}
                                                 width="100%"
-                                                height="200px"
+                                                height="200"
                                                 title="PDF Preview"
                                                 style={{ border: '1px solid #ccc', borderRadius: '4px' }}
-                                                className="mb-3"
                                             />
-
                                             <a
                                                 href={fileUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="btn btn-outline-primary "
-                                                style={{ width: '100%' }}
+                                                className="btn btn-outline-primary w-100"
                                             >
                                                 Buka File
                                             </a>
-                                        </>
+                                        </div>
                                     );
                                 }
 
@@ -182,7 +180,7 @@ export default function Document({ data }: PageProps & {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="btn btn-outline-primary"
-                                        style={{ width: '100%' }}
+                                        style={{ width: '300px' }}
                                     >
                                         Buka File
                                     </a>
