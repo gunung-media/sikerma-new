@@ -42,7 +42,7 @@ export default function PartnerCriteria({ data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
-                    setTimeout(() => router.visit(route('master.partner-criterias.index')), 500)
+                    router.visit(route('master.partner-criterias.index'))
                 }
             })
             return;
@@ -55,7 +55,7 @@ export default function PartnerCriteria({ data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.partner-criterias.index')), 500)
+                router.visit(route('master.partner-criterias.index'))
             }
         })
     }
@@ -65,6 +65,7 @@ export default function PartnerCriteria({ data }: PageProps & {
             router.delete(route('master.partner-criterias.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
+                    router.visit(route('master.partner-criterias.index'))
                 }
             })
         })

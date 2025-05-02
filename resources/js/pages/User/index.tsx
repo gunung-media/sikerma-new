@@ -56,6 +56,7 @@ export default function User({ roles, data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
+                    router.visit(route('master.users.index'))
                 }
             })
             return;
@@ -68,7 +69,7 @@ export default function User({ roles, data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.users.index')), 500)
+                router.visit(route('master.users.index'))
             }
         })
     }
@@ -78,6 +79,7 @@ export default function User({ roles, data }: PageProps & {
             router.delete(route('master.users.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('User deleted successfully')
+                    router.visit(route('master.users.index'))
                 }
             })
         })

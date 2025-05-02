@@ -41,7 +41,7 @@ export default function Upt({ data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
-                    setTimeout(() => router.visit(route('master.upts.index')), 500)
+                    router.visit(route('master.upts.index'))
                 }
             })
             return;
@@ -54,7 +54,7 @@ export default function Upt({ data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.upts.index')), 500)
+                router.visit(route('master.upts.index'))
             }
         })
     }
@@ -64,6 +64,7 @@ export default function Upt({ data }: PageProps & {
             router.delete(route('master.upts.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
+                    router.visit(route('master.upts.index'))
                 }
             })
         })

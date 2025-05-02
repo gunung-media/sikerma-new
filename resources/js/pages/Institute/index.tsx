@@ -41,7 +41,7 @@ export default function Institute({ data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
-                    setTimeout(() => router.visit(route('master.institutes.index')), 500)
+                    router.visit(route('master.institutes.index'))
                 }
             })
             return;
@@ -54,7 +54,7 @@ export default function Institute({ data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.institutes.index')), 500)
+                router.visit(route('master.institutes.index'))
             }
         })
     }
@@ -64,6 +64,7 @@ export default function Institute({ data }: PageProps & {
             router.delete(route('master.institutes.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
+                    router.visit(route('master.institutes.index'))
                 }
             })
         })

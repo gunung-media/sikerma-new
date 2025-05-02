@@ -41,7 +41,7 @@ export default function FieldActivity({ data }: PageProps & {
                     successToast('Berhasil mengubah data')
                     setSelectedId(null)
                     setShowForm(false)
-                    setTimeout(() => router.visit(route('master.field-activities.index')), 500)
+                    router.visit(route('master.field-activities.index'))
                 }
             })
             return;
@@ -54,7 +54,7 @@ export default function FieldActivity({ data }: PageProps & {
             onSuccess: () => {
                 successToast('Berhasil menambahkan data')
                 setShowForm(false)
-                setTimeout(() => router.visit(route('master.field-activities.index')), 500)
+                router.visit(route('master.field-activities.index'))
             }
         })
     }
@@ -64,6 +64,7 @@ export default function FieldActivity({ data }: PageProps & {
             router.delete(route('master.field-activities.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
+                    router.visit(route('master.field-activities.index'))
                 }
             })
         })
@@ -86,17 +87,12 @@ export default function FieldActivity({ data }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, index, index
+                            index + 1, item.name, index
                         ])}
                         options={{
                             responsive: true,
                         }}
                         slots={{
-                            1: (value: number) => (
-                                <div className="d-flex flex-column">
-                                    <span className="emp_name text-truncate">{data[value]?.name}</span>
-                                </div>
-                            ),
                             [cols.length - 1]: (value: number) => (
                                 <div className="d-flex align-items-end gap-2">
                                     <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => handleEdit(value)} />
