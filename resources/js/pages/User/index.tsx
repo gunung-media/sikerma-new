@@ -50,6 +50,7 @@ export default function User({ roles, data }: PageProps & {
         if (isEditing) {
             router.put(route('master.users.update', selectedId), user, {
                 onError: (errors) => {
+                    console.error(errors);
                     errorToast(errors.error ? errors.error : 'Maaf, terjadi kesalahan.')
                 },
                 onSuccess: () => {
@@ -190,7 +191,7 @@ export default function User({ roles, data }: PageProps & {
                     setSelectedId(null)
                     setShowForm(false)
                 }}
-                title={selectedId ? "Edit Room" : "Add New Room"}
+                title={selectedId ? "Edit User" : "Tambah User"}
             >
                 <form onSubmit={handleSubmit} method="post">
                     <Input
