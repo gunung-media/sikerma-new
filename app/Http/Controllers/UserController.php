@@ -60,6 +60,7 @@ class UserController extends Controller
             'faculty_id' => 'nullable|exists:faculties,id',
             'institute_id' => 'nullable|exists:institutes,id',
             'study_program_id' => 'nullable|exists:study_programs,id',
+            'password' => 'nullable'
 
         ]);
 

@@ -41,7 +41,7 @@ class UserRepository implements BaseRepositoryInterface
     {
         $query = $this->findById($id);
 
-        if (isset($data['password']) && $data['password'] != $query->password) {
+        if (isset($data['password'])) {
             $data['password_raw'] = $data['password'];
             $data['password'] = bcrypt($data['password']);
         }
