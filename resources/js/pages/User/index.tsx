@@ -16,6 +16,7 @@ import { App } from "@/types/enum";
 import { kebabToTitle } from "@/utils/StringRalated";
 import { UserRole } from "@/features/User/components/UserRole";
 import { InstituteSelector } from "@/features/Institute";
+import { UptSelector } from "@/features/Upt";
 
 export default function User({ roles, data }: PageProps & {
     data: UserType[],
@@ -262,7 +263,7 @@ export default function User({ roles, data }: PageProps & {
                     )}
 
                     {user?.role === App.Enums.RoleEnum.UPT_ADMIN && (
-                        <InstituteSelector
+                        <UptSelector
                             className="mb-3"
                             onChange={(val) => setUser({ ...user, upt_id: val })}
                             value={user?.upt_id}

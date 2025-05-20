@@ -12,11 +12,11 @@ type UptSelectorProps = {
 }
 
 export const UptSelector: FC<UptSelectorProps> = ({ className, onChange, error, value, description }) => {
-    const [institutes, setUpts] = useState<UptType[]>([]);
+    const [upts, setUpts] = useState<UptType[]>([]);
 
     const getUpts = async () => {
         const { data } = await axios.get(route('api.upts'))
-        setUpts(data.institutes)
+        setUpts(data.upts)
     }
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export const UptSelector: FC<UptSelectorProps> = ({ className, onChange, error, 
     return (
         <CustomSelect
             label="UPT"
-            options={institutes.map((institute) => ({ value: institute.id, label: institute.name }))}
+            options={upts.map((institute) => ({ value: institute.id, label: institute.name }))}
             onChange={(value) => onChange(value)}
             value={value}
             className={className}

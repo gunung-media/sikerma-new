@@ -34,9 +34,9 @@ class UserController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required',
             'role' => 'required|in:' . implode(',', RoleEnum::getValues()),
-            'faculty_id' => 'exists:faculties,id',
+            'faculty_id' => 'nullable|exists:faculties,id',
             'institute_id' => 'nullable|exists:institutes,id',
-            'study_program_id' => 'exists:study_programs,id',
+            'study_program_id' => 'nullable|exists:study_programs,id',
 
         ]);
 
@@ -70,7 +70,6 @@ class UserController extends Controller
             return response(status: 200);
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
             return back()->withErrors(['error' => $th->getMessage()]);
         }
     }
