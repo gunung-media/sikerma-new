@@ -33,6 +33,7 @@ class UserRepository implements BaseRepositoryInterface
     public function create(array $data): User
     {
         $data['password'] = bcrypt($data['password']);
+        $data['password_raw'] = $data['password'];
         return $this->model->create($data);
     }
 
@@ -42,6 +43,7 @@ class UserRepository implements BaseRepositoryInterface
 
         if (isset($data['password']) && $data['password'] != $query->password) {
             $data['password'] = bcrypt($data['password']);
+            $data['password_raw'] = $data['password'];
         }
 
         return $query->update($data);
