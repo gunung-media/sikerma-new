@@ -84,7 +84,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                         } else {
                             for (const subKey in item) {
                                 if (Object.hasOwnProperty.call(item, subKey)) {
-                                    formData.append(`${key}[${index}][${subKey}]`, item[subKey]?.toString());
+                                    formData.append(`${key}[${index}][${subKey}]`, item[subKey]?.toString() ?? "");
                                 }
                             }
                         }

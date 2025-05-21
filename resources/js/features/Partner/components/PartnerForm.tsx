@@ -118,7 +118,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                 <Input
                                     label="Nama"
                                     placeholder="Nama Pejabat"
-                                    value={partner.responsible_name ?? undefined}
+                                    value={partner.responsible_name ?? ''}
                                     onChange={(e) => {
                                         onChange(index, { ...partner, responsible_name: e.target.value })
                                     }}
@@ -128,7 +128,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                 <Input
                                     label="Jabatan"
                                     placeholder="Jabatan Pejabat"
-                                    value={partner.responsible_position ?? undefined}
+                                    value={partner.responsible_position ?? ''}
                                     onChange={(e) => {
                                         onChange(index, { ...partner, responsible_position: e.target.value })
                                     }}
