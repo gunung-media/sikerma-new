@@ -13,7 +13,7 @@ interface DropzoneProps {
 }
 
 
-export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, error, description = "Batas ukuran file 2MB " }) => {
+export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, error, description = "Hanya menerima pdf,jpg,jpeg,png,doc,docx" }) => {
     const { props } = usePage<PageProps>();
 
     const [filePreview, setFilePreview] = useState<string | null>(null);
