@@ -62,8 +62,8 @@ class PartnershipController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'executor' => 'nullable|string|max:255',
             'partner_criteria_id' => 'nullable|exists:partner_criterias,id',
-            'document_path' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
-            'final_document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+            'document_path' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx',
+            'final_document_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
 
             'institute_id' => 'nullable|exists:institutes,id',
             'upt_id' => 'nullable|exists:upts,id',
@@ -81,7 +81,7 @@ class PartnershipController extends Controller
 
             'activities' => 'nullable|array',
             'activities.*.field_activity_id' => 'required|integer',
-            'activities.*.file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+            'activities.*.file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx',
         ]);
 
         DB::beginTransaction();
