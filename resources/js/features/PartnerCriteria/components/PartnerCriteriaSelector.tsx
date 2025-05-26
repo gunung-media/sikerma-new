@@ -26,7 +26,7 @@ export const PartnerCriteriaSelector: FC<PartnerCriteriaSelectorProps> = ({ clas
     return (
         <CustomSelect
             label="Kriteria Partner"
-            options={partnerCriterias.map((institute) => ({ value: institute.id, label: `${institute.name} (${institute.weight})` }))}
+            options={partnerCriterias.map((institute) => ({ value: institute.id, label: `(${institute.weight}) ${institute.name}` }))}
             onChange={(value) => onChange(value)}
             value={value}
             className={className}

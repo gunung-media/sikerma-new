@@ -38,6 +38,8 @@ export const CustomSelect: FC<SelectProps> = ({ label, name, value, options, onC
                 onChange={handleChange}
                 className={mergeClass(errorMessage ? 'is-invalid' : '')}
                 isDisabled={disabled}
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
             />
             {errorMessage && <div className="invalid-feedback">{errorMessage}</div>}
             {description && <div className="form-text">{description}</div>}
