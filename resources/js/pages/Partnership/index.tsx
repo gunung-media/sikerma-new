@@ -89,7 +89,10 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                     <div className="card-title mb-0">
                     </div>
                     {!isWeight && (
-                        <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
+                        <div className="flex ">
+                            <Button value="Export" type="success" icon="bx-download" onClick={() => window.open(route('partnerships.export'))} className="me-4" />
+                            <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
+                        </div>
                     )}
                 </div>
                 <div className="card-datatable table-responsive" style={{ minHeight: '10rem' }}>

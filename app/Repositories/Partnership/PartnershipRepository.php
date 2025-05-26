@@ -15,7 +15,7 @@ class PartnershipRepository implements BaseRepositoryInterface
         protected Partnership $model,
     ) {}
 
-    public function getAll(): Collection
+    public function getAll($isAdvanced = false): Collection
     {
         $query = $this->model->query();
         $user = auth()->guard('web')->user();
@@ -37,7 +37,7 @@ class PartnershipRepository implements BaseRepositoryInterface
                     break;
             }
         }
-        $query->with(['partnerCriteria', 'studyProgram']);
+        $query->with($isAdvanced ? ['partnerCriteria', 'studyProgram', 'activities', 'partners', 'institute', 'faculty'] : ['partnerCriteria', 'studyProgram']);
         return $query->get();
     }
 

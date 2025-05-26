@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Partnership;
 
+use App\Exports\PartnershipExport;
 use Illuminate\Validation\Rule;
 use App\Enums\AgencyTypeEnum;
 use App\Enums\PartnershipStatusEnum;
@@ -17,6 +18,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PartnershipController extends Controller
 {
@@ -287,7 +290,7 @@ class PartnershipController extends Controller
         ]);
     }
 
-    public function updatePartnerCriteria(Request $request, string $id)
+    public function updatePartnerCriteria(Request $request, string $id): Response|RedirectResponse
     {
         $validatedData = $request->validate([
             'partner_criteria_id' => 'required|exists:partner_criterias,id',
@@ -309,5 +312,10 @@ class PartnershipController extends Controller
             dd($e);
             return back()->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(new PartnershipExport, 'kerjasama.xlsx');
     }
 }
