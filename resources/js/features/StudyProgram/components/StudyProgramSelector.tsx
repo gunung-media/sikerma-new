@@ -9,9 +9,10 @@ type StudyProgramSelectorProps = {
     error?: string
     value?: number
     description?: string
+    disabled?: boolean
 }
 
-export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className, onChange, error, value, description }) => {
+export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className, onChange, error, value, description, disabled }) => {
     const [studyPrograms, setStudyPrograms] = useState<StudyProgramType[]>([]);
 
     const getFaculties = async () => {
@@ -32,6 +33,7 @@ export const StudyProgramSelector: FC<StudyProgramSelectorProps> = ({ className,
             className={className}
             errorMessage={error}
             description={description}
+            disabled={disabled}
         />
     );
 };

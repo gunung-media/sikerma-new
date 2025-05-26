@@ -9,9 +9,10 @@ type PartnershipSelectorProps = {
     error?: string
     value?: string
     description?: string
+    disabled?: boolean
 }
 
-export const PartnershipSelector: FC<PartnershipSelectorProps> = ({ className, onChange, error, value, description }) => {
+export const PartnershipSelector: FC<PartnershipSelectorProps> = ({ className, onChange, error, value, description, disabled }) => {
     const [partnerships, setPartnerships] = useState<PartnershipType[]>([]);
 
     const getPartnerships = async () => {
@@ -32,6 +33,7 @@ export const PartnershipSelector: FC<PartnershipSelectorProps> = ({ className, o
             className={className}
             errorMessage={error}
             description={description}
+            disabled={disabled}
         />
     );
 };

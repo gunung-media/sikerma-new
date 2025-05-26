@@ -12,6 +12,7 @@ type DatePickerProps = {
     minDate?: Date;
     maxDate?: Date;
     errorMessage?: string,
+    disabled?: boolean
 }
 
 export const DatePicker: FC<DatePickerProps> = ({
@@ -24,6 +25,7 @@ export const DatePicker: FC<DatePickerProps> = ({
     minDate,
     maxDate,
     errorMessage,
+    disabled
 }) => {
     return (
         <div className={className}>
@@ -39,6 +41,7 @@ export const DatePicker: FC<DatePickerProps> = ({
                     maxDate: maxDate
                 }}
                 className={mergeClass(!inline ? "form-control" : "", errorMessage && "is-invalid")}
+                disabled={disabled}
             />
 
             <style>

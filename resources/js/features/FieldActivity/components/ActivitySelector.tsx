@@ -10,9 +10,10 @@ type ActivitySelectorProps = {
     error?: string
     value?: string
     description?: string
+    disabled?: boolean
 }
 
-export const ActivitySelector: FC<ActivitySelectorProps> = ({ className, onChange, error, value, description }) => {
+export const ActivitySelector: FC<ActivitySelectorProps> = ({ className, onChange, error, value, description, disabled }) => {
     const [activities, setActivity] = useState<FieldActivityType[]>([]);
 
     const getActivity = async () => {
@@ -33,6 +34,7 @@ export const ActivitySelector: FC<ActivitySelectorProps> = ({ className, onChang
             className={className}
             errorMessage={error}
             description={description}
+            disabled={disabled}
         />
     );
 };

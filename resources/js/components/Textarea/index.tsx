@@ -14,6 +14,7 @@ type TextAreaType = {
     onChange?: (value: string) => void;
     children?: ReactNode;
     height?: string | number;
+    disabled?: boolean
 };
 
 export const TextArea: FC<TextAreaType> = ({
@@ -28,6 +29,7 @@ export const TextArea: FC<TextAreaType> = ({
     isRequired,
     onChange,
     height,
+    disabled
 }) => {
     return (
         <div className={className}>
@@ -39,6 +41,7 @@ export const TextArea: FC<TextAreaType> = ({
                 style={{ height: `${height}px`, maxHeight: `${height}px!important`, overflowY: "auto", }}
                 className={`${errorMessage ? "is-invalid" : ""}`}
                 id={id || name}
+                readOnly={disabled}
             />
             {errorMessage && <div className="invalid-feedback">{errorMessage}</div>}
             {description && <div className="form-text">{description}</div>}

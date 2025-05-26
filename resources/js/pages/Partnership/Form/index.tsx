@@ -154,7 +154,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
     }, [partnership])
 
     return (
-        <AuthenticatedLayout title={`${partnership ? 'Edit' : 'Tambah'} Kerjasama`}>
+        <AuthenticatedLayout title={`${partnership ? isReadOnly ? 'Lihat' : 'Edit' : 'Tambah'} Kerjasama`}>
             {isLoading && (
                 <div className="loading-overlay position-fixed d-flex justify-content-center align-items-center"
                     style={{
@@ -181,7 +181,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                             <h5 className="mb-0 me-2"></h5>
 
                             <div className="card-header-elements ms-auto">
-                                <Button value="Simpan" icon="bx-save" isSubmit disabled={isLoading} />
+                                <Button value="Simpan" icon="bx-save" isSubmit disabled={isLoading || isReadOnly} />
                             </div>
                         </div>
                         <div className="card-body">
@@ -197,6 +197,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                 value={data?.status.toString() ?? undefined}
                                                 onChange={(value) => setData({ ...data, status: value })}
                                                 error={errors.status}
+                                                disabled={isReadOnly}
                                             />
                                             <DatePicker
                                                 label="Tanggal Awal"
@@ -206,6 +207,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                 className="mb-3"
                                                 inline={false}
                                                 maxDate={new Date(data.end_date)}
+                                                disabled={isReadOnly}
                                             />
 
                                             <DatePicker
@@ -216,6 +218,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                 className="mb-3"
                                                 inline={false}
                                                 minDate={new Date(data.start_date)}
+                                                disabled={isReadOnly}
                                             />
                                         </div>
                                     </div>
@@ -232,6 +235,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                     setData({ ...data, document_path: file });
                                                 }}
                                                 error={errors.document_path}
+                                                disabled={isReadOnly}
                                             />
                                         </div>
                                     </div>
@@ -251,6 +255,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                             onChange={(e) => setData({ ...data, document_fundamental: e })}
                                             error={errors.document_fundamental}
                                             className="mb-3"
+                                            disabled={isReadOnly}
                                         />
                                     )}
                                     <Input
@@ -259,6 +264,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         onChange={(e) => setData({ ...data, document_number: e.target.value })}
                                         errorMessage={errors.document_number}
                                         className="mb-3"
+                                        disabled={isReadOnly}
                                     />
                                     <Input
                                         label="Judul"
@@ -266,12 +272,14 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         onChange={(e) => setData({ ...data, title: e.target.value })}
                                         errorMessage={errors.title}
                                         className="mb-3"
+                                        disabled={isReadOnly}
                                     />
                                     <TextArea
                                         label="Deskripsi"
                                         value={data.description ?? undefined}
                                         onChange={(e) => isEditing ? (!data.title && data.title != "" && setData({ ...data, description: e })) : setData({ ...data, description: e })}
                                         className="mb-3"
+                                        disabled={isReadOnly}
                                     />
 
                                     {user?.is_super_admin && (
@@ -280,6 +288,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                             onChange={(value) => setData({ ...data, study_program_id: value })}
                                             className="mb-3 "
                                             error={errors.study_program_id}
+                                            disabled={isReadOnly}
                                         />
                                     )}
 
@@ -319,7 +328,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                     className="mt-4"
                                     value="Tambah Penggiat"
                                     onClick={() => setData({ ...data, partners: [...data.partners, defaultPartner] })}
-                                    disabled={isLoading}
+                                    disabled={isLoading || isReadOnly}
                                 />
                             </div>
                         </div>
@@ -345,6 +354,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                             }]
                                         })
                                     }}
+                                    disabled={isReadOnly}
                                 />
 
                                 {data.activities.map((activity, index) => (
@@ -364,7 +374,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                                             activities: data.activities.filter((_, i) => i !== index)
                                                         });
                                                     }}
-                                                    disabled={isLoading}
+                                                    disabled={isLoading || isReadOnly}
                                                 />
                                             </div>
                                         </div>

@@ -18,6 +18,7 @@ type InputType = {
     isRequired?: boolean
     children?: ReactNode,
     mask?: string | RegExp[]
+    disabled?: boolean
 }
 
 export const Input: FC<InputType> = ({
@@ -36,6 +37,7 @@ export const Input: FC<InputType> = ({
     isRequired,
     children,
     mask,
+    disabled,
 }
 ) => {
     const input = mask ? (
@@ -52,6 +54,7 @@ export const Input: FC<InputType> = ({
             aria-describedby={ariaDescribedBy}
             required={isRequired}
             onChange={onChange}
+            disabled={disabled}
         />
     ) : (
         <input
@@ -67,6 +70,7 @@ export const Input: FC<InputType> = ({
             value={value}
             onChange={(e) => onChange && onChange(e)}
             required={isRequired}
+            disabled={disabled}
         />
     );
 

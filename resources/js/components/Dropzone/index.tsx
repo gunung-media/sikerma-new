@@ -10,10 +10,17 @@ interface DropzoneProps {
     className?: string;
     error?: string;
     description?: string;
+    disabled?: boolean;
 }
 
-
-export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, error, description = "Hanya menerima pdf,jpg,jpeg,png,doc,docx" }) => {
+export const Dropzone: React.FC<DropzoneProps> = ({
+    onChange,
+    value,
+    className,
+    error,
+    description = "Hanya menerima pdf,jpg,jpeg,png,doc,docx",
+    disabled = false,
+}) => {
     const { props } = usePage<PageProps>();
 
     const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -22,6 +29,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
 
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
+            if (disabled) return;
             const file = acceptedFiles[0];
             if (file) {
                 const isPdfFile = file.type === "application/pdf";
@@ -38,17 +46,15 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
                 onChange(file);
             }
         },
-        [onChange]
+        [onChange, disabled]
     );
 
     const generatePDFThumbnail = (file: File | string) => {
         if (typeof file === "string") {
-            // Handle URL case
             fetch(file)
                 .then((response) => response.arrayBuffer())
                 .then((buffer) => processPDF(new Uint8Array(buffer)));
         } else {
-            // Handle File case
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 const typedArray = new Uint8Array(fileReader.result as ArrayBuffer);
@@ -107,6 +113,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
             "application/pdf": [],
         },
         multiple: false,
+        disabled: disabled,
     });
 
     return (
@@ -118,12 +125,17 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
                     border: error ? "2px dashed red" : "2px dashed gray",
                     padding: "20px",
                     textAlign: "center",
-                    backgroundColor: isDragActive ? "#f0f0f0" : "#ffffff",
+                    backgroundColor: disabled
+                        ? "#f9f9f9"
+                        : isDragActive
+                            ? "#f0f0f0"
+                            : "#ffffff",
                     borderRadius: "8px",
-                    cursor: "pointer",
+                    cursor: disabled ? "not-allowed" : "pointer",
+                    opacity: disabled ? 0.6 : 1,
                 }}
             >
-                <input {...getInputProps()} />
+                <input {...getInputProps()} disabled={disabled} />
                 {filePreview ? (
                     <div>
                         <img
@@ -151,13 +163,16 @@ export const Dropzone: React.FC<DropzoneProps> = ({ onChange, value, className, 
                                 Download File
                             </a>
                         )}
-                        <p>Klik atau drag dan drop file untuk menganti</p>
+                        {!disabled && <p>Klik atau drag dan drop file untuk menganti</p>}
                     </div>
                 ) : (
-                    <p>Drag dan drop file di sini, atau klik untuk memilih file</p>
+                    !disabled && <p>Drag dan drop file di sini, atau klik untuk memilih file</p>
                 )}
-
-                {error && <div className="form-text" style={{ color: "red" }}>{error}</div>}
+                {error && (
+                    <div className="form-text" style={{ color: "red" }}>
+                        {error}
+                    </div>
+                )}
             </div>
             {description && <div className="form-text">{description}</div>}
         </div>

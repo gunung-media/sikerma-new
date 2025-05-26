@@ -154,9 +154,9 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                                             <Button
                                                 value="Download"
                                                 type="info"
-                                                icon="bx-download"
+                                                icon="bx-show"
                                                 isIcon
-                                                onClick={() => window.open(route('partnerships.print', data[value].id), '_blank')}
+                                                onClick={() => window.open(route('partnerships.show', data[value].id), '_blank')}
                                             />
                                             <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
                                         </div>

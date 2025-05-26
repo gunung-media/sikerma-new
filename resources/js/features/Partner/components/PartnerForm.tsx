@@ -13,6 +13,7 @@ type PartnerFormProps = {
     onChange: (index: number, value: PartnerDto) => void
     onDelete: (index: number) => void
     errors?: any
+    disabled?: boolean
 }
 
 
@@ -24,6 +25,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
     onChange,
     onDelete,
     errors,
+    disabled
 }) => {
     return (
         <div className="card mb-5" key={index}>
@@ -38,6 +40,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             isIcon
                             size="xs"
                             onClick={() => onDelete(index)}
+                            disabled={disabled}
                         />
                     )}
                     <Button
@@ -46,6 +49,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                         isIcon
                         size="xs"
                         onClick={() => setSelectedPartner(selectedPartner === index ? null : index)}
+                        disabled={disabled}
                     />
                 </div>
             </div>
@@ -65,6 +69,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                 onChange(index, { ...partner, agency_name: value })
                             }}
                             isRequired
+                            disabled={disabled}
                         />
                         <Input
                             label="Alamat"
@@ -75,6 +80,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             }}
                             errorMessage={errors?.[`partners.${index}.agency_address`]}
                             isRequired
+                            disabled={disabled}
                         />
                         <hr />
                         <h6 className="mb-0">Penandatangan</h6>
@@ -89,6 +95,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             className="mt-4"
                             errorMessage={errors?.[`partners.${index}.signatory_name`]}
                             isRequired
+                            disabled={disabled}
                         />
 
                         <Input
@@ -101,6 +108,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                             className="mt-4"
                             errorMessage={errors?.[`partners.${index}.signatory_position`]}
                             isRequired
+                            disabled={disabled}
                         />
                         <hr />
                         <h6 className="mb-0">Penanggung Jawab (Jika Ada)
@@ -123,6 +131,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                         onChange(index, { ...partner, responsible_name: e.target.value })
                                     }}
                                     className="mt-4"
+                                    disabled={disabled}
                                 />
 
                                 <Input
@@ -133,6 +142,7 @@ export const PartnerForm: FC<PartnerFormProps> = ({
                                         onChange(index, { ...partner, responsible_position: e.target.value })
                                     }}
                                     className="mt-4"
+                                    disabled={disabled}
                                 />
                             </div>
                         </Collapse>

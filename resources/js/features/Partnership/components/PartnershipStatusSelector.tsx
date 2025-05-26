@@ -9,9 +9,10 @@ type PartnershipStatusSelectorProps = {
     error?: string
     value?: string
     description?: string
+    disabled?: boolean
 }
 
-export const PartnershipStatusSelector: FC<PartnershipStatusSelectorProps> = ({ className, onChange, error, value, description }) => {
+export const PartnershipStatusSelector: FC<PartnershipStatusSelectorProps> = ({ className, onChange, error, value, description, disabled }) => {
     const [status, setStatus] = useState<string[]>([]);
 
     useEffect(() => {
@@ -27,6 +28,7 @@ export const PartnershipStatusSelector: FC<PartnershipStatusSelectorProps> = ({ 
             className={className}
             errorMessage={error}
             description={description}
+            disabled={disabled}
         />
     );
 };

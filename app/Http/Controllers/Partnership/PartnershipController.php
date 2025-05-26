@@ -139,7 +139,7 @@ class PartnershipController extends Controller
     {
         return Inertia::render('Partnership/Form/index', [
             'partnership' => $this->partnershipRepository->findById($id),
-            'is_read_only' => true
+            'isReadOnly' => true
         ]);
     }
 
@@ -217,7 +217,7 @@ class PartnershipController extends Controller
             ]);
 
             if (isset($validatedData['partners'])) {
-                $existingPartnerIds = $this->partnerRepository->findByAttributes(['partnership_id' => $partnership->id])->pluck('id')->toArray();
+                $existingPartnerIds = $this->partnerRepository->findByAttributes(['partnership_id' => $partnership->id])?->pluck('id')?->toArray() ?? [];
 
                 $incomingPartnerIds = [];
                 foreach ($validatedData['partners'] as $partnerData) {

@@ -14,6 +14,7 @@ type PartnerSelectorProps = {
     error?: string
     description?: string
     isRequired?: boolean
+    disabled?: boolean
 }
 
 export const PartnerSelector: FC<PartnerSelectorProps> = ({
@@ -24,7 +25,8 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
     onChangeValue,
     error,
     description,
-    isRequired
+    isRequired,
+    disabled
 }) => {
     const [types, setTypes] = useState<string[]>([])
     const [selectedType, setSelectedType] = useState<string | null>(null)
@@ -64,6 +66,7 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
             >
                 <select
                     value={typeValue}
+                    disabled={disabled}
                     onChange={(e) => {
                         onChangeType(e.target.value);
                         setSelectedType(e.target.value);
@@ -99,6 +102,7 @@ export const PartnerSelector: FC<PartnerSelectorProps> = ({
                                 border: '1px solid #ccc',
                             }),
                         }}
+                        isDisabled={disabled}
                     />
                 </div>
 
