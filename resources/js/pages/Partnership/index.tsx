@@ -102,7 +102,7 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                             index + 1, item.type, index, index, item.status, item.type, item.title, item.document_number, index
                         ])}
                         options={{
-                            responsive: true,
+                            responsive: false,
                             stateDuration: 0
                         }}
                         columns={cols.map((col, index) => ({
