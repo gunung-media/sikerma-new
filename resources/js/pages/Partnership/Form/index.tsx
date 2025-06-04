@@ -154,7 +154,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
     }, [partnership])
 
     return (
-        <AuthenticatedLayout title={`${partnership ? isReadOnly ? 'Lihat' : 'Edit' : 'Tambah'} Kerjasama`}>
+        <AuthenticatedLayout title={`${partnership ? (isReadOnly ? 'Lihat' : 'Edit') : 'Tambah'} Kerjasama`}>
             {isLoading && (
                 <div className="loading-overlay position-fixed d-flex justify-content-center align-items-center"
                     style={{
@@ -171,7 +171,7 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                 </div>
             )}
 
-            <h4 className="mb-1">{partnership ? 'Edit' : 'Add'} Kerjasama</h4>
+            <h4 className="mb-1">{`${partnership ? (isReadOnly ? 'Lihat' : 'Edit') : 'Tambah'} Kerjasama`}</h4>
             <p className="mb-6">Form Kerjasama</p>
 
             <form className="row" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
@@ -179,10 +179,15 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                     <div className="card">
                         <div className="card-header header-elements">
                             <h5 className="mb-0 me-2"></h5>
-
                             <div className="card-header-elements ms-auto">
+                                {partnership && isReadOnly && (
+                                    <Button value="Cetak" icon="bx-printer" type="success"
+                                        onClick={() => window.open(route('partnerships.print', partnership.id), '_blank')}
+                                    />
+                                )}
                                 <Button value="Simpan" icon="bx-save" isSubmit disabled={isLoading || isReadOnly} />
                             </div>
+
                         </div>
                         <div className="card-body">
                             <div className="row">
@@ -408,5 +413,6 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
 
             </form >
         </AuthenticatedLayout >
+
     )
 }

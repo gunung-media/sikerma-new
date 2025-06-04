@@ -156,7 +156,7 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                                                 type="info"
                                                 icon="bx-show"
                                                 isIcon
-                                                onClick={() => window.open(route('partnerships.show', data[value].id), '_blank')}
+                                                onClick={() => route('partnerships.show', data[value].id)}
                                             />
                                             <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
                                         </div>
