@@ -20,7 +20,7 @@ class PartnershipRepository implements BaseRepositoryInterface
         $query = $this->model->query();
         $user = auth()->guard('web')->user();
 
-        if (!$user->is_super_admin) {
+        if (!$user->is_super_admin && !$user->is_supervisor) {
             $query->where('user_id', $user->id);
             switch ($user->role) {
                 case RoleEnum::FACULTY_ADMIN->value:

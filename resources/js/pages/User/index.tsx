@@ -157,7 +157,7 @@ export default function User({ roles, data }: PageProps & {
                             index + 1, item.name, item.username, item.password_raw, index, item.role, index
                         ])}
                         options={{
-                            responsive: true,
+                            responsive: false,
                         }}
                         slots={{
                             3: (value: string) => <span className="text-muted">{value ?? '***'}</span>,

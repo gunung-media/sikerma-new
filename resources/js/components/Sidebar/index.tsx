@@ -3,6 +3,7 @@ import { mergeClass } from "@/utils/UIRalated"
 import { Logo } from "../Logo";
 import { Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
+import { useEffect } from "react";
 
 export const Sidebar = () => {
     const { props: { auth: { user } } } = usePage<PageProps>();
@@ -64,6 +65,11 @@ export const Sidebar = () => {
                         if (sub.isSuperAdmin && sub.isSuperAdmin !== user?.is_super_admin) {
                             return null
                         }
+
+                        if (typeof sub.canSupervisionAccess !== 'undefined' && sub.canSupervisionAccess !== user?.is_supervisor) {
+                            return null;
+                        }
+
                         return (
                             <li className={mergeClass("menu-item", compareUrl(sub.url!) ? "active" : "")} key={idx}>
                                 <Link href={route(sub.url)} className="menu-link">
@@ -76,6 +82,10 @@ export const Sidebar = () => {
             </li>
         )
     };
+
+    useEffect(() => {
+        console.log(user.is_supervisor)
+    });
 
     return (
         <aside

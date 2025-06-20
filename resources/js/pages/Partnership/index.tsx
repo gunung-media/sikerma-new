@@ -3,7 +3,7 @@ import { AuthenticatedLayout } from "@/layouts/Authenticated"
 import { PageProps } from "@/types"
 import DataTable from "datatables.net-react";
 import { Button } from "@/components/Button";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { basicErrorToast, successToast } from "@/utils/Toast";
 import { confirmationDelete } from "@/utils/Swal";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
     data: PartnershipType[],
     isWeight: boolean
 }) {
+    const { props: { auth: { user } } } = usePage<PageProps>();
     const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "hide_tipe", "hide_judul", "hide_nomor", "Action"];
     const [count, setCount] = useState({
         moa: 0,
@@ -91,7 +92,9 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                     {!isWeight && (
                         <div className="flex ">
                             <Button value="Export" type="success" icon="bx-download" onClick={() => window.open(route('partnerships.export'))} className="me-4" />
-                            <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
+                            {!user.is_supervisor && (
+                                <Button value="Tambah Kerjasama" type="primary" icon="bx-plus" onClick={() => router.visit(route('partnerships.create'))} />
+                            )}
                         </div>
                     )}
                 </div>
@@ -150,15 +153,19 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                                     )}
                                     {!isWeight && (
                                         <div className="d-flex align-items-end gap-2">
-                                            <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
+                                            {!user.is_supervisor && (
+                                                <Button value="Edit" type="warning" icon="bx-edit" isIcon onClick={() => router.visit(route('partnerships.edit', data[value].id))} />
+                                            )}
                                             <Button
-                                                value="Download"
+                                                value="Info"
                                                 type="info"
                                                 icon="bx-show"
                                                 isIcon
                                                 onClick={() => router.visit(route('partnerships.show', data[value].id))}
                                             />
-                                            <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
+                                            {!user.is_supervisor && (
+                                                <Button value="Edit" type="danger" icon="bx-trash" isIcon onClick={() => handleDelete(value)} />
+                                            )}
                                         </div>
                                     )}
                                 </div>

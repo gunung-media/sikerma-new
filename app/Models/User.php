@@ -81,7 +81,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected $appends = ['is_super_admin', 'is_supervisior'];
+    protected $appends = ['is_super_admin', 'is_supervisor'];
 
     public function faculty(): BelongsTo|null
     {
@@ -105,7 +105,7 @@ class User extends Authenticatable
         );
     }
 
-    public function isSupervisior(): Attribute
+    public function isSupervisor(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->role === RoleEnum::SUPERVISOR

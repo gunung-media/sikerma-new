@@ -6,6 +6,7 @@ export type SidebarNavigationItem = {
     items?: {
         label: string;
         isSuperAdmin?: boolean;
+        canSupervisionAccess?: boolean;
         url: string;
     }[];
     isSuperAdmin?: boolean;
@@ -96,13 +97,13 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     {
         type: 'header',
         label: 'Menu',
-        canSupervisionAccess: false,
+        canSupervisionAccess: true,
     },
     {
         type: 'multiple',
         label: 'Kerjasama',
         icon: 'bx-calendar',
-        canSupervisionAccess: false,
+        canSupervisionAccess: true,
         items: [
             {
                 label: 'List Kerjasama',
@@ -115,7 +116,8 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
             },
             {
                 label: 'Tambah Kerjasama',
-                url: 'partnerships.create'
+                url: 'partnerships.create',
+                canSupervisionAccess: false,
             }
         ]
     },
