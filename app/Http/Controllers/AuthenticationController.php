@@ -17,7 +17,7 @@ class AuthenticationController extends Controller
         return Inertia::render('Authentication/Login/index');
     }
 
-    public function loginPost(Request $request): RedirectResponse
+    public function loginPost(Request $request)
     {
         $request->validate([
             'username' => 'required',
