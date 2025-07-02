@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
 
         if (auth()->guard('web')->attempt($request->only('username', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
+            return Inertia::location(route('dashboard'));
         }
 
         return back()->withErrors(['error' => 'Akun tidak ditemukan']);
