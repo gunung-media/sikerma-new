@@ -17,7 +17,7 @@ createInertiaApp({
     },
     setup({ el, App, props }) {
         DataTable.use(DT);
-        GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf.worker.min.mjs'
+        GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs'
         createRoot(el).render(<App {...props} />)
     },
 })
