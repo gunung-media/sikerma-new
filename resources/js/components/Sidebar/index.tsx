@@ -83,10 +83,6 @@ export const Sidebar = () => {
         )
     };
 
-    useEffect(() => {
-        console.log(user.is_supervisor)
-    });
-
     return (
         <aside
             id="layout-menu"
