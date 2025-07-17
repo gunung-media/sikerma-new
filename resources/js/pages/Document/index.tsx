@@ -111,7 +111,7 @@ export default function Document({ data }: PageProps & {
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
                     </div>
-                    {user.is_super_admin && (
+                    {true && (
                         <Button value="Tambah Document" type="primary" icon="bx-plus" onClick={() => setShowForm(true)} />
                     )}
                 </div>
