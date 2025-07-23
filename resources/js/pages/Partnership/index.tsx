@@ -16,7 +16,7 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
     isWeight: boolean
 }) {
     const { props: { auth: { user } } } = usePage<PageProps>();
-    const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "hide_tipe", "hide_judul", "hide_nomor", "Action"];
+    const cols = ["#", "Tipe", "Judul", "Tanggal", "Status", "Author", "hide_author", "hide_tipe", "hide_judul", "hide_nomor", "Action"];
     const [count, setCount] = useState({
         moa: 0,
         mou: 0,
@@ -58,6 +58,13 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
         })
 
     }, [data])
+
+    const getOwnerName = (item: PartnershipType) =>
+        item.faculty?.name ||
+        item.study_program?.name ||
+        item.institute?.name ||
+        item.upt?.name ||
+        "Super Admin";
 
     return (
         <AuthenticatedLayout title="Kerjasama">
@@ -102,7 +109,10 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                     <DataTable
                         className="datatables-basic table border-top"
                         data={data.map((item, index) => [
-                            index + 1, item.type, index, index, item.status, item.type, item.title, item.document_number, index
+                            index + 1, item.type, index, index, item.status,
+                            index,
+                            getOwnerName(item),
+                            item.type, item.title, item.document_number, index
                         ])}
                         options={{
                             responsive: false,
@@ -131,6 +141,9 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
                             ),
                             4: (value: App.Enums.PartnershipStatusEnum) => (
                                 <PartnershipStatus value={value} />
+                            ),
+                            5: (value: number) => (
+                                <span>{getOwnerName(data[value])}</span>
                             ),
                             [cols.length - 1]: (value: number) => (
                                 <div >

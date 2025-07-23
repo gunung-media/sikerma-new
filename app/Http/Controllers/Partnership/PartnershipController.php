@@ -32,7 +32,7 @@ class PartnershipController extends Controller
     public function index(): InertiaResponse
     {
         return Inertia::render('Partnership/index', [
-            'data' => $this->partnershipRepository->getAll(),
+            'data' => $this->partnershipRepository->getAll(true),
         ]);
     }
 
