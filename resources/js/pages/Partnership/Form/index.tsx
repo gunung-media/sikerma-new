@@ -281,8 +281,8 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                     />
                                     <TextArea
                                         label="Deskripsi"
-                                        value={data.description ?? undefined}
-                                        onChange={(e) => isEditing ? (!data.title && data.title != "" && setData({ ...data, description: e })) : setData({ ...data, description: e })}
+                                        value={data.description ?? ""}
+                                        onChange={(e) => setData({ ...data, description: e })}
                                         className="mb-3"
                                         disabled={isReadOnly}
                                     />

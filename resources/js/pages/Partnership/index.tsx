@@ -30,6 +30,7 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
             router.delete(route('partnerships.destroy', data[index].id), {
                 onSuccess: () => {
                     successToast('Berhasil menghapus data')
+                    router.visit(route('partnerships.index'))
                 },
                 onError: (errors) => {
                     basicErrorToast(errors)
