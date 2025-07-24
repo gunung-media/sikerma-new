@@ -1,5 +1,6 @@
+import { formatDateForInput } from "@/utils/date";
 import { mergeClass } from "@/utils/UIRalated";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 
 type DatePickerProps = {
@@ -27,6 +28,9 @@ export const DatePicker: FC<DatePickerProps> = ({
     errorMessage,
     disabled
 }) => {
+    useEffect(() => {
+        console.log(value)
+    });
     return (
         <div className={className}>
             {label && <label className="form-label" >{label}</label>}
@@ -37,8 +41,8 @@ export const DatePicker: FC<DatePickerProps> = ({
                     inline: inline,
                     dateFormat: inline ? "Y-m-d" : "Y-m-d",
                     enableTime: enableTime,
-                    minDate: minDate,
-                    maxDate: maxDate
+                    minDate: minDate ? formatDateForInput(minDate) : undefined,
+                    maxDate: maxDate ? formatDateForInput(maxDate) : undefined
                 }}
                 className={mergeClass(!inline ? "form-control" : "", errorMessage && "is-invalid")}
                 disabled={disabled}

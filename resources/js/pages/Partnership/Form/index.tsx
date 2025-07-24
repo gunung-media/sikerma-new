@@ -15,6 +15,7 @@ import { ActivitySelector } from "@/features/FieldActivity";
 import { Dropzone } from "@/components/Dropzone";
 import { kebabToTitle } from "@/utils/StringRalated";
 import { StudyProgramSelector } from "@/features/StudyProgram";
+import { formatDateForInput } from "@/utils/date";
 
 export default function PartnershipForm({ partnership, isReadOnly }: PageProps & { partnership?: PartnershipType, isReadOnly: false }) {
     const { props: { auth: { user } } } = usePage<PageProps>();
@@ -206,23 +207,23 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                             />
                                             <DatePicker
                                                 label="Tanggal Awal"
-                                                value={new Date(data.start_date)}
-                                                onChange={(date) => setData({ ...data, start_date: date.toISOString() })}
+                                                value={data.start_date ? new Date(data.start_date) : new Date()}
+                                                onChange={(date) => setData({ ...data, start_date: formatDateForInput(date) })}
                                                 errorMessage={errors.start_date}
                                                 className="mb-3"
                                                 inline={false}
-                                                maxDate={new Date(data.end_date)}
+                                                maxDate={data.end_date ? new Date(data.end_date) : undefined}
                                                 disabled={isReadOnly}
                                             />
 
                                             <DatePicker
                                                 label="Tanggal Akhir"
-                                                value={new Date(data.end_date)}
-                                                onChange={(date) => setData({ ...data, end_date: date.toISOString() })}
+                                                value={data.end_date ? new Date(data.end_date) : new Date()}
+                                                onChange={(date) => setData({ ...data, end_date: formatDateForInput(date) })}
                                                 errorMessage={errors.end_date}
                                                 className="mb-3"
                                                 inline={false}
-                                                minDate={new Date(data.start_date)}
+                                                minDate={data.start_date ? new Date(data.start_date) : undefined}
                                                 disabled={isReadOnly}
                                             />
                                         </div>
