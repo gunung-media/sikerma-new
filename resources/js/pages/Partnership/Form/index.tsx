@@ -272,13 +272,14 @@ export default function PartnershipForm({ partnership, isReadOnly }: PageProps &
                                         className="mb-3"
                                         disabled={isReadOnly}
                                     />
-                                    <Input
+                                    <TextArea
                                         label="Judul"
                                         value={data.title ?? undefined}
-                                        onChange={(e) => setData({ ...data, title: e.target.value })}
+                                        onChange={(e) => setData({ ...data, title: e })}
                                         errorMessage={errors.title}
                                         className="mb-3"
                                         disabled={isReadOnly}
+                                        withToolbar={false}
                                     />
                                     <TextArea
                                         label="Deskripsi"
