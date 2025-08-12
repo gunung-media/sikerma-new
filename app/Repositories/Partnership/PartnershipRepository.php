@@ -37,7 +37,7 @@ class PartnershipRepository implements BaseRepositoryInterface
                     break;
             }
         }
-        $query->with($isAdvanced ? ['partnerCriteria', 'studyProgram', 'activities', 'partners', 'institute', 'faculty'] : ['partnerCriteria', 'studyProgram']);
+        $query->with($isAdvanced ? ['partnerCriteria', 'studyProgram', 'activities', 'partners', 'institute', 'faculty', 'user'] : ['user', 'partnerCriteria', 'studyProgram']);
         return $query->get();
     }
 

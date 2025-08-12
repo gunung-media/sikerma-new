@@ -61,11 +61,8 @@ export default function Partnership({ data, isWeight = false }: PageProps & {
     }, [data])
 
     const getOwnerName = (item: PartnershipType) =>
-        item.faculty?.name ||
-        item.study_program?.name ||
-        item.institute?.name ||
-        item.upt?.name ||
-        "Super Admin";
+        item?.user?.name ||
+        "Super Admins";
 
     return (
         <AuthenticatedLayout title="Kerjasama">

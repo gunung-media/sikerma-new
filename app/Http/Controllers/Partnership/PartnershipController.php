@@ -203,7 +203,7 @@ class PartnershipController extends Controller
                 'final_document_path' => $validatedData['final_document_path'] ?? null,
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'] ?? null,
-                'user_id' => $validatedData['user_id'] ?? auth()->guard('web')->user()->id,
+                'user_id' => $validatedData['user_id'] ?? $partnership->user_id ?? auth()->guard('web')->user()->id,
                 'status' => $validatedData['status'],
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
