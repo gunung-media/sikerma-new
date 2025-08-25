@@ -40,10 +40,10 @@ export default function Analytic({
             }
 
             switch (item.type) {
-                case App.Enums.PartnershipTypeEnum.MOA:
+                case App.Enums.PartnershipTypeEnum.MOU:
                     acc[0] += 1;
                     break;
-                case App.Enums.PartnershipTypeEnum.MOU:
+                case App.Enums.PartnershipTypeEnum.MOA:
                     acc[1] += 1;
                     break;
                 case App.Enums.PartnershipTypeEnum.IA:
